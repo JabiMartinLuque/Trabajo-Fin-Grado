@@ -16,17 +16,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // Deshabilita CSRF para simplificar el desarrollo de una API REST
+            // Deshabilita CSRF (útil para APIs REST)
             .csrf(csrf -> csrf.disable())
+            // Permite el acceso a los endpoints de autenticación y a la consola H2
             .authorizeHttpRequests(auth -> auth
-                // Permite acceso sin autenticación a los endpoints de autenticación
-                .requestMatchers("/api/auth/**").permitAll()
-                // Cualquier otro endpoint requiere autenticación
+                .requestMatchers("/api/auth/**", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
-            // Puedes usar el siguiente customizer para simplificar la configuración
+            // Deshabilita las cabeceras que impiden la visualización en frames (necesario para H2 console)
+            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
+            // Usa autenticación básica para las demás rutas protegidas
             .httpBasic(Customizer.withDefaults());
-        
+
         return http.build();
     }
 
