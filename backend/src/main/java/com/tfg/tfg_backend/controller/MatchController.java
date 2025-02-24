@@ -25,7 +25,7 @@ public class MatchController {
     }
 
     @GetMapping
-    public ResponseEntity<ScoreboardDTO> getMatchesByLeague(@RequestParam("league") String league) {
+    public ResponseEntity<ScoreboardDTO> getMatchesByLeague(@RequestParam("league") String league) { //http://localhost:8080/api/matches?league=esp.1
         ScoreboardDTO response = matchService.getMatchesByLeague(league);
         return ResponseEntity.ok(response);
     }
