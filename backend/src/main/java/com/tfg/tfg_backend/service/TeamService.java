@@ -25,5 +25,16 @@ public class TeamService {
         }
         return team;
     }
+
+    public TeamDTO getTeamById(String id) {
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "?lang=es&region=es";
+        TeamDTO team = restTemplate.getForObject(url, TeamDTO.class);
+        if (team != null) {
+            // Reemplaza la referencia externa de athletes por la URL interna de tu backend
+            team.setAthletesRef("http://localhost:8080/api/teams/athletes?team=" + id);
+        }
+        return team;
+    }
+    
 }
 
