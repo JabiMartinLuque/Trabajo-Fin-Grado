@@ -21,7 +21,7 @@ public class AthleteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@RequestParam("team") String teamId) throws IOException {
+    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@RequestParam("team") String teamId) throws IOException { //http://localhost:8080/api/teams/athletes?team=86
         List<AthleteDTO> athletes = athleteService.getAthletesByTeam(teamId);
         return ResponseEntity.ok(athletes);
     }

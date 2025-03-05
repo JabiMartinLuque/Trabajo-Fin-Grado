@@ -20,14 +20,27 @@ public class TeamController {
     }
 
     @GetMapping
-    public ResponseEntity<TeamDTO> getTeamById(@RequestParam("team") String team) {
+    public ResponseEntity<TeamDTO> getTeamById(@RequestParam("team") String team) { //http://localhost:8080/api/teams?team=86
         TeamDTO response = teamService.getTeamById(team);
         return ResponseEntity.ok(response);
     }
 
+    //No fufa
     @GetMapping("/details")
-    public ResponseEntity<TeamDTO> getTeamDetails(@RequestParam("teamRef") String teamRef) {
+    public ResponseEntity<TeamDTO> getTeamDetails(@RequestParam("team") String teamRef) { //http://localhost:8080/api/teams/details?team=86
         TeamDTO response = teamService.getTeamDetails(teamRef);
         return ResponseEntity.ok(response);
     }
+
+    /*
+     *  // Endpoint para obtener los detalles de un equipo dado su id, por ejemplo: GET /api/teams/83
+    @GetMapping("/{teamId}")
+    public ResponseEntity<TeamDTO> getTeamById(@PathVariable("teamId") String teamId) {
+        TeamDTO team = teamService.getTeamById(teamId);
+        return ResponseEntity.ok(team);
+    }
+     */
+
+     
+    
 }

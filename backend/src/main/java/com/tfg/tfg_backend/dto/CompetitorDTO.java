@@ -51,4 +51,27 @@ public class CompetitorDTO {
     public void setTeam(TeamDTO team) {
         this.team = team;
     }
+
+    @JsonProperty("score")
+    public void setScoreFromObject(Object scoreObj) {
+        // Si scoreObj es un mapa, extraer displayValue
+        if (scoreObj instanceof java.util.Map) {
+            java.util.Map<?,?> map = (java.util.Map<?,?>) scoreObj;
+            Object displayVal = map.get("displayValue");
+            if (displayVal != null) {
+                this.scoreAsString = displayVal.toString();
+            }
+        } else if (scoreObj != null) {
+            this.scoreAsString = scoreObj.toString();
+        }
+    }
+
+    // Campo para almacenar la representación en String
+    private String scoreAsString;
+
+    public String getScoreAsString() {
+        return scoreAsString;
+    }
+
+
 }
