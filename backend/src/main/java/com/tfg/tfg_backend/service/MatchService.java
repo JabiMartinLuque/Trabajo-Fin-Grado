@@ -9,6 +9,8 @@ import com.tfg.tfg_backend.dto.ScoreboardDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamEventDTO;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,10 +39,22 @@ public class MatchService {
         return restTemplate.getForObject(url, ScoreboardDTO.class);
     }
 
-    public ScoreboardDTO getMatchesByLeague(String league) {
-        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/" + league + "/scoreboard?lang=es&region=es"; 
+    public ScoreboardDTO getMatchesByLeague(String league, String startDate, String endDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        LocalDate today = LocalDate.now();
+        
+        if (startDate == null || startDate.trim().isEmpty()) {
+            startDate = today.format(formatter);
+        }
+        if (endDate == null || endDate.trim().isEmpty()) {
+            endDate = today.plusWeeks(1).format(formatter);
+        }
+        
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/" 
+                + league + "/scoreboard?dates=" + startDate + "-" + endDate + "&lang=es&region=es";
+        
         return restTemplate.getForObject(url, ScoreboardDTO.class);
-    }
+}
 
     /* 
     public ScoreboardDTO getMatchesByTeam(String teamId) {
@@ -147,4 +161,5 @@ public class MatchService {
         }
         return allEvents;
     }
+
 }

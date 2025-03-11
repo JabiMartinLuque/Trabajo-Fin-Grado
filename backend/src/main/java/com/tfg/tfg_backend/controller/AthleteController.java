@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/teams/athletes")
+@RequestMapping("/api/athletes")
 public class AthleteController {
 
     private final AthleteService athleteService;
@@ -21,9 +21,21 @@ public class AthleteController {
         this.athleteService = athleteService;
     }
 
-    @GetMapping("/{team}")
-    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@PathVariable("team") String teamId) throws IOException { //http://localhost:8080/api/teams/athletes/86
+    @GetMapping("/league/{league}")
+    public ResponseEntity<List<AthleteDTO>> getAthletesByLeague(@PathVariable("league") String leagueId) throws IOException { //http://localhost:8080/api/athletes/league/esp.1
+        List<AthleteDTO> athletes = athleteService.getAthletesByLeague(leagueId);
+        return ResponseEntity.ok(athletes);
+    }
+
+    @GetMapping("/team/{team}")
+    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@PathVariable("team") String teamId) throws IOException { //http://localhost:8080/api/athletes/team/86
         List<AthleteDTO> athletes = athleteService.getAthletesByTeam(teamId);
         return ResponseEntity.ok(athletes);
+    }
+
+    @GetMapping("/{athlete}")
+    public ResponseEntity<AthleteDTO> getAthleteById(@PathVariable("athlete") String athleteId) throws IOException { //http://localhost:8080/api/athletes/3253
+        AthleteDTO athlete = athleteService.getAthleteById(athleteId);
+        return ResponseEntity.ok(athlete);
     }
 }

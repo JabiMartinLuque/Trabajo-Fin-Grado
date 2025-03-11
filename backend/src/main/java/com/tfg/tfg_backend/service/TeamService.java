@@ -7,6 +7,8 @@ import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamDTO.GroupDTO;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,7 +29,7 @@ public class TeamService {
         return restTemplate.getForObject(teamRef, TeamDTO.class);
     }
 
-    public TeamDTO enrichTeam(TeamDTO team) {
+    public TeamDTO enrichTeamForStanding(TeamDTO team) {
         // Si el objeto TeamDTO tiene un , se hace la llamada para obtener más detalles
         if (team.getRef() != null) {
             return restTemplate.getForObject(team.getRef(), TeamDTO.class);
@@ -38,9 +40,12 @@ public class TeamService {
     public TeamDTO getTeamById(String id) throws IOException {
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "?lang=es&region=es";
         TeamDTO team = restTemplate.getForObject(url, TeamDTO.class);
+        String league = team.getLeague();
+        String currentSeason = team.getCurrentSeason();
         if (team != null) {
             // Reemplaza la referencia externa de athletes por la URL interna de tu backend
             team.setAthletesRef("http://localhost:8080/api/teams/athletes/" + id);
+            team.setStatisticsRef("http://localhost:8080/api/statistics/team/" + id + "?team=" + league + "&season=" + currentSeason);
         }
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
@@ -59,7 +64,7 @@ public class TeamService {
             if (!seasonRef.isEmpty()) {
                 String seasonJson = restTemplate.getForObject(seasonRef, String.class);
                 SeasonDTO season = objectMapper.readValue(seasonJson, SeasonDTO.class);
-                season.setAthletesRef("http://localhost:8080/api/teams/athletes/" + id);
+                season.setAthletesRef("http://localhost:8080/api/athletes/team/" + id);
                 group.setSeason(season);
             }
 
@@ -69,6 +74,44 @@ public class TeamService {
         
         return team;
     }
+
+    public List<TeamDTO> getTeamsByLeague(String league, String season) throws IOException {
+        if (season == null || season.trim().isEmpty()) {
+            season = "2024";
+        }
+        // Endpoint externo que devuelve la respuesta paginada con un array "items" de $ref
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" 
+                + league + "/seasons/" + season + "/teams?lang=es&region=es";
+        
+        // Obtenemos la respuesta completa en forma de String
+        String response = restTemplate.getForObject(url, String.class);
+        JsonNode root = objectMapper.readTree(response);
+        JsonNode items = root.path("items");
+        List<TeamDTO> teams = new ArrayList<>();
+        
+        if (items.isArray()) {
+            for (JsonNode item : items) {
+                // Extraemos el $ref de cada item
+                String ref = item.path("$ref").asText();
+                if (ref != null && !ref.isEmpty()) {
+                    // Obtenemos el objeto TeamDTO completo haciendo una llamada al $ref
+                    TeamDTO team = restTemplate.getForObject(ref, TeamDTO.class);
+                    if (team != null) {
+                        // Enriquecemos el objeto reemplazando las URL externas por las internas.
+                        // Por ejemplo, para el equipo:
+                        String internalTeamUrl = "http://localhost:8080/api/teams/" + team.getId();
+                        team.setRef(internalTeamUrl);
+                        // Para los atletas:
+                        team.setAthletesRef("http://localhost:8080/api/athletes/team/" + team.getId());
+                        // Puedes enriquecer otros campos si lo deseas...
+                    }
+                    teams.add(team);
+                }
+            }
+        }
+        return teams;
+    }
+
     
 }
 

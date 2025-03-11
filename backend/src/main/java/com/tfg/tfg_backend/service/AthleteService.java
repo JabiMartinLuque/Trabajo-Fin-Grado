@@ -21,6 +21,34 @@ public class AthleteService {
         this.objectMapper = new ObjectMapper();
     }
 
+    public List<AthleteDTO> getAthletesByLeague(String league) throws IOException {
+        List<AthleteDTO> result = new ArrayList<>();
+        // URL base para obtener atletas de la liga (ajusta según la documentación de la API)
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/athletes?lang=en&region=es";
+        String jsonResponse = restTemplate.getForObject(url, String.class);
+        JsonNode root = objectMapper.readTree(jsonResponse);
+        // Extraer el array de items (cada uno contiene el campo "$ref")
+        JsonNode itemsNode = root.path("items");
+        if (itemsNode.isArray()) {
+            for (JsonNode itemNode : itemsNode) {
+                JsonNode refNode = itemNode.path("$ref");
+                if (!refNode.isMissingNode()) {
+                    String athleteRef = refNode.asText();
+                    // Obtiene detalles completos del atleta usando el $ref
+                    AthleteDTO athleteDetail = restTemplate.getForObject(athleteRef, AthleteDTO.class);
+                    result.add(athleteDetail);
+                }
+            }
+        }
+        return result;
+    }
+
+    public AthleteDTO getAthleteById(String athleteId) throws IOException {
+        // URL base para obtener detalles de un atleta (ajusta según la documentación de la API)
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/athletes/" + athleteId + "?lang=en&region=es";
+        return restTemplate.getForObject(url, AthleteDTO.class);
+    }
+
     /**
      * Obtiene un listado unificado de atletas para el equipo indicado.
      * Recorre todas las páginas y acumula los detalles completos de cada atleta.

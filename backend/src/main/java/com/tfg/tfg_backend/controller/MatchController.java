@@ -34,36 +34,15 @@ public class MatchController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/league")
-    public ResponseEntity<ScoreboardDTO> getMatchesByLeague(@RequestParam("league") String league) { //http://localhost:8080/api/matches?league=esp.1
-        ScoreboardDTO response = matchService.getMatchesByLeague(league);
+    //Aqui se puede filtar por fechas
+    @GetMapping("/league/{league}")
+    public ResponseEntity<ScoreboardDTO> getMatchesByLeague(
+        @PathVariable("league") String league, 
+        @RequestParam(value = "startDate", required = false) String startDate,
+        @RequestParam(value = "endDate", required = false) String endDate) { //http://localhost:8080/api/matches/league/esp.1
+        ScoreboardDTO response = matchService.getMatchesByLeague(league, startDate, endDate);
         return ResponseEntity.ok(response);
     }
-    
-    /*
-    @GetMapping("/team")
-    public ResponseEntity<ScoreboardDTO> getMatchesByTeam(@RequestParam("team") String team) { //http://localhost:8080/api/matches?team=83
-        ScoreboardDTO response = matchService.getMatchesByTeam(team);
-        return ResponseEntity.ok(response);
-    }
-        */
-
-    /*
-    @GetMapping
-    public ResponseEntity<ScoreboardDTO> getMatchesByTeam(@RequestParam("team") String team) { //http://localhost:8080/api/matches?team=83
-        ScoreboardDTO response = matchService.getMatchesByTeam(team);
-        return ResponseEntity.ok(response);
-    }
-    */
-
-    /*
-    @GetMapping("/league")
-    public ResponseEntity<ScoreboardDTO> getMatchesByLeagueSeasonTeam(@RequestParam("league") String league, @RequestParam("team") String team, @RequestParam("season") String season) { //http://localhost:8080/api/matches/league?league=esp.1&team=83&season=2024
-        ScoreboardDTO response = matchService.getMatchesByLeagueSeasonTeam(league, team, season);
-        return ResponseEntity.ok(response);
-    }
-    */
-
     
     /**
      * Endpoint para obtener los partidos de un equipo en la temporada indicada, 
@@ -79,12 +58,14 @@ public class MatchController {
           * @throws JsonProcessingException 
           * @throws JsonMappingException 
           */
-         @GetMapping("/{team}")
-         public ResponseEntity<List<TeamEventDTO>> getMatchesByTeamAndSeason( //http://localhost:8080/api/matches/86?&season=2024
+         @GetMapping("/team/{team}")
+         public ResponseEntity<List<TeamEventDTO>> getMatchesByTeamAndSeason( //http://localhost:8080/api/matches/team/86?season=2024
                  @PathVariable("team") String teamId,
                  @RequestParam(value = "season", required = false) String season,
                  @RequestParam(value = "league", required = false) String league) throws IOException, JsonMappingException, JsonProcessingException {
         List<TeamEventDTO> events = matchService.getMatchesByTeamAcrossLeagues(teamId, season, league);
         return ResponseEntity.ok(events);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.tfg.tfg_backend.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.catalina.connector.Request;
 import org.springframework.http.ResponseEntity;
@@ -28,23 +29,18 @@ public class TeamController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/league/{league}")
+    public ResponseEntity<List<TeamDTO>> getTeamsByLeague(@PathVariable("league") String league, 
+        @RequestParam(value = "season", required = false) String season) throws IOException { //http://localhost:8080/api/teams/league/esp.1?season=2024
+        List<TeamDTO> response = teamService.getTeamsByLeague(league, season);
+        return ResponseEntity.ok(response);
+    }
 
     //No fufa
     @GetMapping("/details")
     public ResponseEntity<TeamDTO> getTeamDetails(@RequestParam("team") String teamRef) { //http://localhost:8080/api/teams/details?team=86
         TeamDTO response = teamService.getTeamDetails(teamRef);
         return ResponseEntity.ok(response);
-    }
-
-    /*
-     *  // Endpoint para obtener los detalles de un equipo dado su id, por ejemplo: GET /api/teams/83
-    @GetMapping("/{teamId}")
-    public ResponseEntity<TeamDTO> getTeamById(@PathVariable("teamId") String teamId) {
-        TeamDTO team = teamService.getTeamById(teamId);
-        return ResponseEntity.ok(team);
-    }
-     */
-
-     
+    }  
     
 }

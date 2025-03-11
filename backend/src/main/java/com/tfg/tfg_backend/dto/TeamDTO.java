@@ -38,6 +38,8 @@ public class TeamDTO {
     private String athletesRef;
     
     private GroupDTO groups;
+
+    @JsonProperty("statistics")
     private String statisticsRef;
     private String leadersRef;
     private String injuriesRef;
@@ -265,7 +267,41 @@ public class TeamDTO {
     public void setLinks(List<LinkDTO> links) {
         this.links = links;
     }
+    public String getLeague() {
+        if (defaultLeagueRef != null && !defaultLeagueRef.isEmpty()) {
+            String[] parts = defaultLeagueRef.split("/");
+            for (int i = 0; i < parts.length; i++) {
+                if ("leagues".equals(parts[i]) && i + 1 < parts.length) {
+                    String leaguePart = parts[i + 1];
+                    // Elimina la query si existe
+                    if (leaguePart.contains("?")) {
+                        leaguePart = leaguePart.split("\\?")[0];
+                    }
+                    return leaguePart;
+                }
+            }
+        }
+        return null;
+    }
     
+    public String getCurrentSeason() {
+        if (recordRef != null && !recordRef.isEmpty()) {
+            // Dividimos la URL por "/"
+            String[] parts = recordRef.split("/");
+            for (int i = 0; i < parts.length; i++) {
+                if ("seasons".equals(parts[i]) && i + 1 < parts.length) {
+                    String seasonPart = parts[i + 1];
+                    // Si el segmento contiene parámetros, se eliminan
+                    if (seasonPart.contains("?")) {
+                        seasonPart = seasonPart.split("\\?")[0];
+                    }
+                    return seasonPart;
+                }
+            }
+        }
+        // Valor por defecto si no se encuentra la temporada
+        return "2024";
+    }
 
     // Setter personalizado para "logos": extrae el primer logo del array y guarda su href
     @JsonProperty("logos")
