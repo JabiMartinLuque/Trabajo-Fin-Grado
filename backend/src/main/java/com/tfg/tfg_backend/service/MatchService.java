@@ -66,43 +66,50 @@ public class MatchService {
         return restTemplate.getForObject(url, EventDTO.class);
     }
 
-     /**
-     * Obtiene los partidos (TeamEventDTO) de un equipo para la temporada indicada en todas sus competiciones.
+    /**
+     * Obtiene los partidos (TeamEventDTO) de un equipo para la temporada indicada a partir de todas sus competiciones.
      * Si season es nula o vacía, se usará "2024" por defecto.
+     * Si se especifica una liga (league no vacía), se usarán sólo los eventos de esa competición.
      *
      * @param teamId Identificador del equipo (por ejemplo, "83")
      * @param season Temporada (por defecto "2024")
-     * @return List<TeamEventDTO> con todos los partidos unificados
+     * @param league Liga o competición (opcional). Ejemplo: "esp.1"
+     * @return Lista unificada de TeamEventDTO con los eventos
      * @throws IOException, JsonMappingException, JsonProcessingException
      */
-    public List<TeamEventDTO> getMatchesByTeamAcrossLeagues(String teamId, String season)
-    throws IOException, JsonMappingException, JsonProcessingException {
+    public List<TeamEventDTO> getMatchesByTeamAcrossLeagues(String teamId, String season, String league)
+            throws IOException, JsonMappingException, JsonProcessingException {
         if (season == null || season.trim().isEmpty()) {
             season = "2024";
         }
-        // 1. Obtener las competiciones (ligas) en las que participa el equipo.
-        String leaguesUrl = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
-                + teamId + "/leagues?lang=es&region=es";
-        String leaguesResponse = restTemplate.getForObject(leaguesUrl, String.class);
-        JsonNode leaguesRoot = objectMapper.readTree(leaguesResponse);
 
+        // 1. Determinar la lista de competiciones a usar.
         List<String> leagueIds = new ArrayList<>();
-        JsonNode leaguesItems = leaguesRoot.path("items");
-        if (leaguesItems.isArray()) {
-            for (JsonNode leagueNode : leaguesItems) {
-                // Extraer el $ref del elemento y obtener el identificador de la liga.
-                String ref = leagueNode.path("$ref").asText();
-                if (ref != null && !ref.isEmpty()) {
-                    String[] parts = ref.split("/");
-                    for (int i = 0; i < parts.length; i++) {
-                        if ("leagues".equals(parts[i]) && i + 1 < parts.length) {
-                            String leagueId = parts[i + 1];
-                            if (leagueId.contains("?")) {
-                                leagueId = leagueId.split("\\?")[0];
+        if (league != null && !league.trim().isEmpty()) {
+            leagueIds.add(league);
+        } else {
+            // Si no se especifica liga, obtener las ligas en las que participa el equipo.
+            String leaguesUrl = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
+                    + teamId + "/leagues?lang=es&region=es";
+            String leaguesResponse = restTemplate.getForObject(leaguesUrl, String.class);
+            JsonNode leaguesRoot = objectMapper.readTree(leaguesResponse);
+            JsonNode leaguesItems = leaguesRoot.path("items");
+            if (leaguesItems.isArray()) {
+                for (JsonNode leagueNode : leaguesItems) {
+                    // Extraer el $ref y obtener el identificador de la liga.
+                    String ref = leagueNode.path("$ref").asText();
+                    if (ref != null && !ref.isEmpty()) {
+                        String[] parts = ref.split("/");
+                        for (int i = 0; i < parts.length; i++) {
+                            if ("leagues".equals(parts[i]) && i + 1 < parts.length) {
+                                String leagueId = parts[i + 1];
+                                if (leagueId.contains("?")) {
+                                    leagueId = leagueId.split("\\?")[0];
+                                }
+                                leagueIds.add(leagueId);
+                                System.out.println("Liga encontrada: " + leagueId);
+                                break;
                             }
-                            leagueIds.add(leagueId);
-                            System.out.println("Liga encontrada: " + leagueId);
-                            break;
                         }
                     }
                 }
@@ -112,26 +119,21 @@ public class MatchService {
         // 2. Para cada competición, obtener los eventos del equipo para la temporada indicada.
         List<TeamEventDTO> allEvents = new ArrayList<>();
         for (String leagueId : leagueIds) {
-            // Construir la URL de eventos para ese equipo, competición y temporada.
             String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
                     + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es";
             
-            // Se asume que la respuesta está paginada; acumulamos todos los eventos.
             int currentPage = 1;
             int totalPages = 1;
             boolean morePages = true;
-            
             while (morePages) {
-                // Usamos el parámetro "page" para la paginación.
                 String paginatedUrl = eventsUrl + "&page=" + currentPage;
                 String eventsResponse = restTemplate.getForObject(paginatedUrl, String.class);
                 JsonNode eventsRoot = objectMapper.readTree(eventsResponse);
                 totalPages = eventsRoot.path("pageCount").asInt(1);
                 JsonNode eventsItems = eventsRoot.path("items");
-                
                 if (eventsItems.isArray()) {
                     for (JsonNode eventNode : eventsItems) {
-                        // Obtenemos el $ref del evento para obtener su detalle completo.
+                        // Obtener el $ref del evento para extraer el detalle completo.
                         String eventRef = eventNode.path("$ref").asText();
                         if (eventRef != null && !eventRef.isEmpty()) {
                             TeamEventDTO detailedEvent = restTemplate.getForObject(eventRef, TeamEventDTO.class);

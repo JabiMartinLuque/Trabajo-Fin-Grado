@@ -66,21 +66,25 @@ public class MatchController {
 
     
     /**
-     * Endpoint para obtener los partidos de un equipo en todas sus competiciones para una temporada.
-     * Ejemplo: GET /api/matches?team=83&season=2024
+     * Endpoint para obtener los partidos de un equipo en la temporada indicada, 
+     * de todas sus competiciones o filtrado por una liga específica si se proporciona.
+     * Ejemplo: GET /api/matches/86?&season=2024
+     *          GET /api/matches/86?&season=2024&league=esp.1
      *
      * @param teamId Identificador del equipo.
      * @param season Temporada (opcional, por defecto "2024").
+     * @param league Liga o competición (opcional).
      * @return Lista unificada de TeamEventDTO.
      * @throws IOException
           * @throws JsonProcessingException 
           * @throws JsonMappingException 
           */
-         @GetMapping
-         public ResponseEntity<List<TeamEventDTO>> getMatchesByTeamAndSeason(
-                 @RequestParam("team") String teamId,
-                 @RequestParam(value = "season", required = false) String season) throws IOException, JsonMappingException, JsonProcessingException { //http://localhost:8080/api/matches?team=83&season=2024
-        List<TeamEventDTO> events = matchService.getMatchesByTeamAcrossLeagues(teamId, season);
+         @GetMapping("/{team}")
+         public ResponseEntity<List<TeamEventDTO>> getMatchesByTeamAndSeason( //http://localhost:8080/api/matches/86?&season=2024
+                 @PathVariable("team") String teamId,
+                 @RequestParam(value = "season", required = false) String season,
+                 @RequestParam(value = "league", required = false) String league) throws IOException, JsonMappingException, JsonProcessingException {
+        List<TeamEventDTO> events = matchService.getMatchesByTeamAcrossLeagues(teamId, season, league);
         return ResponseEntity.ok(events);
     }
 }

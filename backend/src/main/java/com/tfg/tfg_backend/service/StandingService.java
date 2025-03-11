@@ -50,6 +50,7 @@ public class StandingService {
         JsonNode root = objectMapper.readTree(jsonResponse);
         // Extraer el nodo "standings"
         JsonNode standingsNode = root.path("standings");
+        
         // Mapear el array a una lista de StandingDTO
         List<StandingDTO> standings = objectMapper.readerForListOf(StandingDTO.class).readValue(standingsNode);
 

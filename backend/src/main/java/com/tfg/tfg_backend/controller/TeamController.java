@@ -1,8 +1,11 @@
 package com.tfg.tfg_backend.controller;
 
+import java.io.IOException;
+
 import org.apache.catalina.connector.Request;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +22,12 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    @GetMapping
-    public ResponseEntity<TeamDTO> getTeamById(@RequestParam("team") String team) { //http://localhost:8080/api/teams?team=86
+    @GetMapping("/{team}")
+    public ResponseEntity<TeamDTO> getTeamById(@PathVariable("team") String team) throws IOException { //http://localhost:8080/api/teams/86
         TeamDTO response = teamService.getTeamById(team);
         return ResponseEntity.ok(response);
     }
+
 
     //No fufa
     @GetMapping("/details")

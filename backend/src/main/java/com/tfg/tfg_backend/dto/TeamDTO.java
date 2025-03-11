@@ -37,7 +37,7 @@ public class TeamDTO {
     @JsonProperty("athletes")
     private String athletesRef;
     
-    private String groupsRef;
+    private GroupDTO groups;
     private String statisticsRef;
     private String leadersRef;
     private String injuriesRef;
@@ -175,11 +175,11 @@ public class TeamDTO {
     public void setAthletesRef(String athletesRef) {
         this.athletesRef = athletesRef;
     }
-    public String getGroupsRef() {
-        return groupsRef;
+    public GroupDTO getGroup() {
+        return groups;
     }
-    public void setGroupsRef(String groupsRef) {
-        this.groupsRef = groupsRef;
+    public void setGroup(GroupDTO groups) {
+        this.groups = groups;
     }
     public String getStatisticsRef() {
         return statisticsRef;
@@ -265,6 +265,7 @@ public class TeamDTO {
     public void setLinks(List<LinkDTO> links) {
         this.links = links;
     }
+    
 
     // Setter personalizado para "logos": extrae el primer logo del array y guarda su href
     @JsonProperty("logos")
@@ -307,18 +308,6 @@ public class TeamDTO {
 
     // Puedes agregar setters similares para otros campos que son referencias
     // Por ejemplo: groups, statistics, leaders, injuries, notes, franchise, events, coaches, seasons, summary, defaultLeague
-
-    @JsonProperty("groups")
-    public void setGroupsFromObject(Object groupsObj) {
-        if (groupsObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) groupsObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                // Puedes guardarlo en un campo groupsRef
-                this.groupsRef = ref.toString();
-            }
-        }
-    }
 
     @JsonProperty("statistics")
     public void setStatisticsFromObject(Object statisticsObj) {
@@ -563,6 +552,47 @@ public class TeamDTO {
         }
         public void setIsPremium(Boolean isPremium) {
             this.isPremium = isPremium;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class GroupDTO {
+
+        private String name;
+        
+        private SeasonDTO season;
+        
+        @JsonProperty("standing")
+        private String standingRef;
+
+        // Getters y setters
+        public String getName() {
+            return name;
+        }
+        
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public SeasonDTO getSeason() {
+            return season;
+        }
+
+        public void setSeason(SeasonDTO season) {
+            this.season = season;
+        }
+
+        public String getStandingRef() {
+            return standingRef;
+        }
+
+        public void setStandingRef(String standingRef) {
+            this.standingRef = standingRef;
+        }
+
+        public String getLeague() {
+            String[] parts = standingRef.split("=");
+            return parts[1];
         }
     }
 }
