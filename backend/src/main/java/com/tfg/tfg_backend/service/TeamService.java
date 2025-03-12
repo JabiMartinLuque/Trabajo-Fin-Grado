@@ -45,7 +45,8 @@ public class TeamService {
         if (team != null) {
             // Reemplaza la referencia externa de athletes por la URL interna de tu backend
             team.setAthletesRef("http://localhost:8080/api/teams/athletes/" + id);
-            team.setStatisticsRef("http://localhost:8080/api/statistics/team/" + id + "?team=" + league + "&season=" + currentSeason);
+            team.setStatisticsRef("http://localhost:8080/api/statistics/team/" + id + "?league=" + league + "&season=" + currentSeason);
+            team.setLeadersRef("http://localhost:8080/api/topPerformers/team/" + id + "?league=" + league + "&season=" + currentSeason);
         }
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
