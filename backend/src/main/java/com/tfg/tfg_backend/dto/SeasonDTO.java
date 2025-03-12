@@ -18,7 +18,6 @@ public class SeasonDTO {
     private String shortDisplayName;
     private String abbreviation;
     
-    
     private String athletesRef;
 
     // Getters y setters

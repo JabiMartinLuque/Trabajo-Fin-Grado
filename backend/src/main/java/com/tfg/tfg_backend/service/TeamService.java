@@ -47,6 +47,8 @@ public class TeamService {
             team.setAthletesRef("http://localhost:8080/api/teams/athletes/" + id);
             team.setStatisticsRef("http://localhost:8080/api/statistics/team/" + id + "?league=" + league + "&season=" + currentSeason);
             team.setLeadersRef("http://localhost:8080/api/topPerformers/team/" + id + "?league=" + league + "&season=" + currentSeason);
+            team.setEventsRef("http://localhost:8080/api/matches/team/" + id + "?season=" + currentSeason + "&league=" + league);
+            team.setSeasonsRef("http://localhost:8080/api/seasons/league/" + league + "/team/" + id);
         }
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
