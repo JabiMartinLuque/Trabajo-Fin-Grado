@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { User } from '../../../entities/User';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../entities/User'; // Asegúrate de que la ruta sea correcta
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -11,13 +12,25 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
-  user: User = new User('pedro', 'pedro@gmail.com', '12345');
+  // Inicializamos el usuario con username y password vacíos
+  user: User = new User('', '', ''); 
   errorMessage: string = '';
 
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   login() {
-    console.log(this.user);
+    this.authService.login(this.user).subscribe({
+      next: (token: string) => {
+        console.log('Login exitoso, token:', token);
+        // Guardamos el token en localStorage
+        localStorage.setItem('token', token);
+        // Redirigimos a una ruta protegida (por ejemplo, home)
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.error('Error en el login:', error);
+        this.errorMessage = 'Credenciales incorrectas o error en el login.';
+      }
+    });
   }
 }
