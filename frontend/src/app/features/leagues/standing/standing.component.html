@@ -1,1 +1,38 @@
-<p>standing works!</p>
+<div class="container mt-4">
+    <h1>Clasificación de la Liga: {{ leagueId }}</h1>
+  
+    <div *ngIf="isLoading" class="text-center">
+      <p>Cargando clasificación...</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Se muestra una tabla solo si hay datos -->
+    <table *ngIf="!isLoading && (standings?.length || 0) > 0" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Equipo</th>
+          <!-- Usamos operador de navegación segura para evitar errores si no hay records o stats -->
+          <th *ngFor="let stat of (standings[0]?.records?.[0]?.stats || [])">
+            {{ stat.displayName }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let standing of standings">
+          <td>{{ standing.team.displayName }}</td>
+          <td *ngFor="let stat of (standing.records?.[0]?.stats || [])">
+            {{ stat.displayValue }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="!isLoading && (!standings || standings.length === 0)" class="text-center">
+      <p>No hay clasificación disponible.</p>
+    </div>
+  </div>
+  
+  

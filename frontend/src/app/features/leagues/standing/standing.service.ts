@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { StandingDTO } from '../../../dtos/standing.dto';
 import { url } from 'inspector';
 
 @Injectable({
@@ -9,21 +10,16 @@ import { url } from 'inspector';
     })
 export class StandingService {
     
-        private apiUrl = 'http://localhost:8080/api/standings/'; 
+        private apiUrl = 'http://localhost:8080/api/standings'; 
         private standingsCache: any[] | null = null;
     
         constructor(private http: HttpClient) {}
 
-        standingByLeague(league: string): Observable<any[]> {
-            if (this.standingsCache) {
-                return of(this.standingsCache);
-            } else {
-                const url = this.apiUrl + '?league= ' + league;
-                return this.http.get<any>(url).pipe(
-                    map(response => response.standings),
-                    tap(standings => this.standingsCache = standings)
-                );
-            }
+        getStandingByLeague(league: string): Observable<any[]> {
+            const url = `${this.apiUrl}?league=${league}`;
+            console.log('Fetching standings for league:', league, 'URL:', url);
+            // Se espera que el backend retorne directamente un arreglo de StandingDTO
+            return this.http.get<StandingDTO[]>(url);
         }
 
         /**

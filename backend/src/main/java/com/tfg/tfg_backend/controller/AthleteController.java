@@ -3,6 +3,7 @@ package com.tfg.tfg_backend.controller;
 import com.tfg.tfg_backend.dto.AthleteDTO;
 import com.tfg.tfg_backend.service.AthleteService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/athletes")
+@CrossOrigin(origins = "*")
 public class AthleteController {
 
     private final AthleteService athleteService;

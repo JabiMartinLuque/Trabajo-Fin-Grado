@@ -10,14 +10,14 @@ import { AuthGuard } from './auth.guard';
 import { AthletesComponent } from './features/leagues/athletes/athletes.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
-    {path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-    {path: 'login', component: LoginComponent},
-    {path: 'register', component: RegisterComponent},
-    {path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]},
-    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+    { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
+    {path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //http://localhost:4200/home
+    {path: 'login', component: LoginComponent}, //http://localhost:4200/login
+    {path: 'register', component: RegisterComponent}, //http://localhost:4200/register
+    {path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
+    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}, //http://localhost:4200/profile
     {
-    path: ':league', 
+    path: ':league', //http://localhost:4200/league/esp.1
     children: [
       { path: 'standing', component: StandingComponent },
       { path: 'players', component: AthletesComponent },

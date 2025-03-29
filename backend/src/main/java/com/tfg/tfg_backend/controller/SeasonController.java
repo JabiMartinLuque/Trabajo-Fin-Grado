@@ -4,6 +4,7 @@ package com.tfg.tfg_backend.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.tfg.tfg_backend.service.SeasonService;
 
 @RestController
 @RequestMapping("/api/seasons")
+@CrossOrigin(origins = "*")
 public class SeasonController {
     
     private final SeasonService seasonService;

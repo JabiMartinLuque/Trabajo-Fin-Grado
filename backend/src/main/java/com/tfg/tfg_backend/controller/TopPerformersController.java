@@ -1,5 +1,6 @@
 package com.tfg.tfg_backend.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.tfg.tfg_backend.dto.TopPerformersDTO;
 
 @RestController
 @RequestMapping("/api/topPerformers/team")
+@CrossOrigin(origins = "*")
 public class TopPerformersController {
             
     private final TopPerformersService topPerformersService;

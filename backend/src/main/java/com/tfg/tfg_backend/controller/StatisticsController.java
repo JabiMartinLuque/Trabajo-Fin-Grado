@@ -3,6 +3,7 @@ package com.tfg.tfg_backend.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import com.tfg.tfg_backend.service.StatisticsService;
 
 @RestController
 @RequestMapping("/api/statistics/team")
+@CrossOrigin(origins = "*")
 public class StatisticsController {
     private final StatisticsService statisticsService;
 

@@ -3,6 +3,7 @@ package com.tfg.tfg_backend.controller;
 import com.tfg.tfg_backend.dto.StandingDTO;
 import com.tfg.tfg_backend.service.StandingService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/standings")
+@CrossOrigin(origins = "*")
 public class StandingController {
     
     private final StandingService standingService;

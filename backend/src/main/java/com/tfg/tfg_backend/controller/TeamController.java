@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.catalina.connector.Request;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.tfg.tfg_backend.service.TeamService;
 
 @RestController
 @RequestMapping("/api/teams")
+@CrossOrigin(origins = "*")
 public class TeamController {
     private final TeamService teamService;
 
