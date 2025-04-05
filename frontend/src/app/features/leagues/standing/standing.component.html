@@ -1,38 +1,44 @@
-<div class="container mt-4">
-    <h1>Clasificación de la Liga: {{ leagueId }}</h1>
-  
-    <div *ngIf="isLoading" class="text-center">
-      <p>Cargando clasificación...</p>
-    </div>
-  
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  
-    <!-- Se muestra una tabla solo si hay datos -->
-    <table *ngIf="!isLoading && (standings?.length || 0) > 0" class="table table-striped">
-      <thead>
-        <tr>
-          <th>Equipo</th>
-          <!-- Usamos operador de navegación segura para evitar errores si no hay records o stats -->
-          <th *ngFor="let stat of (standings[0]?.records?.[0]?.stats || [])">
-            {{ stat.displayName }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let standing of standings">
-          <td>{{ standing.team.displayName }}</td>
-          <td *ngFor="let stat of (standing.records?.[0]?.stats || [])">
-            {{ stat.displayValue }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <div *ngIf="!isLoading && (!standings || standings.length === 0)" class="text-center">
-      <p>No hay clasificación disponible.</p>
-    </div>
+
+<mat-card class="m-4">
+  <mat-card-title>Clasificación de la Liga: {{ leagueId }}</mat-card-title>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Tabla de clasificación -->
+  <div *ngIf="!isLoading && standings && standings.length > 0">
+    <table mat-table [dataSource]="standings" class="mat-elevation-z8 w-100">
+      <!-- Columna para el nombre del equipo -->
+      <ng-container matColumnDef="team">
+        <th mat-header-cell *matHeaderCellDef> Equipo </th>
+        <td mat-cell *matCellDef="let row"> {{ row.team.displayName }} </td>
+      </ng-container>
+
+      <!-- Generar columnas dinámicamente según los stats del primer registro -->
+      <ng-container *ngFor="let stat of (standings[0]?.records?.[0]?.stats || []); let i = index" [matColumnDef]="'stat' + i">
+        <th mat-header-cell *matHeaderCellDef> {{ stat.displayName }} </th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.records?.[0]?.stats[i]?.displayValue }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <!-- Mensaje en caso de no haber datos -->
+  <div *ngIf="!isLoading && (!standings || standings.length === 0)" class="text-center my-4">
+    <p>No hay clasificación disponible.</p>
+  </div>
+</mat-card>
+
   
   

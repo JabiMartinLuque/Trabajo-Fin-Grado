@@ -15,6 +15,46 @@
         <li class="nav-item">
           <a class="nav-link" href="/home" routerLinkActive="active">Home</a>
         </li>
+        <li class="nav-item dropdown">
+          <a 
+            class="nav-link dropdown-toggle" 
+            href="#" 
+            id="leaguesDropdown" 
+            role="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            (click)="$event.preventDefault()"
+          >
+            Leagues
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="leaguesDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/league" [queryParams]="{ league: 'esp.1' }">
+                Spain (LaLiga)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/league" [queryParams]="{ league: 'eng.1' }">
+                England (Premier League)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/league" [queryParams]="{ league: 'fra.1' }">
+                France (Ligue 1)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/league" [queryParams]="{ league: 'ger.1' }">
+                Germany (Bundesliga)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/league" [queryParams]="{ league: 'ita.1' }">
+                Italy (Serie A)
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/matches" routerLinkActive="active">Matches</a>
         </li>

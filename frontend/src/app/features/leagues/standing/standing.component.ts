@@ -3,10 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { StandingDTO } from '../../../dtos/standing.dto';
 import { StandingService } from './standing.service';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-standing',
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule],
   templateUrl: './standing.component.html',
   styleUrl: './standing.component.css'
 })
@@ -15,6 +18,7 @@ export class StandingComponent {
   standings: StandingDTO[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
+  displayedColumns: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +26,7 @@ export class StandingComponent {
   ) {}
 
   ngOnInit(): void {
-    // Extraemos el parámetro "id" de la ruta (por ejemplo, "esp.1")
+    // Extraemos el parámetro "league" de la query string
     this.route.queryParamMap.subscribe(params => {
       this.leagueId = params.get('league') || '';
       this.loadStandings();
@@ -33,9 +37,16 @@ export class StandingComponent {
     this.isLoading = true;
     this.standingService.getStandingByLeague(this.leagueId).subscribe({
       next: (data: StandingDTO[]) => {
-        console.log("Standings data received: ", data);
         this.standings = data;
         this.isLoading = false;
+        // Definir las columnas de la tabla
+        if (this.standings && this.standings.length > 0 && this.standings[0].records?.[0]?.stats) {
+          // La primera columna será siempre "team", luego una para cada estadística
+          this.displayedColumns = ['team'];
+          for (let i = 0; i < this.standings[0].records[0].stats.length; i++) {
+            this.displayedColumns.push('stat' + i);
+          }
+        }
       },
       error: (error) => {
         console.error('Error fetching standings', error);

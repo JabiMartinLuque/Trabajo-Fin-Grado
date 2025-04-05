@@ -1,1 +1,40 @@
-<p>scoreboard works!</p>
+<!-- src/app/features/scoreboard/scoreboard.component.html -->
+<div class="container mt-4">
+    <h1>Scoreboard - League: {{ league }}</h1>
+  
+    <!-- Spinner de carga -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <p>Loading scoreboard...</p>
+    </div>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Mostrar los eventos si existen -->
+    <div *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0">
+      <div *ngFor="let event of scoreboard.events" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ event.name }} ({{ event.shortName }})</h5>
+          <p class="card-text">Date: {{ event.date | date:'short' }}</p>
+          <div *ngFor="let comp of event.competitions">
+            <p>Competition Start: {{ comp.startDate | date:'short' }}</p>
+            <p>Venue: {{ comp.venue.displayName }}</p>
+            <div *ngFor="let competitor of comp.competitors">
+              <p>
+                {{ competitor.team.displayName }} - Score: {{ competitor.score }} 
+                ({{ competitor.homeAway }})
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mensaje si no hay eventos -->
+    <div *ngIf="scoreboard && (!scoreboard.events || scoreboard.events.length === 0)" class="text-center">
+      <p>No events available.</p>
+    </div>
+  </div>
+  

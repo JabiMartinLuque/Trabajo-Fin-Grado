@@ -42,7 +42,7 @@ public class MatchController {
         @PathVariable("league") String league, 
         @RequestParam(value = "startDate", required = false) String startDate,
         @RequestParam(value = "endDate", required = false) String endDate) { //http://localhost:8080/api/matches/league/esp.1
-        ScoreboardDTO response = matchService.getMatchesByLeague(league, startDate, endDate);
+        ScoreboardDTO response = matchService.getMatchesByLeague(league, startDate, endDate); //http://localhost:8080/api/matches/league/esp.1?startDate=2024-01-01&endDate=2024-12-31
         return ResponseEntity.ok(response);
     }
     

@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <span>League: {{ leagueId }}</span>
+    <span class="spacer"></span>
+    <button mat-button [routerLink]="['standing']" routerLinkActive="active" queryParamsHandling="preserve">
+      Standing
+    </button>
+    <button mat-button [routerLink]="['teams']" routerLinkActive="active" queryParamsHandling="preserve">
+      Teams
+    </button>
+    <button mat-button [routerLink]="['scoreboard']" routerLinkActive="active" queryParamsHandling="preserve">
+      Scoreboard
+    </button>
+    <button mat-button [routerLink]="['players']" routerLinkActive="active" queryParamsHandling="preserve">
+      Players
+    </button>
+  </mat-toolbar>
+  

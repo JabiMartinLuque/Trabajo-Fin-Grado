@@ -8,6 +8,8 @@ import { StandingComponent } from './features/leagues/standing/standing.componen
 import { TeamsComponent } from './features/leagues/teams/teams.component';
 import { AuthGuard } from './auth.guard';
 import { AthletesComponent } from './features/leagues/athletes/athletes.component';
+import { LeagueComponent } from './features/leagues/league/league.component';
+import { ScoreboardComponent } from './features/leagues/scoreboard/scoreboard.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
@@ -18,10 +20,13 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}, //http://localhost:4200/profile
     {
     path: ':league', //http://localhost:4200/league/esp.1
+    component: LeagueComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'standing', component: StandingComponent },
       { path: 'players', component: AthletesComponent },
       { path: 'teams', component: TeamsComponent },
+      { path: 'scoreboard', component: ScoreboardComponent },
       { path: '', redirectTo: 'standing', pathMatch: 'full' }
     ]
   },

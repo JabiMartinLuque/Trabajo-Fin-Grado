@@ -1,0 +1,52 @@
+/* Sobrescribe el estilo del mat-card */
+.mat-card {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  /* Título del mat-card */
+  .mat-card-title {
+    font-size: 2rem;
+    text-align: center;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  /* Tabla personalizada */
+  .mat-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+  }
+  
+  .mat-header-cell {
+    background-color: #007bff !important;
+    color: #fff !important;
+    text-align: center;
+    padding: 0.75rem;
+  }
+  
+  .mat-cell {
+    text-align: center;
+    padding: 0.75rem;
+  }
+  
+  /* Filas alternadas */
+  .mat-row:nth-of-type(odd) {
+    background-color: #f1f1f1;
+  }
+  
+  /* Hover para filas */
+  .mat-row:hover {
+    background-color: #e2e6ea;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  /* Estilo para mensajes */
+  .alert {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+  }
+  
