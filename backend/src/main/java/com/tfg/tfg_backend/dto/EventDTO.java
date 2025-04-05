@@ -72,6 +72,9 @@ public class EventDTO {
         @JsonProperty("startDate")
         private String startDate;
 
+        @JsonProperty("status")
+        private StatusDTO status;
+
         @JsonProperty("venue")
         private VenueDTO venue;
 
@@ -102,6 +105,92 @@ public class EventDTO {
 
         public void setCompetitors(List<CompetitorDTO> competitors) {
             this.competitors = competitors;
+        }
+
+        public StatusDTO getStatus() {
+            return status;
+        }
+
+        public void setStatus(StatusDTO status) {
+            this.status = status;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class StatusDTO {
+
+        @JsonProperty("clock")
+        private String clock;
+
+        @JsonProperty("displayClock")
+        private String displayClock;
+
+        @JsonProperty("type")
+        private TypeDTO type;
+
+        // Getters y setters
+
+        public TypeDTO getType() {
+            return type;
+        }
+
+        public void setType(TypeDTO type) {
+            this.type = type;
+        }
+
+        public String getClock() {
+            return clock;
+        }
+
+        public void setClock(String clock) {
+            this.clock = clock;
+        }
+
+        public String getDisplayClock() {
+            return displayClock;
+        }
+
+        public void setDisplayClock(String displayClock) {
+            this.displayClock = displayClock;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class TypeDTO {
+
+        @JsonProperty("name")
+        private String name;
+
+        @JsonProperty("state")
+        private String state;
+
+        @JsonProperty("completed")
+        private boolean completed;
+
+        // Getters y setters
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+
+        public void setCompleted(boolean completed) {
+            this.completed = completed;
         }
     }
     
@@ -170,28 +259,6 @@ public class EventDTO {
         public void setTeam(TeamDTO team) {
             this.team = team;
         }
-
-        @JsonProperty("score")
-        public void setScoreFromObject(Object scoreObj) {
-            // Si scoreObj es un mapa, extraer displayValue
-            if (scoreObj instanceof java.util.Map) {
-                java.util.Map<?,?> map = (java.util.Map<?,?>) scoreObj;
-                Object displayVal = map.get("displayValue");
-                if (displayVal != null) {
-                    this.scoreAsString = displayVal.toString();
-                }
-            } else if (scoreObj != null) {
-                this.scoreAsString = scoreObj.toString();
-            }
-        }
-
-        // Campo para almacenar la representación en String
-        private String scoreAsString;
-
-        public String getScoreAsString() {
-            return scoreAsString;
-        }
-
 
     }
 }

@@ -1,40 +1,69 @@
-<!-- src/app/features/scoreboard/scoreboard.component.html -->
-<div class="container mt-4">
-    <h1>Scoreboard - League: {{ league }}</h1>
+<mat-card class="m-4">
+    <mat-card-header>
+      <mat-card-title>Scoreboard - League: {{ league }}</mat-card-title>
+    </mat-card-header>
   
-    <!-- Spinner de carga -->
-    <div *ngIf="isLoading" class="text-center my-4">
-      <p>Loading scoreboard...</p>
-    </div>
-  
-    <!-- Mensaje de error -->
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  
-    <!-- Mostrar los eventos si existen -->
-    <div *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0">
-      <div *ngFor="let event of scoreboard.events" class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ event.name }} ({{ event.shortName }})</h5>
-          <p class="card-text">Date: {{ event.date | date:'short' }}</p>
-          <div *ngFor="let comp of event.competitions">
-            <p>Competition Start: {{ comp.startDate | date:'short' }}</p>
-            <p>Venue: {{ comp.venue.displayName }}</p>
-            <div *ngFor="let competitor of comp.competitors">
-              <p>
-                {{ competitor.team.displayName }} - Score: {{ competitor.score }} 
-                ({{ competitor.homeAway }})
-              </p>
-            </div>
-          </div>
-        </div>
+    <mat-card-content>
+      <!-- Spinner de carga -->
+      <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </div>
-    </div>
   
-    <!-- Mensaje si no hay eventos -->
-    <div *ngIf="scoreboard && (!scoreboard.events || scoreboard.events.length === 0)" class="text-center">
-      <p>No events available.</p>
-    </div>
-  </div>
+      <!-- Mensaje de error -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+  
+      <!-- Se muestra el contenido solo si hay eventos -->
+      <ng-container *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0; else noEvents">
+        <div *ngFor="let event of scoreboard.events" class="mb-3">
+          <mat-card class="event-card">
+            <mat-card-header>
+              <div mat-card-avatar class="event-avatar">
+                <mat-icon>sports_soccer</mat-icon>
+              </div>
+              <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
+              <mat-card-subtitle>
+                {{ event.date | date:'short' }}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div *ngFor="let comp of event.competitions">
+                <p>
+                  <strong>Competition Start:</strong> {{ comp.startDate | date:'shortTime' }}
+                </p>
+                <p>
+                  <strong>Venue:</strong> {{ comp.venue.displayName }}
+                </p>
+                <div *ngIf="comp.status">
+                  <p>
+                    <strong>Status:</strong> {{ comp.status.type.name }}
+                    <span *ngIf="comp.status.displayClock">
+                      - Live: {{ comp.status.displayClock }} ({{ comp.status.clock }} sec)
+                    </span>
+                  </p>
+                </div>
+                <mat-divider></mat-divider>
+                <div *ngFor="let competitor of comp.competitors" class="competitor-row" style="display: flex; justify-content: space-between; margin: 8px 0;">
+                  <span>{{ competitor.team.displayName }}</span>
+                  <span>
+                    <strong>Score:</strong> {{ competitor.score }}
+                    <span *ngIf="competitor.homeAway === 'home'">(Home)</span>
+                    <span *ngIf="competitor.homeAway === 'away'">(Away)</span>
+                  </span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </ng-container>
+  
+      <ng-template #noEvents>
+        <div class="text-center my-4">
+          <p>No events available.</p>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+  
   

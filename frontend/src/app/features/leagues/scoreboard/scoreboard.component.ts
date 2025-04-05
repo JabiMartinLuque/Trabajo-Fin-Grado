@@ -3,10 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { ScoreboardDTO } from '../../../dtos/scoreboard';
 import { ScoreboardService } from './scoreboard.service';
 import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDivider } from '@angular/material/divider';
 
 @Component({
   selector: 'app-scoreboard',
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatDivider],
   templateUrl: './scoreboard.component.html',
   styleUrl: './scoreboard.component.css'
 })

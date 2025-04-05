@@ -14,6 +14,7 @@ export interface EventDTO {
 
 export interface CompetitionDTO {
     startDate: string;
+    status: StatusDTO;
     venue: VenueDTO;
     competitors: CompetitorDTO[];
 }
@@ -27,4 +28,16 @@ export interface CompetitorDTO {
     winner: string;
     score: String;
     team: TeamDTO;
+}
+
+export interface StatusDTO {
+    clock: string;
+    displayClock: string;
+    type: TypeDTO;
+}
+
+export interface TypeDTO {
+    name: string;
+    state: string;
+    completed: boolean;
 }
