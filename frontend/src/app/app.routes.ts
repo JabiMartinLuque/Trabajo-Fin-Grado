@@ -21,7 +21,7 @@ export const routes: Routes = [
     {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}, //http://localhost:4200/profile
     { path: 'match/:id', component: MatchDetailComponent },
     {
-    path: ':league', //http://localhost:4200/league/esp.1
+    path: ':league/:league', //http://localhost:4200/league/esp.1
     component: LeagueComponent,
     canActivate: [AuthGuard],
     children: [

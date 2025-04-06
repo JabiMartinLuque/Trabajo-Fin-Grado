@@ -31,9 +31,9 @@ export class ScoreboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Suponiendo que la liga se pasa como parámetro de ruta, por ejemplo: /league/scoreboard/esp.1
-    this.route.paramMap.subscribe(params => {
+    this.route.parent?.paramMap.subscribe(params => {
       // Si usas query params en vez de ruta, usa: params.get('league')
-      this.league = params.get('league') || 'esp.1';
+      this.league = params.get('league') || 'eng.1';
       this.fetchScoreboard();
     });
   }

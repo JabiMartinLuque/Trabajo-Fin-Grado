@@ -27,7 +27,7 @@ export class StandingComponent {
 
   ngOnInit(): void {
     // Extraemos el parámetro "league" de la query string
-    this.route.queryParamMap.subscribe(params => {
+    this.route.parent?.paramMap.subscribe(params => {
       this.leagueId = params.get('league') || '';
       this.loadStandings();
     });
