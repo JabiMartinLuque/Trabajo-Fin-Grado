@@ -1,69 +1,69 @@
-<mat-card class="m-4">
-    <mat-card-header>
-      <mat-card-title>Scoreboard - League: {{ league }}</mat-card-title>
-    </mat-card-header>
-  
-    <mat-card-content>
-      <!-- Spinner de carga -->
-      <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-      </div>
-  
-      <!-- Mensaje de error -->
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-  
-      <!-- Se muestra el contenido solo si hay eventos -->
-      <ng-container *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0; else noEvents">
-        <div *ngFor="let event of scoreboard.events" class="mb-3">
-          <mat-card class="event-card">
-            <mat-card-header>
-              <div mat-card-avatar class="event-avatar">
-                <mat-icon>sports_soccer</mat-icon>
-              </div>
-              <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
-              <mat-card-subtitle>
-                {{ event.date | date:'short' }}
-              </mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-              <div *ngFor="let comp of event.competitions">
+<div class="container mt-4">
+  <h1>Scoreboard - League: {{ league }}</h1>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Se muestra el contenido solo si hay eventos -->
+  <ng-container *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0; else noEvents">
+    <div *ngFor="let event of scoreboard.events" class="mb-3">
+      <!-- Envolvemos la tarjeta en un enlace con routerLink -->
+      <a [routerLink]="['/match', event.id]" style="text-decoration: none; color: inherit;">
+        <mat-card class="event-card" style="cursor: pointer;">
+          <mat-card-header>
+            <div mat-card-avatar class="event-avatar">
+              <mat-icon>sports_soccer</mat-icon>
+            </div>
+            <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
+            <mat-card-subtitle>
+              {{ event.date | date:'short' }}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let comp of event.competitions">
+              <p>
+                <strong>Competition Start:</strong> {{ comp.startDate | date:'shortTime' }}
+              </p>
+              <p>
+                <strong>Venue:</strong> {{ comp.venue.displayName }}
+              </p>
+              <div *ngIf="comp.status">
                 <p>
-                  <strong>Competition Start:</strong> {{ comp.startDate | date:'shortTime' }}
-                </p>
-                <p>
-                  <strong>Venue:</strong> {{ comp.venue.displayName }}
-                </p>
-                <div *ngIf="comp.status">
-                  <p>
-                    <strong>Status:</strong> {{ comp.status.type.name }}
-                    <span *ngIf="comp.status.displayClock">
-                      - Live: {{ comp.status.displayClock }} ({{ comp.status.clock }} sec)
-                    </span>
-                  </p>
-                </div>
-                <mat-divider></mat-divider>
-                <div *ngFor="let competitor of comp.competitors" class="competitor-row" style="display: flex; justify-content: space-between; margin: 8px 0;">
-                  <span>{{ competitor.team.displayName }}</span>
-                  <span>
-                    <strong>Score:</strong> {{ competitor.score }}
-                    <span *ngIf="competitor.homeAway === 'home'">(Home)</span>
-                    <span *ngIf="competitor.homeAway === 'away'">(Away)</span>
+                  <strong>Status:</strong> {{ comp.status.type.name }}
+                  <span *ngIf="comp.status.displayClock">
+                    - Live: {{ comp.status.displayClock }} ({{ comp.status.clock }} sec)
                   </span>
-                </div>
+                </p>
               </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </ng-container>
-  
-      <ng-template #noEvents>
-        <div class="text-center my-4">
-          <p>No events available.</p>
-        </div>
-      </ng-template>
-    </mat-card-content>
-  </mat-card>
+              <mat-divider></mat-divider>
+              <div *ngFor="let competitor of comp.competitors" class="competitor-row" style="display: flex; justify-content: space-between; margin: 8px 0;">
+                <span>{{ competitor.team.displayName }}</span>
+                <span>
+                  <strong>Score:</strong> {{ competitor.score }}
+                  <span *ngIf="competitor.homeAway === 'home'">(Home)</span>
+                  <span *ngIf="competitor.homeAway === 'away'">(Away)</span>
+                </span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </a>
+    </div>
+  </ng-container>
+
+  <ng-template #noEvents>
+    <div class="text-center my-4">
+      <p>No events available.</p>
+    </div>
+  </ng-template>
+</div>
+
   
   

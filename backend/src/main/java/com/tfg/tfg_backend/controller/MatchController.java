@@ -2,6 +2,7 @@ package com.tfg.tfg_backend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.tfg.tfg_backend.dto.EventDTO;
 import com.tfg.tfg_backend.dto.ScoreboardDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamEventDTO;
@@ -69,5 +70,10 @@ public class MatchController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<EventDTO> getMatchById(@PathVariable("id") String id) throws JsonMappingException, IOException, JsonProcessingException { //http://localhost:8080/api/matches/704663
+        EventDTO response = matchService.getMatchById(id);
+        return ResponseEntity.ok(response);
+    }
 
 }

@@ -18,6 +18,8 @@ import { ScoreboardDTO } from '../../../dtos/scoreboard';
      */
     getScoreboard(league: string): Observable<ScoreboardDTO> {
       const url = `${this.apiUrl}/${league}`;
+      console.log(url);
       return this.http.get<ScoreboardDTO>(url);
+      
     }
   }

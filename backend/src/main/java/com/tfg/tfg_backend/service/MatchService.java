@@ -162,4 +162,8 @@ public class MatchService {
         return allEvents;
     }
 
+    public EventDTO getMatchById(String id) throws IOException, JsonMappingException, JsonProcessingException {
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard/" + id + "?lang=es&region=es";
+        return restTemplate.getForObject(url, EventDTO.class);
+    }
 }

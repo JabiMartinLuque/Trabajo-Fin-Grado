@@ -1,0 +1,54 @@
+<!-- src/app/features/match-detail/match-detail.component.html -->
+<mat-card class="match-detail-card m-4">
+    <mat-card-header>
+      <!-- Avatar con ícono de partido -->
+      <div mat-card-avatar class="match-avatar">
+        <mat-icon color="primary" style="font-size: 40px;">sports_soccer</mat-icon>
+      </div>
+      <mat-card-title class="match-title">
+        {{ event.name }} ({{ event.shortName }})
+      </mat-card-title>
+      <mat-card-subtitle class="match-date">
+        {{ event.date | date:'medium' }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div *ngFor="let comp of event.competitions" class="competition-section" fxLayout="column" fxLayoutGap="8px">
+        <div class="competition-header" fxLayout="row" fxLayoutAlign="space-between center">
+          <span class="competition-start">
+            <strong>Inicio:</strong> {{ comp.startDate | date:'shortTime' }}
+          </span>
+          <span class="competition-venue">
+            <strong>Sede:</strong> {{ comp.venue.displayName }}
+          </span>
+        </div>
+  
+        <!-- Estado del partido en directo -->
+        <div *ngIf="comp.status" class="competition-status">
+          <mat-chip color="accent" selected>
+            {{ comp.status.type.name }} – {{ comp.status.displayClock }} ({{ comp.status.clock }} seg)
+          </mat-chip>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <!-- Información de los competidores -->
+        <div class="competitors-section" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="space-between center">
+          <div *ngFor="let competitor of comp.competitors" class="competitor">
+            <h3 class="competitor-name">{{ competitor.team.displayName }}</h3>
+            <p class="competitor-score">
+              <strong>Score:</strong> {{ competitor.score }} 
+              <span *ngIf="competitor.homeAway === 'home'">(Local)</span>
+              <span *ngIf="competitor.homeAway === 'away'">(Visitante)</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+    
+    <mat-card-actions align="end">
+      <button mat-raised-button color="primary">Ver Detalles</button>
+    </mat-card-actions>
+  </mat-card>
+  

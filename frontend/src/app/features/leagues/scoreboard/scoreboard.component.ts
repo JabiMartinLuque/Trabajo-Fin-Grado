@@ -9,10 +9,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDivider } from '@angular/material/divider';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-scoreboard',
-  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatDivider],
+  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatDivider, RouterModule],
   templateUrl: './scoreboard.component.html',
   styleUrl: './scoreboard.component.css'
 })

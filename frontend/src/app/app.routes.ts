@@ -10,6 +10,7 @@ import { AuthGuard } from './auth.guard';
 import { AthletesComponent } from './features/leagues/athletes/athletes.component';
 import { LeagueComponent } from './features/leagues/league/league.component';
 import { ScoreboardComponent } from './features/leagues/scoreboard/scoreboard.component';
+import { MatchDetailComponent } from './features/matches/match-details/match-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent}, //http://localhost:4200/register
     {path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
     {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}, //http://localhost:4200/profile
+    { path: 'match/:id', component: MatchDetailComponent },
     {
     path: ':league', //http://localhost:4200/league/esp.1
     component: LeagueComponent,
