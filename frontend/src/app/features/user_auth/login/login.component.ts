@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
-import { User } from '../../../entities/User'; // Asegúrate de que la ruta sea correcta
+import { User } from '../../../entities/user'; // Asegúrate de que la ruta sea correcta
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

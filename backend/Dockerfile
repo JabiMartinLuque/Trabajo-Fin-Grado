@@ -1,12 +1,15 @@
-# Etapa 1: Construcción de la aplicación
-FROM maven:3.8.6-openjdk-17 AS builder
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Utiliza una imagen base ligera de OpenJDK 17 (ajusta la versión si es necesario)
+FROM openjdk:17-jdk-slim
 
-# Etapa 2: Crear la imagen final con JDK
-FROM openjdk:17
+# Establece el directorio de trabajo (opcional)
 WORKDIR /app
-COPY --from=builder /app/target/tfg_backend-0.0.1-SNAPSHOT.jar app.jar
+
+# Copia el archivo JAR generado en la carpeta target al directorio de trabajo en el contenedor
+COPY target/tfg-backend-0.0.1-SNAPSHOT.jar app.jar
+
+# Expone el puerto 8080 (asegúrate que en tu aplicación este sea el puerto configurado)
 EXPOSE 8080
+
+# Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
