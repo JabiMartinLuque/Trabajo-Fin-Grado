@@ -1,15 +1,18 @@
-# Utiliza una imagen base ligera de OpenJDK 17 (ajusta la versión si es necesario)
-FROM openjdk:17-jdk-slim
 
-# Establece el directorio de trabajo (opcional)
+# filepath: c:\Users\jamar\UMA\Año 4\Segundo cuatrimestre\TFG\backend\Dockerfile
+# Etapa 1: Compilar el proyecto
+FROM maven:3.9.0-eclipse-temurin-17 AS builder
 WORKDIR /app
+COPY pom.xml ./
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn package -DskipTests
 
-# Copia el archivo JAR generado en la carpeta target al directorio de trabajo en el contenedor
-COPY target/tfg-backend-0.0.1-SNAPSHOT.jar app.jar
-
-# Expone el puerto 8080 (asegúrate que en tu aplicación este sea el puerto configurado)
+# Etapa 2: Imagen final
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/target/tfg-backend-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
-
-# Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
 
