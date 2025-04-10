@@ -29,7 +29,7 @@ services:
     container_name: tfg-backend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.backend.rule=Host(`tfgproject.duckdns.org`)"  # Puedes ajustar el dominio, o incluso usar subdominios distintos para backend y frontend
+      - "traefik.http.routers.backend.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=myresolver"
     environment:
@@ -44,7 +44,7 @@ services:
     container_name: tfg-frontend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`tfgproject.duckdns.org`)"  
+      - "traefik.http.routers.frontend.rule=Host(`tfgproject.duckdns.org`) && (PathPrefix(`/`) && !PathPrefix(`/api`))"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls.certresolver=myresolver"
     networks:
