@@ -6,6 +6,7 @@ import com.tfg.tfg_backend.security.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -31,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> request) {
+    public Map<String, Object> login(@RequestBody Map<String, String> request) {
         User user = userRepository.findByUsername(request.get("username"))
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -39,6 +40,12 @@ public class AuthController {
             throw new RuntimeException("Invalid password");
         }
 
-        return jwtUtil.generateToken(user.getUsername());
+        String token = jwtUtil.generateToken(user.getUsername());
+
+        // Devolver el token y el ID del usuario
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("userId", user.getId());
+        return response;
     }
 }

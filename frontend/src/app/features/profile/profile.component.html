@@ -1,1 +1,57 @@
-<p>profile works!</p>
+<div class="container mt-4" *ngIf="!isLoading; else loading">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Perfil de Usuario</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="user; else noUser">
+          <!-- Información del Usuario -->
+          <div class="user-info">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Role:</strong> {{ user.role }}</p>
+          </div>
+          <mat-divider></mat-divider>
+          <!-- Equipos Favoritos -->
+          <h3>Equipos Favoritos</h3>
+          <div *ngIf="favoriteTeams && favoriteTeams.length > 0; else noTeams">
+            <mat-list>
+              <mat-list-item *ngFor="let team of favoriteTeams">
+                <mat-icon matListIcon>sports_soccer</mat-icon>
+                <h4 matLine>{{ team.name }}</h4>
+                <p matLine>{{ team.displayName }}</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <ng-template #noTeams>
+            <p>No tienes equipos favoritos.</p>
+          </ng-template>
+          <mat-divider></mat-divider>
+          <!-- Jugadores Favoritos -->
+          <h3>Jugadores Favoritos</h3>
+          <div *ngIf="favoritePlayers && favoritePlayers.length > 0; else noPlayers">
+            <mat-list>
+              <mat-list-item *ngFor="let player of favoritePlayers">
+                <mat-icon matListIcon>person</mat-icon>
+                <h4 matLine>{{ player.name }}</h4>
+                <p matLine>{{ player.position || 'Sin posición definida' }}</p>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <ng-template #noPlayers>
+            <p>No tienes jugadores favoritos.</p>
+          </ng-template>
+        </div>
+        <ng-template #noUser>
+          <p>Error: datos de usuario no disponibles.</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <ng-template #loading>
+    <div class="text-center">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-template>
+  

@@ -5,6 +5,13 @@ import { User } from '../../../entities/user'; // Asegúrate de que la ruta sea 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+
+interface DecodedToken {
+  sub: string; // O la propiedad que uses para almacenar el ID o username
+  iat: number;
+  exp: number;
+}
 
 @Component({
   selector: 'app-login',
@@ -21,12 +28,11 @@ export class LoginComponent {
 
   login() {
     this.authService.login(this.user).subscribe({
-      next: (token: string) => {
-        console.log('Login exitoso, token:', token);
-        // Guardamos el token en localStorage
-        localStorage.setItem('token', token);
-        // Redirigimos a una ruta protegida (por ejemplo, home)
-        this.router.navigate(['/home']);
+      next: (res: any) => {
+        console.log('Respuesta del backend:', res);
+        localStorage.setItem('token', res.token); // Almacena el token
+        localStorage.setItem('userId', res.userId.toString()); // Almacena el ID del usuario
+        this.router.navigate(['/profile']); // Redirige al perfil
       },
       error: (error) => {
         console.error('Error en el login:', error);

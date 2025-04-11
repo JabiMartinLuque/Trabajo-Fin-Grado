@@ -4,13 +4,15 @@ import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { StandingDTO } from '../../../dtos/standing.dto';
 import { url } from 'inspector';
+import { environment } from '../../../../environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
     })
 export class StandingService {
     
-        private apiUrl = 'https://tfgproject.duckdns.org/api/standings'; 
+        private apiUrl = `${environment.apiUrl}/standings`; // URL base para el servicio de standings
         private standingsCache: any[] | null = null;
     
         constructor(private http: HttpClient) {}

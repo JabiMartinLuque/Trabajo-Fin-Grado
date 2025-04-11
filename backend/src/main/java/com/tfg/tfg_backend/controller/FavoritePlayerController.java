@@ -50,7 +50,7 @@ public class FavoritePlayerController {
 
     // Endpoint para listar los jugadores favoritos de un usuario
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<UserFavoritePlayer>> getFavoritePlayers(@PathVariable Long userId) {
+    public ResponseEntity<List<UserFavoritePlayer>> getFavoritePlayers(@PathVariable Long userId) { //localhost:8080/api/favorites/players/user/1
         List<UserFavoritePlayer> favorites = favoritePlayerRepository.findByUserId(userId);
         return ResponseEntity.ok(favorites);
     }
