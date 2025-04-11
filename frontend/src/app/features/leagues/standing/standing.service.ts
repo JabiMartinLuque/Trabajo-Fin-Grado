@@ -10,7 +10,7 @@ import { url } from 'inspector';
     })
 export class StandingService {
     
-        private apiUrl = 'http://localhost:8080/api/standings'; 
+        private apiUrl = 'https://tfgproject.duckdns.org/api/standings'; 
         private standingsCache: any[] | null = null;
     
         constructor(private http: HttpClient) {}

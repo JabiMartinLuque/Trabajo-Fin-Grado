@@ -8,8 +8,8 @@ import { User } from '../entities/user';
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = 'http://localhost:8080/api/auth/login'; // Ajusta la URL según tu backend
-  private registerUrl = 'http://localhost:8080/api/auth/register'; // URL de registro
+  private loginUrl = 'https://tfgproject.duckdns.org/api/auth/login'; // Ajusta la URL según tu backend
+  private registerUrl = 'https://tfgproject.duckdns.org/api/auth/register'; // URL de registro
 
 
   constructor(private http: HttpClient) {}

@@ -8,7 +8,7 @@ import { ScoreboardDTO } from '../../../dtos/scoreboard';
   })
   export class ScoreboardService {
     // Base URL del endpoint en el backend (ajústala según tu configuración)
-    private apiUrl = 'http://localhost:8080/api/matches/league';
+    private apiUrl = 'https://tfgproject.duckdns.org/api/matches/league';
   
     constructor(private http: HttpClient) {}
   
