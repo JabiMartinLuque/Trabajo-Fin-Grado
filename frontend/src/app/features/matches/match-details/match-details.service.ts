@@ -9,7 +9,7 @@ import { EventDTO } from '../../../dtos/scoreboard';
   providedIn: 'root'
 })
 export class MatchDetailService {
-  private apiUrl = 'http://localhost:8080/api/matches/';
+  private apiUrl = 'http://tfgproject.duckdns.org/api/matches/';
 
   constructor(private http: HttpClient) {}
 
