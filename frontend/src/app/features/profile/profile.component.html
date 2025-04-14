@@ -1,57 +1,94 @@
-<div class="container mt-4" *ngIf="!isLoading; else loading">
-    <mat-card class="profile-card">
-      <mat-card-header>
-        <mat-card-title>Perfil de Usuario</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div *ngIf="user; else noUser">
-          <!-- Información del Usuario -->
-          <div class="user-info">
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Role:</strong> {{ user.role }}</p>
-          </div>
-          <mat-divider></mat-divider>
-          <!-- Equipos Favoritos -->
-          <h3>Equipos Favoritos</h3>
-          <div *ngIf="favoriteTeams && favoriteTeams.length > 0; else noTeams">
-            <mat-list>
-              <mat-list-item *ngFor="let team of favoriteTeams">
-                <mat-icon matListIcon>sports_soccer</mat-icon>
-                <h4 matLine>{{ team.name }}</h4>
-                <p matLine>{{ team.displayName }}</p>
-              </mat-list-item>
-            </mat-list>
-          </div>
-          <ng-template #noTeams>
-            <p>No tienes equipos favoritos.</p>
-          </ng-template>
-          <mat-divider></mat-divider>
-          <!-- Jugadores Favoritos -->
-          <h3>Jugadores Favoritos</h3>
-          <div *ngIf="favoritePlayers && favoritePlayers.length > 0; else noPlayers">
-            <mat-list>
-              <mat-list-item *ngFor="let player of favoritePlayers">
-                <mat-icon matListIcon>person</mat-icon>
-                <h4 matLine>{{ player.fullName }}</h4>
-                <p matLine>{{ player.position || 'Sin posición definida' }}</p>
-              </mat-list-item>
-            </mat-list>
-          </div>
-          <ng-template #noPlayers>
-            <p>No tienes jugadores favoritos.</p>
-          </ng-template>
+<!-- filepath: c:\Users\jamar\UMA\Año 4\Segundo cuatrimestre\TFG\frontend\src\app\features\profile\profile.component.html -->
+<div class="profile-container" *ngIf="!isLoading; else loading">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>Perfil de Usuario</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Datos del usuario -->
+      <div *ngIf="user; else noUser">
+        <div class="user-info">
+          <p><strong>Username:</strong> {{ user.username }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Role:</strong> {{ user.role }}</p>
         </div>
-        <ng-template #noUser>
-          <p>Error: datos de usuario no disponibles.</p>
+        <mat-divider></mat-divider>
+
+        <!-- Equipos Favoritos -->
+        <h3 class="section-title">Equipos Favoritos</h3>
+        <div *ngIf="favoriteTeams && favoriteTeams.length > 0; else noTeams" class="teams-section">
+          <mat-list class="teams-list">
+            <mat-list-item *ngFor="let team of favoriteTeams" class="team-item">
+              <mat-icon matListIcon>sports_soccer</mat-icon>
+              <img
+                *ngIf="team.logo"
+                [src]="team.logo"
+                alt="{{ team.displayName }}"
+                class="team-logo"
+              />
+              <div class="team-info">
+                <h4>
+                  {{ team.name }} - {{ team.shortDisplayName }}
+                  <span *ngIf="team.abbreviation">
+                    ({{ team.abbreviation }})
+                  </span>
+                </h4>
+                <p>
+                  {{ team.location }} &bull; 
+                  <span [style.color]="team.color">Color: {{ team.color }}</span>
+                </p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <ng-template #noTeams>
+          <p>No tienes equipos favoritos.</p>
         </ng-template>
-      </mat-card-content>
-    </mat-card>
+
+        <mat-divider></mat-divider>
+
+        <!-- Jugadores Favoritos -->
+        <h3 class="section-title">Jugadores Favoritos</h3>
+        <div *ngIf="favoritePlayers && favoritePlayers.length > 0; else noPlayers" class="players-section">
+          <mat-list class="players-list">
+            <mat-list-item *ngFor="let player of favoritePlayers" class="player-item">
+              <mat-icon matListIcon>person</mat-icon>
+              <div class="player-info">
+                <strong>{{ player.fullName }}</strong>
+                <span *ngIf="player.jersey">(#{{ player.jersey }})</span>
+                <div class="player-position">
+                  Posición: {{ player?.position?.displayName || 'Desconocida' }}
+                </div>
+                <div class="player-flag">
+                  <span *ngIf="player.flag?.href">
+                    <img
+                      [src]="player.flag.href"
+                      alt="Bandera"
+                      width="50"
+                    />
+                  </span>
+                  País: {{ player?.citizenshipCountry?.abbreviation || 'N/A' }}
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <ng-template #noPlayers>
+          <p>No tienes jugadores favoritos.</p>
+        </ng-template>
+      </div>
+
+      <!-- Si no hay usuario -->
+      <ng-template #noUser>
+        <p>Error: datos de usuario no disponibles.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loading>
+  <div class="spinner-container">
+    <mat-progress-spinner mode="indeterminate" class="spinner"></mat-progress-spinner>
   </div>
-  
-  <ng-template #loading>
-    <div class="text-center">
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </div>
-  </ng-template>
-  
+</ng-template>
+

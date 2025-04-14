@@ -1,14 +1,131 @@
+/* CONTENEDOR PRINCIPAL */
+.profile-container {
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f2f2f2; /* O el que prefieras */
+}
+
+/* TARJETA DE PERFIL */
 .profile-card {
-    max-width: 600px;
-    margin: auto;
-    padding: 1rem;
-  }
-  
-  .user-info p {
-    margin: 0.5rem 0;
-  }
-  
-  mat-divider {
-    margin: 1rem 0;
-  }
-  
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #ffffff;
+  /* Para que no corte contenido y crezca verticalmente */
+  overflow: visible;
+  flex-direction: column;
+}
+
+/* ASEGURAR QUE EL CONTENIDO SE EXPANDA */
+mat-card-content {
+  overflow: visible !important; 
+  flex-direction: column;
+}
+
+mat-divider {
+  margin: 1rem 0;
+  background-color: #007bff; /* Cambia el color según tu preferencia */
+  height: 2px; /* Cambia el grosor según tu preferencia */
+  width: 100%;
+  border-radius: 5px; /* Cambia el radio según tu preferencia */
+  display: block !important;
+}
+
+/* INFORMACIÓN DEL USUARIO */
+.user-info p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+/* TÍTULO DE SECCIÓN */
+.section-title {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* SECCIONES DE LISTAS (equipos/jugadores) */
+.teams-section,
+.players-section {
+  margin-bottom: 1rem;
+}
+
+.teams-list,
+.players-list {
+  width: 100%;
+}
+
+/* ÍTEMS DE EQUIPOS/JUGADORES */
+.team-item,
+.player-item {
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  /* Para que baje a la siguiente línea si hay mucho contenido */
+  flex-wrap: wrap;
+  /* Evita que se corte texto largo */
+  word-break: break-word; 
+  overflow: visible;
+}
+
+/* LOGO DEL EQUIPO */
+.team-logo {
+  width: 60px;
+  height: auto;
+  margin-right: 12px;
+  object-fit: contain;
+}
+
+/* INFORMACIÓN DEL EQUIPO */
+.team-info {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.team-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.team-info p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+/* INFORMACIÓN DEL JUGADOR */
+.player-info {
+  margin-left: 12px;
+  font-size: 0.95rem;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.player-position,
+.player-flag {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+}
+
+/* PARA LA BANDERA DEL JUGADOR */
+.player-flag img {
+  width: 50px;
+  height: auto;
+  border: 2px solid red; /* Ajusta el estilo según tu preferencia */
+  object-fit: contain;
+}
+
+/* SPINNER DE CARGA */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  color: #007bff;
+}

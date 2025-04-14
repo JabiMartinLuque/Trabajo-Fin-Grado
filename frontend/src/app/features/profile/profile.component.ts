@@ -65,8 +65,9 @@ export class ProfileComponent implements OnInit {
     this.favoriteTeams = [];
   
     // Iteramos sobre los FavoritePlayer y hacemos llamadas al servicio "athletesService"
-    this.user?.favitePlayers?.forEach((fav) => {
+    this.user?.favoritePlayers?.forEach((fav) => {
       this.athletesService.getAthleteByid(fav.playerId).subscribe((athlete: any) => {
+        console.log(athlete);
         this.favoritePlayers.push(athlete);
       });
     });
@@ -77,6 +78,8 @@ export class ProfileComponent implements OnInit {
         this.favoriteTeams.push(team);
       });
     });
+
+    
   }
 
 }

@@ -4,7 +4,7 @@ export class User {
   email: string;       // Corresponde al "email"
   password: string;    // Corresponde al "password"
   role?: string;       // Opcional: Rol del usuario (ADMIN, USER)
-  favitePlayers?: FavoritePlayer[]; // Opcional: Lista de jugadores favoritos
+  favoritePlayers?: FavoritePlayer[]; // Opcional: Lista de jugadores favoritos
   favoriteTeams?: FavoriteTeam[]; // Opcional: Lista de equipos favoritos
 
   constructor(username: string, email: string, password: string, role?: string) {
@@ -33,5 +33,15 @@ export class FavoriteTeam {
   constructor(id: string, teamId: string) {
     this.id = id;
     this.teamId = teamId;
+  }
+}
+
+export class FavoriteLeague {
+  id: string;
+  leagueId: string;
+
+  constructor(id: string, leagueId: string) {
+    this.id = id;
+    this.leagueId = leagueId;
   }
 }

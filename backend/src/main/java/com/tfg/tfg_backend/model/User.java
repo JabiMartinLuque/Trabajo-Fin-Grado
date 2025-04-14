@@ -41,4 +41,9 @@
         @JsonIgnoreProperties("user")
         private List<UserFavoriteTeam> favoriteTeams;
 
+        // Relación con ligas favoritas
+        @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+        @JsonIgnoreProperties("user")
+        private List<UserFavoriteLeague> favoriteLeagues;
+
     }

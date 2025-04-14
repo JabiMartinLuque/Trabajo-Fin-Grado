@@ -38,7 +38,7 @@ public class AthleteController {
     }
 
     @GetMapping("/{athlete}")
-    public ResponseEntity<AthleteDTO> getAthleteById(@PathVariable("athlete") String athleteId) throws IOException { //http://localhost:8080/api/athletes/3253
+    public ResponseEntity<AthleteDTO> getAthleteById(@PathVariable("athlete") String athleteId) throws IOException { //http://localhost:8080/api/athletes/252107
         AthleteDTO athlete = athleteService.getAthleteById(athleteId);
         return ResponseEntity.ok(athlete);
     }
