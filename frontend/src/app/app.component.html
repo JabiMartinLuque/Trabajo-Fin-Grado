@@ -64,6 +64,46 @@
         <li class="nav-item">
           <a class="nav-link" href="/register" routerLinkActive="active">Register</a>
         </li>
+        <li class="nav-item dropdown">
+          <a 
+            class="nav-link dropdown-toggle" 
+            href="#" 
+            id="transactionsDropdown" 
+            role="button" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
+            (click)="$event.preventDefault()"
+          >
+            Transactions
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="leaguesDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/transactions/esp.1">
+                Spain (LaLiga)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/transactions/eng.1" >
+                England (Premier League)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/transactions/fra.1" >
+                France (Ligue 1)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/transactions/ger.1" >
+                Germany (Bundesliga)
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/transactions/ita.1" >
+                Italy (Serie A)
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="/profile" routerLinkActive="active">Profile</a>
         </li>
