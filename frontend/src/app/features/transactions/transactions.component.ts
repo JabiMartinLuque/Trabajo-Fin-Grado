@@ -23,9 +23,9 @@ export class TransactionsComponent {
   isLoading: boolean = true;
   transactions: TransactionDTO[] = [];
   league: string = '';
-  season: string = '2024';
+  season: string = '2025';
 
-  seasonOptions: string[] = ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008'];
+  seasonOptions: string[] = ['2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009', '2008'];
 
   constructor(private transactionsService: TransactionsService, 
               private route: ActivatedRoute,
@@ -68,10 +68,8 @@ export class TransactionsComponent {
     if (value == null) return '';
     
     if (value >= 1000000) {
-      // Dividimos en millones
       return (value / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
     } else if (value >= 1000) {
-      // Dividimos en miles
       return (value / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
     } else {
       return value.toString();
