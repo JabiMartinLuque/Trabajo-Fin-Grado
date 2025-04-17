@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { AthleteDTO } from '../../../dtos/athlete.dto';
 
 @Injectable({
     providedIn: 'root'
@@ -11,10 +13,10 @@ import { environment } from '../../../../environments/environment';
   
     constructor(private http: HttpClient) {}
 
-    getAthleteByid(id: string) {
+    getAthleteByid(id: string): Observable<AthleteDTO> {
         const url = `${this.apiUrl}/${id}`;
         console.log(url);
-        return this.http.get(url);
+        return this.http.get<AthleteDTO>(url);
         
     }
 }

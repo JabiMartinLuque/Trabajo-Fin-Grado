@@ -1,0 +1,52 @@
+<mat-card class="m-4" *ngIf="athlete; else loadingOrError">
+    <mat-card-header>
+      <div mat-card-avatar class="athlete-avatar">
+        <img *ngIf="athlete.flag?.href" [src]="athlete.flag.href" [alt]="athlete.flag.alt" />
+        <mat-icon *ngIf="!athlete.flag?.href">person</mat-icon>
+      </div>
+      <mat-card-title>{{ athlete.fullName }}</mat-card-title>
+      <mat-card-subtitle>
+        #{{ athlete.jersey }} • {{ athlete.position.displayName }}
+      </mat-card-subtitle>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Nombre:</strong> {{ athlete.displayName }}</p>
+          <p><strong>Edad:</strong> {{ athlete.age }} años</p>
+          <p><strong>Fecha de nacimiento:</strong> {{ athlete.dateOfBirth | date }}</p>
+          <p><strong>Altura:</strong> {{ athlete.displayHeight }}</p>
+          <p><strong>Peso:</strong> {{ athlete.displayWeight }}</p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Género:</strong> {{ athlete.gender }}</p>
+          <p><strong>Ciudadanía:</strong> {{ athlete.citizenship }}</p>
+          <p><strong>País:</strong> {{ athlete.citizenshipCountry.abbreviation }}</p>
+          <p><strong>Activo:</strong> {{ athlete.active ? 'Sí' : 'No' }}</p>
+          <p><strong>Perfil completo:</strong> {{ athlete.profiled ? 'Sí' : 'No' }}</p>
+        </div>
+      </div>
+  
+      <mat-divider class="my-3"></mat-divider>
+  
+      <!-- Sección de estadísticas 
+      <h3>Enlaces</h3>
+      <ul>
+        <li *ngFor="let link of athlete.links">
+          <a [href]="link.href" target="_blank">{{ link.text || link.shortText || link.href }}</a>
+        </li>
+      </ul>
+      -->
+    </mat-card-content>
+  </mat-card>
+  
+  <ng-template #loadingOrError>
+    <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    <div *ngIf="!isLoading && errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  </ng-template>
+  

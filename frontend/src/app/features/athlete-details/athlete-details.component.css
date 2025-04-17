@@ -1,0 +1,55 @@
+
+
+/* Ajusta el card */
+mat-card.m-4 {
+  margin: 1rem 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+mat-card-header {
+  align-items: center;
+}
+
+/* Para el avatar del atleta */
+.athlete-avatar img {
+  width: 40px;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Título y subtítulo */
+mat-card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+mat-card-subtitle {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Contenido principal */
+mat-card-content .row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+mat-card-content p {
+  margin: 0.4rem 0;
+}
+
+mat-divider.my-3 {
+  margin: 1rem 0;
+}
+
+/* Lista de enlaces */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+ul li {
+  margin-bottom: 0.5rem;
+}

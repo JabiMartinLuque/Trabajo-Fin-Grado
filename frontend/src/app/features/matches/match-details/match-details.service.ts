@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EventDTO } from '../../../dtos/scoreboard';
+import { environment } from '../../../../environments/environment';
 
 
 
@@ -9,7 +10,7 @@ import { EventDTO } from '../../../dtos/scoreboard';
   providedIn: 'root'
 })
 export class MatchDetailService {
-  private apiUrl = 'http://tfgproject.duckdns.org/api/matches/';
+  private apiUrl = `${environment.apiUrl}/matches/`;
 
   constructor(private http: HttpClient) {}
 

@@ -12,6 +12,7 @@ import { LeagueComponent } from './features/leagues/league/league.component';
 import { ScoreboardComponent } from './features/leagues/scoreboard/scoreboard.component';
 import { MatchDetailComponent } from './features/matches/match-details/match-details.component';
 import { TransactionsComponent } from './features/transactions/transactions.component';
+import { AthleteDetailsComponent } from './features/athlete-details/athlete-details.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}, //http://localhost:4200/profile
     { path: 'match/:id', component: MatchDetailComponent, canActivate: [AuthGuard]}, //http://localhost:4200/match/12345
     { path: 'transactions/:league', component: TransactionsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/transactions
+    { path: 'player/:id', component: AthleteDetailsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/athlete/12345
     {
     path: ':league/:league', //http://localhost:4200/league/esp.1
     component: LeagueComponent,
