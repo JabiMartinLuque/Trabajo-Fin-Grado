@@ -1,0 +1,24 @@
+.transactions-container {
+    padding: 20px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .transaction-info p {
+    margin: 0.5em 0;
+  }
+  
+  .info-value {
+    color: #555;
+    font-weight: 500;
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+  }
+  

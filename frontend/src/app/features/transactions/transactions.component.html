@@ -1,0 +1,70 @@
+<div class="transactions-container">
+    <h2 class="text-center mb-4">Fichajes</h2>
+
+    <div class="season-selector mb-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Temporada</mat-label>
+          <mat-select [value]="season" (selectionChange)="onSeasonChange($event.value)">
+            <mat-option *ngFor="let option of seasonOptions" [value]="option">
+              {{ option }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+    <!-- Spinner de carga -->
+    <div *ngIf="isLoading" class="spinner-container text-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  
+    <!-- Listado de transacciones -->
+    <div class="row" *ngIf="!isLoading">
+      <div class="col-md-4" *ngFor="let transaction of transactions">
+        <mat-card class="mb-3">
+          <mat-card-header>
+            <!-- Puedes mostrar el logo del equipo de origen como avatar -->
+            <img mat-card-avatar 
+                 [src]="transaction.from.logo" 
+                 alt="{{ transaction.from.displayName }} logo" />
+            <mat-card-title>{{ transaction.athlete.fullName }}</mat-card-title>
+            <mat-card-subtitle>{{ transaction.date | date:'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div class="transaction-info">
+              <p>
+                <strong>Tipo: </strong>
+                <span class="info-value">{{ transaction.type }}</span>
+              </p>
+              <p>
+                <strong>Importe: </strong>
+                <span class="info-value">{{ transform(transaction.amount) }}</span>
+                ({{ transaction.displayAmount }})
+              </p>
+              <p>
+                <strong>Desde: </strong>
+                <span class="info-value">
+                  <!-- Logo del equipo de origen -->
+                  <img [src]="transaction.from.logo" 
+                       alt="{{ transaction.from.displayName }} logo" 
+                       width="24" height="24" style="margin-right:5px;" />
+                  {{ transaction.from.displayName }}
+                </span>
+              </p>
+              <p>
+                <strong>Hasta: </strong>
+                <span class="info-value">
+                  <!-- Logo del equipo destino -->
+                  <img [src]="transaction.to.logo" 
+                       alt="{{ transaction.to.name }} logo" 
+                       width="24" height="24" style="margin-right:5px;" />
+                  {{ transaction.to.name }}
+                </span>
+              </p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  
