@@ -16,6 +16,7 @@
 
         <!-- Equipos Favoritos -->
         <h3 class="section-title">Equipos Favoritos</h3>
+        <button mat-raised-button color="primary" routerLink="favorites/teams">Mis Equipos</button>
         <div *ngIf="favoriteTeams && favoriteTeams.length > 0; else noTeams" class="teams-section">
           <mat-list class="teams-list">
             <mat-list-item *ngFor="let team of favoriteTeams" class="team-item">
@@ -49,6 +50,7 @@
 
         <!-- Jugadores Favoritos -->
         <h3 class="section-title">Jugadores Favoritos</h3>
+        <button mat-raised-button color="primary" routerLink="favorites/players">Mis Jugadores</button>
         <div *ngIf="favoritePlayers && favoritePlayers.length > 0; else noPlayers" class="players-section">
           <mat-list class="players-list">
             <mat-list-item *ngFor="let player of favoritePlayers" class="player-item">
@@ -73,6 +75,27 @@
             </mat-list-item>
           </mat-list>
         </div>
+
+        <mat-divider></mat-divider>
+
+
+        <!-- Ligas favoritas -->
+        <h3 class="section-title">Ligas Favoritas</h3>
+        <button mat-raised-button color="primary" routerLink="favorites/leagues">Mis Ligas</button>
+        <div *ngIf="favoriteLeagues && favoriteLeagues.length > 0;" class="leagues-section">
+          <mat-list class="leagues-list">
+            <mat-list-item *ngFor="let league of favoriteLeagues" class="league-item">
+              <mat-icon matListIcon>sports_soccer</mat-icon>
+              <div class="league-info">
+                <strong>{{ league.name }}</strong>
+                <p>País: {{ league.country.name }}</p>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        <ng-template #noPlayers>
+          <p>No tienes jugadores favoritos.</p>
+        </ng-template>
+      </div>
         <ng-template #noPlayers>
           <p>No tienes jugadores favoritos.</p>
         </ng-template>
@@ -91,4 +114,11 @@
     <mat-progress-spinner mode="indeterminate" class="spinner"></mat-progress-spinner>
   </div>
 </ng-template>
+
+<div class="profile-container">
+  <!-- Aquí van otros elementos de la página de perfil -->
+
+  <!-- Necesario para mostrar los children -->
+  <router-outlet></router-outlet>
+</div>
 

@@ -1,0 +1,25 @@
+<div class="all-leagues" *ngIf="!isLoading; else loading">
+    <h3>Gestionar Ligas Favoritas</h3>
+  
+    <div *ngIf="errorMsg" class="alert alert-danger">
+      {{ errorMsg }}
+    </div>
+  
+    <div *ngIf="allLeagues && allLeagues.length">
+      <div *ngFor="let league of allLeagues" class="league-row">
+        <input
+          type="checkbox"
+          [checked]="favoriteLeagueIds.has(league.slug)"
+          (change)="toggleFavorite(league)"
+        />
+        <span>{{ league.name }}</span>
+      </div>
+    </div>
+    <div *ngIf="allLeagues && !allLeagues.length">
+      <p>No se encontraron ligas disponibles.</p>
+    </div>
+  </div>
+  
+  <ng-template #loading>
+    <p>Cargando ligas...</p>
+  </ng-template>

@@ -28,7 +28,7 @@ public class TransactionController {
     @GetMapping("/league/{league}")
     public ResponseEntity<List<TransactionDTO>> getSigningByLeagueAndSeason( //http://localhost:8080/api/transactions/league/esp.1
         @PathVariable("league") String league, 
-        @RequestParam(value = "season", required = false) String season) throws JsonMappingException, JsonProcessingException { //http://localhost:8080/api/transactions/league/esp.1/season/2024
+        @RequestParam(value = "season", required = false) String season) throws JsonMappingException, JsonProcessingException { //http://localhost:8080/api/transactions/league/esp.1?season=2023
         List<TransactionDTO> response = transactionService.getSigningByLeagueAndSeason(league, season);
         return ResponseEntity.ok(response);
     }

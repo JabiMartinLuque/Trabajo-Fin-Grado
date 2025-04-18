@@ -15,7 +15,8 @@
           "options": {
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles"
+                ".",
+                "node_modules"
               ]
             },
             "outputPath": "dist/frontend",

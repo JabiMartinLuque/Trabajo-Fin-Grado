@@ -6,6 +6,7 @@ export class User {
   role?: string;       // Opcional: Rol del usuario (ADMIN, USER)
   favoritePlayers?: FavoritePlayer[]; // Opcional: Lista de jugadores favoritos
   favoriteTeams?: FavoriteTeam[]; // Opcional: Lista de equipos favoritos
+  favoriteLeagues?: FavoriteLeague[]; // Opcional: Lista de ligas favoritas
 
   constructor(username: string, email: string, password: string, role?: string) {
     this.username = username;

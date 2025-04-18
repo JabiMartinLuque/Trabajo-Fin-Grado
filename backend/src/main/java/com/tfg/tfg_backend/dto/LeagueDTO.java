@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LeagueDTO {
 
@@ -39,13 +39,112 @@ public class LeagueDTO {
     private List<LinkDTO> links;
     private List<LogoDTO> logos;
     
-    private String calendar;
-    private String transactions;
     private String gender;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
+    public String getRef() {
+        return ref;
+    }
+    public void setRef(String ref) {
+        this.ref = ref;
+    }
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getGuid() {
+        return guid;
+    }
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+    public String getUid() {
+        return uid;
+    }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+    public String getAlternateId() {
+        return alternateId;
+    }
+    public void setAlternateId(String alternateId) {
+        this.alternateId = alternateId;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getDisplayName() {
+        return displayName;
+    }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+    public String getAbbreviation() {
+        return abbreviation;
+    }
+    public void setAbbreviation(String abbreviation) {
+        this.abbreviation = abbreviation;
+    }
+    public String getShortName() {
+        return shortName;
+    }
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+    public String getMidsizeName() {
+        return midsizeName;
+    }
+    public void setMidsizeName(String midsizeName) {
+        this.midsizeName = midsizeName;
+    }
+    public String getSlug() {
+        return slug;
+    }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+    public boolean isTournament() {
+        return isTournament;
+    }
+    public void setTournament(boolean isTournament) {
+        this.isTournament = isTournament;
+    }
+    public CountryDTO getCountry() {
+        return country;
+    }
+    public void setCountry(CountryDTO country) {
+        this.country = country;
+    }
+    public SeasonDTO getSeason() {
+        return season;
+    }
+    public void setSeason(SeasonDTO season) {
+        this.season = season;
+    }
+    public List<LinkDTO> getLinks() {
+        return links;
+    }
+    public void setLinks(List<LinkDTO> links) {
+        this.links = links;
+    }
+    public List<LogoDTO> getLogos() {
+        return logos;
+    }
+    public void setLogos(List<LogoDTO> logos) {
+        this.logos = logos;
+    }
+    public String getGender() {
+        return this.gender;
+    }
+    public void setGender(String gender) {
+        this.gender = gender;
+    } 
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CountryDTO {
         @JsonProperty("$ref")
         private String ref;
@@ -54,13 +153,49 @@ public class LeagueDTO {
         private String name;
         private String abbreviation;
         private FlagDTO flag;
-        // Referencia a los atletas; se modela como String (URL) por simplicidad.
-        private String athletes;
+
+        public String getRef() {
+            return ref;
+        }
+        public void setRef(String ref) {
+            this.ref = ref;
+        }
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+        public String getSlug() {
+            return slug;
+        }
+        public void setSlug(String slug) {
+            this.slug = slug;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getAbbreviation() {
+            return abbreviation;
+        }
+        public void setAbbreviation(String abbreviation) {
+            this.abbreviation = abbreviation;
+        }
+        public FlagDTO getFlag() {
+            return flag;
+        }
+        public void setFlag(FlagDTO flag) {
+            this.flag = flag;
+        }
+
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Getter
+    @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class FlagDTO {
         private String href;
         private String alt;
@@ -68,9 +203,9 @@ public class LeagueDTO {
     }
 
     
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Getter
+    @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class LinkDTO {
         private String language;
         private List<String> rel;
@@ -81,9 +216,9 @@ public class LeagueDTO {
         private boolean isPremium;
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
+    @Getter
+    @Setter
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class LogoDTO {
         private String href;
         private int width;

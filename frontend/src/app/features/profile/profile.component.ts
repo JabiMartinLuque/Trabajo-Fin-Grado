@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, UserWithFavorites} from './profile.service';
+import { ProfileService} from './profile.service';
 import { User } from '../../entities/user';
 import { TeamDTO } from '../../dtos/team.dto';
 import { AthleteDTO } from '../../dtos/athlete.dto';
@@ -12,13 +12,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
+import { RouterModule } from '@angular/router';
+
 import { AthletesService } from '../leagues/athletes/athletes.service';
 import { TeamsService } from '../leagues/teams/teams.service';
+import { LeagueService } from '../leagues/league.service';
+import { LeagueDTO } from '../../dtos/league.dto';
 
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinner],
+  imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinner, RouterModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -28,11 +32,12 @@ export class ProfileComponent implements OnInit {
   errorMessage: string = '';
   favoritePlayers: AthleteDTO[] = []; // Lista de jugadores favoritos
   favoriteTeams: TeamDTO[] = []; // Lista de equipos favoritos
-  
+  favoriteLeagues: LeagueDTO[] = []; // Lista de ligas favoritas
 
   constructor(
     private profileService: ProfileService, 
-    private athletesService: AthletesService, 
+    private athletesService: AthletesService,
+    private leaguesService: LeagueService, 
     private teamsService: TeamsService) { }
 
   ngOnInit(): void {
@@ -42,7 +47,7 @@ export class ProfileComponent implements OnInit {
   
     if (userId) {
       this.profileService.getUserProfile(userId).subscribe({
-        next: (data: UserWithFavorites) => {
+        next: (data: User) => {
           this.user = data;
           this.isLoading = false;
           this.loadFavorites(); // Llamamos al método que carga jugadores y equipos
@@ -63,8 +68,8 @@ export class ProfileComponent implements OnInit {
   loadFavorites(): void {
     this.favoritePlayers = [];
     this.favoriteTeams = [];
+    this.favoriteLeagues = [];
   
-    // Iteramos sobre los FavoritePlayer y hacemos llamadas al servicio "athletesService"
     this.user?.favoritePlayers?.forEach((fav) => {
       this.athletesService.getAthleteByid(fav.playerId).subscribe((athlete: any) => {
         console.log(athlete);
@@ -72,13 +77,17 @@ export class ProfileComponent implements OnInit {
       });
     });
   
-    // Iteramos sobre los FavoriteTeam y hacemos llamadas al servicio "teamsService"
     this.user?.favoriteTeams?.forEach((fav) => {
       this.teamsService.getTeamByid(fav.teamId).subscribe((team: any) => {
         this.favoriteTeams.push(team);
       });
     });
 
+    this.user?.favoriteLeagues?.forEach((fav) => {
+      this.leaguesService.getLeagueById(fav.leagueId).subscribe((league: any) => {
+        this.favoriteLeagues.push(league);
+      });
+    });
     
   }
 
