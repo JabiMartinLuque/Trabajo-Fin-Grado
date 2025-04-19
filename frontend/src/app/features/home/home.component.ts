@@ -98,23 +98,27 @@ export class HomeComponent {
   }
 
   fetchAthleteMatches(athleteId: string): void {
-    this.homeService.getMatchesByAthlete(athleteId).subscribe((matches: any) => {
-      console.log(matches);
-      this.athleteMatches.push(matches);
-    });
+    if(this.athleteMatches.length <= 0) {
+      this.homeService.getMatchesByAthlete(athleteId).subscribe((matches: any) => {
+        console.log(matches);
+        this.athleteMatches.push(matches);
+      });
+    }
   }
   fetchTeamMatches(teamId: string): void {
-    this.homeService.getMatchesByTeam(teamId).subscribe((matches: any) => {
-      console.log("ID DEL EQUIPO" + teamId);
-      console.log(matches);
-      this.teamMatches.push(matches);
-    });
+    if(this.teamMatches.length <= 0) {
+      this.homeService.getMatchesByTeam(teamId).subscribe((matches: any) => {
+        console.log(matches);
+        this.teamMatches.push(matches);
+      });
+    }
   }
   fetchLeagueMatches(leagueId: string): void {
-    this.homeService.getMatchesByLeague(leagueId).subscribe((matches: any) => {
-      console.log(matches);
-      this.leagueMatches.push(matches);
-    });
+    if(this.leagueMatches.length <= 0) {
+      this.homeService.getMatchesByLeague(leagueId).subscribe((matches: any) => {
+        console.log(matches);
+        this.leagueMatches.push(matches);
+      });    }
   } 
 
   goToMatch(matchId: string) {
