@@ -76,4 +76,15 @@ public class MatchController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/athlete/{id}")
+    public ResponseEntity<TeamEventDTO> getAthleteMatches(@PathVariable("id") String id) throws JsonMappingException, IOException, JsonProcessingException { //http://localhost:8080/api/matches/athlete/252107
+        TeamEventDTO response = matchService.getAthleteMatches(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/team/{id}/event") //http://localhost:8080/api/matches/team/86/event
+    public ResponseEntity<TeamEventDTO> getTeamEvent(@PathVariable("id") String id) throws JsonMappingException, IOException, JsonProcessingException { //http://localhost:8080/api/matches/team/86/event
+        TeamEventDTO response = matchService.getTeamEvent(id);
+        return ResponseEntity.ok(response);
+    }
 }

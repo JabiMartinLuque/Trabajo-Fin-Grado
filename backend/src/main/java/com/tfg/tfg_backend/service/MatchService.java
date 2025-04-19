@@ -166,4 +166,44 @@ public class MatchService {
         String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard/" + id + "?lang=es&region=es";
         return restTemplate.getForObject(url, EventDTO.class);
     }
+
+    public TeamEventDTO getAthleteMatches(String id) throws IOException, JsonMappingException, JsonProcessingException {
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/athletes/" + id + "/events?lang=es&region=es";
+        String response = restTemplate.getForObject(url, String.class);
+        JsonNode root = objectMapper.readTree(response);
+        JsonNode items = root.path("items");
+
+        if (items.isArray() && items.size() > 0) {
+            JsonNode firstItem = items.get(0);
+            String eventRef = firstItem.path("$ref").asText();
+            if (eventRef != null && !eventRef.isEmpty()) {
+                System.out.println("Evento encontrado: " + eventRef);
+                return restTemplate.getForObject(eventRef, TeamEventDTO.class);
+            }
+        } else {
+            System.out.println("No se encontraron eventos para el atleta con ID: " + id);
+        }
+        return null; // O lanzar una excepción si no se encuentra el evento
+        
+    }
+
+    public TeamEventDTO getTeamEvent(String id) throws IOException, JsonMappingException, JsonProcessingException {
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "/events?lang=es&region=es";
+        String response = restTemplate.getForObject(url, String.class);
+        JsonNode root = objectMapper.readTree(response);
+        JsonNode items = root.path("items");
+
+        if (items.isArray() && items.size() > 0) {
+            JsonNode firstItem = items.get(0);
+            String eventRef = firstItem.path("$ref").asText();
+            if (eventRef != null && !eventRef.isEmpty()) {
+                System.out.println("Evento encontrado: " + eventRef);
+                return restTemplate.getForObject(eventRef, TeamEventDTO.class);
+            }
+        } else {
+            System.out.println("No se encontraron eventos para el equipo con ID: " + id);
+        }
+        return null; // O lanzar una excepción si no se encuentra el evento
+
+    }
 }

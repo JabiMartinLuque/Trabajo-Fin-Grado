@@ -1,1 +1,100 @@
-<p>home works!</p>
+<div class="home-container" *ngIf="!isLoading; else loading">
+
+    <h2>Bienvenido, {{ user?.username }}</h2>
+  
+    <!-- === Jugadores favoritos === -->
+    <section>
+      <h3>Partidos de mis jugadores favoritos</h3>
+      <mat-accordion multi="false">
+        <mat-expansion-panel *ngFor="let ath of favoritePlayers"
+          (opened)="fetchAthleteMatches(ath.id)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ ath.fullName }}</mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <ng-container *ngIf="athleteMatches?.length; else noMatches">
+            <mat-list>
+              <mat-list-item *ngFor="let m of athleteMatches">
+                <mat-icon matListIcon>sports_soccer</mat-icon>
+                <div matLine>{{ m.name }}</div>
+                <div matLine class="secondary">{{ m.date | date:'short' }}</div>
+                <button mat-icon-button (click)="goToMatch(m.id)">
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+          <ng-template #noMatches>
+            <p class="empty">No hay partidos para este jugador.</p>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  
+    <mat-divider></mat-divider>
+  
+    <!-- === Equipos favoritos === -->
+    <section>
+      <h3>Partidos de mis equipos favoritos</h3>
+      <mat-accordion multi="false">
+        <mat-expansion-panel *ngFor="let tm of favoriteTeams"
+          (opened)="fetchTeamMatches(tm.id)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ tm.displayName }}</mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <ng-container *ngIf="teamMatches?.length; else noTeam">
+            <mat-list>
+              <mat-list-item *ngFor="let m of teamMatches">
+                <mat-icon matListIcon>stadium</mat-icon>
+                <div matLine>{{ m.name }}</div>
+                <div matLine class="secondary">{{ m.date | date:'short' }}</div>
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+          <ng-template #noTeam>
+            <p class="empty">No hay partidos para este equipo.</p>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  
+    <mat-divider></mat-divider>
+  
+    <!-- === Ligas favoritas === -->
+    <section>
+      <h3>Partidos de mis ligas favoritas</h3>
+      <mat-accordion multi="false">
+        <mat-expansion-panel *ngFor="let lg of favoriteLeagues"
+          (opened)="fetchLeagueMatches(lg.slug)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ lg.displayName }}</mat-panel-title>
+          </mat-expansion-panel-header>
+  
+          <ng-container *ngIf="leagueMatches?.length; else noLeague">
+            <mat-list>
+              <mat-list-item *ngFor="let block of leagueMatches">
+                <mat-icon matListIcon>calendar_today</mat-icon>
+                <div *ngFor="let event of block.events">
+                    <div matLine>{{ event.name  }}</div>
+                    <div matLine class="secondary">{{ event.date | date:'short' }}</div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+          <ng-template #noLeague>
+            <p class="empty">No hay partidos para esta liga.</p>
+          </ng-template>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  
+  </div>
+  
+  <ng-template #loading>
+    <div class="loading-container">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <p>Cargando tus datos...</p>
+    </div>
+  </ng-template>
+  

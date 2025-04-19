@@ -13,8 +13,8 @@ export class LeagueService {
 
     constructor(private http: HttpClient) {}
 
-    getLeagueById(league: String): Observable<LeagueDTO[]> {
-        return this.http.get<LeagueDTO[]>(this.baseUrl + '/' + league);
+    getLeagueById(league: String): Observable<LeagueDTO> {
+        return this.http.get<LeagueDTO>(this.baseUrl + '/' + league);
     }
 
     getLeagues(): Observable<LeagueDTO[]> {
