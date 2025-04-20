@@ -12,75 +12,90 @@ Desarrollo de una aplicación web para el seguimiento personalizado de datos de 
 
 ## 📖 Uso básico de los endpoints
 
-1. **Athletes (jugadores)**
+Para usar la API, cada recurso se corresponde a un conjunto de endpoints:
 
-- GET /api/athletes/league/{league} - Obtener jugadores por liga.
-- GET /api/athletes/team/{team} - Obtener jugadores por equipo.
-- GET /api/athletes/{athlete} - Obtener jugadores por id de jugador.
+### 1. Athletes (jugadores)
+```bash
+GET  /api/athletes/league/{league}        # Obtener jugadores por liga
+GET  /api/athletes/team/{team}           # Obtener jugadores por equipo
+GET  /api/athletes/{athlete}             # Obtener un jugador por su ID
+```
 
-2. **Auth (Registro / Login)**
+### 2. Auth (Registro / Login)
+```bash
+POST /api/auth/register                  # Registrar un nuevo usuario
+POST /api/auth/login                     # Iniciar sesión (retorna JWT)
+```
 
-- POST /api/auth/register - Para registrar a un nuevo usuario.
+### 3. Favoritos
+#### 3.1 Ligas favoritas
+```bash
+POST   /api/favorites/leagues/add                # Añadir una liga favorita al usuario
+DELETE /api/favorites/leagues/remove/{favoriteId}# Quitar una liga favorita
+GET    /api/favorites/leagues/{userId}           # Obtener las ligas favoritas de un usuario
+```
+#### 3.2 Jugadores favoritos
+```bash
+POST   /api/favorites/players/add
+DELETE /api/favorites/players/remove/{favoriteId}
+GET    /api/favorites/players/{userId}
+```
+#### 3.3 Equipos favoritos
+```bash
+POST   /api/favorites/teams/add
+DELETE /api/favorites/teams/remove/{favoriteId}
+GET    /api/favorites/teams/{userId}
+```
 
-- POST /api/auth/login ⇒ JWT - Para iniciar sesión.
+### 4. Ligas
+```bash
+GET /api/leagues                # Todas las ligas (5 grandes ligas de Europa)
+GET /api/leagues/{leagueId}     # Obtener una liga por su id
+```
 
-3. **Favoritos**
+### 5. Partidos
+```bash
+GET /api/matches/league/{league}     # Partidos de una liga
+GET /api/matches/team/{team}         # Partidos de un equipo y temporada
+GET /api/matches/{id}               # Partido por su id
+GET /api/matches/team/{id}/event    # Próximo partido de un equipo
+```
 
-3.1 Ligas favoritas
-- POST /api/favorites/leagues/add - Para añadir una liga favorita al usuario.
-- DELETE /api/favorites/leagues/remove/{favoriteId} - Para quitar una liga favorita al usuario.
-- GET /api/favorites/leagues/{userId} - Para obtener las ligas favoritas del usuario.
+### 6. Temporadas
+```bash
+GET /api/seasons/league/{league}/team/{team}  # Lista de temporadas de un equipo
+```
 
-3.2 Jugadores favoritos
-- POST /api/favorites/players/add - Para añadir un jugador favorito al usuario.
-- DELETE /api/favorites/players/remove/{favoriteId} - Para quitar un jugador favorito al usuario.
-- GET /api/favorites/players/{userId} - Para obtener los jugadores favoritos del usuario.
+### 7. Clasificación
+```bash
+GET /api/standings                   # Clasificación de una liga
+```
 
-3.3 Equipos favoritos
-- POST /api/favorites/teams/add - Para añadir un equipo favorito al usuario.
-- DELETE /api/favorites/teams/remove/{favoriteId} - Para quitar un equipo favorito al usuario.
-- GET /api/favorites/teams/{userId} - Para obtener los equipos favoritos del usuario.
+### 8. Estadísticas
+```bash
+GET /api/statistics/team/{team}      # Estadísticas de un equipo
+```
 
-4. **Ligas**
+### 9. Equipos
+```bash
+GET /api/teams/{team}                # Obtener un equipo por su id
+GET /api/teams/league/{league}       # Equipos de una liga
+```
 
-- GET /api/leagues - Para obtener todas las ligas (en este caso las 5 grandes ligas de Europa).
-- GET /api/leagues/{leagueId} - Para obtener una liga por su id
+### 10. Mejores jugadores
+```bash
+GET /api/topPerformers/team/{team}   # Mejores jugadores de un equipo (liga+temporada)
+```
 
-5. **Partidos**
+### 11. Fichajes
+```bash
+GET /api/transactions/league/{league}    # Fichajes de una liga dada una temporada
+```
 
-- GET /api/matches/league/{league} -  Para obtener los partidos por liga
-- GET /api/matches/team/{team} - Para obtener los partidos por equipo y temporada
-- GET /api/matches/{id} - Para obtener un partido por su id
-- GET/api/matches/team/{id}/event - Para obtener el proximo partido de un equipo
-
-6. **Temporadas**
-
-- GET /api/seasons/league/{league}/team/{team} - Para obtener la lista de temporadas de un equipo
-
-7. **Clasificación**
-
-- GET /api/standings - Para obtener la clasificación de una liga
-
-8. **Estadísiticas**
-
-- GET /api/statistics/team/{team} - Para obtener las estadísticas de un equipo
-
-9. **Equipos**
-
-- GET /api/teams/{team} - Para obtener un equipo por su id
-- GET /api/teams/league/{league} - Para obtener los equipos de una liga
-
-10. **Mejores jugadores**
-
-- GET /api/topPerformers/team/{team} - Para obtener los mejores jugadores por equipo dada una liga y temporada
-
-11. **Fichajes**
-
-- GET /api/transactions/league/{league} - Para obtener los fichajes de una liga dada una temporada
-
-12. **Usuario**
-
-- GET /api/users/profile - Para obtener los datos del perfil del usuario
+### 12. Usuario
+```bash
+GET /api/users/profile               # Datos del perfil de usuario
+```
 
 ## 🔍 Estructura del proyecto
 
@@ -88,7 +103,7 @@ Desarrollo de una aplicación web para el seguimiento personalizado de datos de 
 /backend
  ├─ src/
  │   └─ main/
- │       ├─ java/...           # Controladores servicios, repositorios, entidades
+ │       ├─ java/...           # Controladores, servicios, repositorios, entidades
  │       └─ resources/         # application.yml, esquemas de BD
  └─ Dockerfile
 
@@ -102,6 +117,11 @@ Desarrollo de una aplicación web para el seguimiento personalizado de datos de 
  ├─ angular.json
  └─ Dockerfile
 ```
+
+### Requisitos
+- Java 17 o superior  
+- Node.js 16+  
+- Docker (opcional)
 
  
 
