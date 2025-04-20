@@ -1,0 +1,33 @@
+<ng-container *ngIf="team; else feedback">
+    <mat-card class="m-4">
+      <mat-card-header>
+        <img mat-card-avatar [src]="team.logo" alt="{{ team.displayName }} logo">
+        <mat-card-title>{{ team.displayName }}</mat-card-title>
+        <mat-card-subtitle>{{ team.nickname || team.name }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <mat-card-content class="px-4">
+        <p><strong>Ubicación:</strong> {{ team.location }}</p>
+        <p>
+          <strong>Estadio:</strong>
+          {{ team.venue?.fullName }}, {{ team.venue.address.city }},
+          {{ team.venue.address.country }}
+        </p>
+        <p><strong>Forma actual:</strong> {{ team.form }}</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  
+  <ng-template #feedback>
+    <div class="d-flex justify-content-center my-4">
+      <mat-progress-spinner
+        *ngIf="isLoading"
+        mode="indeterminate"
+      ></mat-progress-spinner>
+  
+      <div *ngIf="!isLoading && errorMessage" class="alert alert-danger mt-3">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </ng-template>
+  

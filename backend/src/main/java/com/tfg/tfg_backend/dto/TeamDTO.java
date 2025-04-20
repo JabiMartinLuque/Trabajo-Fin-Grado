@@ -61,6 +61,8 @@ public class TeamDTO {
     // Lista de links
     private List<LinkDTO> links;
 
+    private List<String> competitions;
+
     // Getters y setters
 
     public String getRef() {
@@ -266,6 +268,13 @@ public class TeamDTO {
     }
     public void setLinks(List<LinkDTO> links) {
         this.links = links;
+    }
+
+    public List<String> getCompetitions() {
+        return competitions;
+    }
+    public void setCompetitions(List<String> leagueIds) {
+        this.competitions = leagueIds;
     }
     public String getLeague() {
         if (defaultLeagueRef != null && !defaultLeagueRef.isEmpty()) {

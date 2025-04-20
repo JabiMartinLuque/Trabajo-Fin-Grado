@@ -74,6 +74,33 @@ public class TeamService {
             //group.setStandingsRef("http://localhost:8080/api/standings?league=esp.1");
             team.setGroup(group);
         }
+        List<String> leagueIds = new ArrayList<>();
+        String leaguesUrl = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
+                    + id + "/leagues?lang=es&region=es";
+        String leaguesResponse = restTemplate.getForObject(leaguesUrl, String.class);
+        JsonNode leaguesRoot = objectMapper.readTree(leaguesResponse);
+        JsonNode leaguesItems = leaguesRoot.path("items");
+        if (leaguesItems.isArray()) {
+            for (JsonNode leagueNode : leaguesItems) {
+                // Extraer el $ref y obtener el identificador de la liga.
+                String ref = leagueNode.path("$ref").asText();
+                if (ref != null && !ref.isEmpty()) {
+                    String[] parts = ref.split("/");
+                    for (int i = 0; i < parts.length; i++) {
+                        if ("leagues".equals(parts[i]) && i + 1 < parts.length) {
+                            String leagueId = parts[i + 1];
+                            if (leagueId.contains("?")) {
+                                leagueId = leagueId.split("\\?")[0];
+                            }
+                            leagueIds.add(leagueId);
+                            System.out.println("Liga encontrada: " + leagueId);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        team.setCompetitions(leagueIds);
         
         return team;
     }

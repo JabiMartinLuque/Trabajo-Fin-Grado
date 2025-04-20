@@ -1,0 +1,66 @@
+<mat-card class="m-4">
+    <mat-card-header>
+      <mat-card-title>
+        Estadísticas de 
+        <span *ngIf="team">{{ team.displayName }}</span>
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <!-- estado de carga -->
+      <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+  
+      <!-- mensaje de error -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+  
+      <!-- selección de split -->
+      <div *ngIf="!isLoading && allStats.length">
+        <mat-form-field appearance="fill" class="w-100 mb-4">
+          <mat-label>Competición / Split</mat-label>
+          <mat-select
+            [value]="selectedSplit?.id"
+            (selectionChange)="onSplitChange($event.value)">
+            <mat-option
+              *ngFor="let st of allStats"
+              [value]="st.splits.id">
+              {{ st.splits.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <!-- tabla de estadísticas -->
+      <div *ngIf="selectedSplit">
+        <table mat-table [dataSource]="selectedSplit.categories" class="mat-elevation-z2 w-100">
+          <!-- nombre de la categoría -->
+          <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef> Categoría </th>
+            <td mat-cell *matCellDef="let cat"> {{ cat.displayName }} </td>
+          </ng-container>
+  
+          <!-- muestra los stats de cada categoría -->
+          <ng-container matColumnDef="stats">
+            <th mat-header-cell *matHeaderCellDef> Estadísticas </th>
+            <td mat-cell *matCellDef="let cat">
+              <div *ngFor="let s of cat.stats" class="stat-item">
+                <strong>{{ s.displayName }}:</strong> {{ s.displayValue }}
+              </div>
+            </td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="['category','stats']"></tr>
+          <tr mat-row        *matRowDef="let row; columns: ['category','stats'];"></tr>
+        </table>
+      </div>
+  
+      <!-- sin datos -->
+      <div *ngIf="!isLoading && !allStats.length" class="text-center my-4">
+        <p>No hay estadísticas disponibles.</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+

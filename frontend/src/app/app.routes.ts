@@ -16,6 +16,11 @@ import { AthleteDetailsComponent } from './features/athlete-details/athlete-deta
 import { FavoritesTeamsComponent } from './features/profile/favorites/favorites-teams/favorites-teams.component';
 import { FavoritesAthletesComponent } from './features/profile/favorites/favorites-athletes/favorites-athletes.component';
 import { FavoritesLeaguesComponent } from './features/profile/favorites/favorites-leagues/favorites-leagues.component';
+import { TeamDetailsComponent } from './features/team-details/team-details.component';
+import { TeamDetailsAthletesComponent } from './features/team-details/team-details-athletes/team-details-athletes.component';
+import { TeamDetailsMatchesComponent } from './features/team-details/team-details-matches/team-details-matches.component';
+import { TeamDetailsStatsComponent } from './features/team-details/team-details-stats/team-details-stats.component';
+import { TeamDetailsNavbarComponent } from './features/team-details/team-details-navbar/team-details-navbar.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
@@ -37,6 +42,16 @@ export const routes: Routes = [
     { path: 'match/:id', component: MatchDetailComponent, canActivate: [AuthGuard]}, //http://localhost:4200/match/12345
     { path: 'transactions/:league', component: TransactionsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/transactions
     { path: 'player/:id', component: AthleteDetailsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/athlete/12345
+    { path: 'team/:id', 
+      component: TeamDetailsNavbarComponent, 
+      canActivate: [AuthGuard], 
+      children: [
+        { path: 'details', component: TeamDetailsComponent, canActivate: [AuthGuard] },
+        { path: 'athletes', component: TeamDetailsAthletesComponent, canActivate: [AuthGuard] },
+        { path: 'matches', component: TeamDetailsMatchesComponent, canActivate: [AuthGuard] },
+        { path: 'stats', component: TeamDetailsStatsComponent, canActivate: [AuthGuard] },
+      ] 
+    }, //http://localhost:4200/team/12345
     {
     path: ':league/:league', //http://localhost:4200/league/esp.1
     component: LeagueComponent,

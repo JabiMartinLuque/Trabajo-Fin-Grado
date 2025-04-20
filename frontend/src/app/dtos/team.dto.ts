@@ -21,6 +21,8 @@ export interface TeamDTO {
     logo: string;
 
     recordRef: string;
+    league: string;
+    currentSeason: string;
     groups: GroupDTO;
 
     statistics: string;
@@ -41,6 +43,8 @@ export interface TeamDTO {
 
     links: LinkDTO[];
 
+    competitions: string[];
+
 }
 
 export interface AlternateIds {
@@ -56,7 +60,7 @@ export interface GroupDTO {
 export interface VenueDTO {
     ref: string;
     id: string;
-    fullname: string;
+    fullName: string;
     shortname: string;
     address: Address;
     images: object;

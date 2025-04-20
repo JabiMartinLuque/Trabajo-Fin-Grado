@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-standing',
-  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './standing.component.html',
   styleUrl: './standing.component.css'
 })

@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <span class="spacer"></span>
+    <button mat-button [routerLink]="['details']" routerLinkActive="active" queryParamsHandling="preserve">
+     Details
+    </button>
+    <button mat-button [routerLink]="['stats']" routerLinkActive="active" queryParamsHandling="preserve">
+     Statistics
+    </button>
+    <button mat-button [routerLink]="['athletes']" routerLinkActive="active" queryParamsHandling="preserve">
+      Players
+    </button>
+    <button mat-button [routerLink]="['matches']" routerLinkActive="active" queryParamsHandling="preserve">
+      Matches
+    </button>
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
