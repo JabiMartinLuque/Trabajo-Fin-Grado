@@ -8,6 +8,7 @@ import com.tfg.tfg_backend.dto.EventDTO;
 import com.tfg.tfg_backend.dto.ScoreboardDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamEventDTO;
+import com.tfg.tfg_backend.dto.ScoreValueDTO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -151,7 +152,7 @@ public class MatchService {
                         String eventRef = eventNode.path("$ref").asText();
                         if (eventRef != null && !eventRef.isEmpty()) {
                             TeamEventDTO detailedEvent = restTemplate.getForObject(eventRef, TeamEventDTO.class);
-                            allEvents.add(detailedEvent);
+                            allEvents.add(resolveReferences(detailedEvent));
                         }
                     }
                 }
@@ -178,7 +179,7 @@ public class MatchService {
             String eventRef = firstItem.path("$ref").asText();
             if (eventRef != null && !eventRef.isEmpty()) {
                 System.out.println("Evento encontrado: " + eventRef);
-                return restTemplate.getForObject(eventRef, TeamEventDTO.class);
+                return resolveReferences(restTemplate.getForObject(eventRef, TeamEventDTO.class));
             }
         } else {
             System.out.println("No se encontraron eventos para el atleta con ID: " + id);
@@ -198,12 +199,44 @@ public class MatchService {
             String eventRef = firstItem.path("$ref").asText();
             if (eventRef != null && !eventRef.isEmpty()) {
                 System.out.println("Evento encontrado: " + eventRef);
-                return restTemplate.getForObject(eventRef, TeamEventDTO.class);
+                return resolveReferences(restTemplate.getForObject(eventRef, TeamEventDTO.class));
             }
         } else {
             System.out.println("No se encontraron eventos para el equipo con ID: " + id);
         }
         return null; // O lanzar una excepción si no se encuentra el evento
 
+    }
+
+    private TeamEventDTO resolveReferences(TeamEventDTO event) throws IOException, JsonMappingException, JsonProcessingException {
+        // Aquí puedes resolver las referencias de los equipos y atletas
+        if (event.getCompetitions() != null) {
+            for (TeamEventDTO.CompetitionDTO competition : event.getCompetitions()) {
+                if (competition.getCompetitors() == null) continue;
+
+                for (TeamEventDTO.CompetitorDTO competitor : competition.getCompetitors()) {
+                    // Para SCORE
+                    if (competitor.getScore() != null) {
+                        
+                        String scoreRef = competitor.getScore().getRef();
+                        if (scoreRef != null && !scoreRef.isEmpty()) {
+                            // Llamada a ESPN para obtener el objeto ScoreValueDTO completo
+                            ScoreValueDTO score = restTemplate.getForObject(scoreRef, ScoreValueDTO.class);
+                            competitor.setScore(score);
+                        }
+                    }
+                    
+                    if(competitor.getTeam() != null) {
+                        String teamRef = competitor.getTeam().getRef();
+                        if (teamRef != null && !teamRef.isEmpty()) {
+                            // Llamada a ESPN para obtener el objeto TeamDTO completo
+                            TeamDTO team = restTemplate.getForObject(teamRef, TeamDTO.class);
+                            competitor.setTeam(team);
+                        }
+                    }
+                }
+            }
+        }
+        return event;
     }
 }

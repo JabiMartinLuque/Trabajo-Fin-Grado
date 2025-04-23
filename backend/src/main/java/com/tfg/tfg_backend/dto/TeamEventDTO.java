@@ -517,14 +517,18 @@ public class TeamEventDTO {
         private int order;
         private String homeAway;
         private boolean winner;
-        private Reference team;
-        private Reference score;
+        private Reference teamRef;
+        private Reference scoreRef;
         private Reference linescores;
         private Reference roster;
         private Reference statistics;
         private Reference leaders;
         private Reference record;
         private UniformDTO uniform;
+
+        private ScoreValueDTO score;
+        private TeamDTO team;
+
         public String getRef() {
             return ref;
         }
@@ -567,17 +571,17 @@ public class TeamEventDTO {
         public void setWinner(boolean winner) {
             this.winner = winner;
         }
-        public Reference getTeam() {
-            return team;
+        public Reference getTeamRef() {
+            return teamRef;
         }
-        public void setTeam(Reference team) {
-            this.team = team;
+        public void setTeamRef(Reference teamRef) {
+            this.teamRef = teamRef;
         }
-        public Reference getScore() {
-            return score;
+        public Reference getScoreRef() {
+            return scoreRef;
         }
-        public void setScore(Reference score) {
-            this.score = score;
+        public void setScoreRef(Reference scoreRef) {
+            this.scoreRef = scoreRef;
         }
         public Reference getLinescores() {
             return linescores;
@@ -614,6 +618,18 @@ public class TeamEventDTO {
         }
         public void setUniform(UniformDTO uniform) {
             this.uniform = uniform;
+        }
+        public ScoreValueDTO getScore() {
+            return score;
+        }
+        public void setScore(ScoreValueDTO score) {
+            this.score = score;
+        }
+        public TeamDTO getTeam() {
+            return team;
+        }
+        public void setTeam(TeamDTO team) {
+            this.team = team;
         }
     }
 
@@ -684,4 +700,5 @@ public class TeamEventDTO {
             this.clock = clock;
         }
     }
+
 }

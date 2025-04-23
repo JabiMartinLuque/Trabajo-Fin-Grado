@@ -1,3 +1,5 @@
+import { TeamDTO } from "./team.dto";
+
 export interface TeamEventDTO {
     ref: string;
     id: string;
@@ -83,8 +85,8 @@ export interface CompetitorDTO {
     order: number;
     homeAway: string;
     winner: boolean;
-    team: Reference;
-    score: Reference;
+    team: TeamDTO;
+    score: ScoreDTO;
     linescores: Reference;
     statistics: Reference;
     leaders: Reference;
@@ -107,4 +109,8 @@ export interface RegulationDTO {
     displayName: string;
     slug: string;
     clock: number;
+}
+
+export interface ScoreDTO {
+    value: number;
 }

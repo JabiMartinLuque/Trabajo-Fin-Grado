@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+  import { Component } from '@angular/core';
 import { SplitDTO, StatisticsDTO } from '../../../dtos/statistics.dto';
 import { ActivatedRoute } from '@angular/router';
 import { TeamDetailsStatsService } from './team-details-stats.service';

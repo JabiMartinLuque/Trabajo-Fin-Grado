@@ -1,1 +1,129 @@
-<p>team-details-matches works!</p>
+<ng-container *ngIf="isLoading; else content">
+    <div class="d-flex justify-content-center my-5">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-container>
+  
+  <ng-template #content>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Próximos partidos -->
+    <section *ngIf="upcomingMatches.length > 0">
+      <h2>Próximos Partidos</h2>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let event of upcomingMatches">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ event.name }} ({{ event.shortName }})</mat-panel-title>
+            <mat-panel-description>{{ event.date | date:'short' }}</mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div *ngFor="let comp of event.competitions" class="mb-3">
+            <mat-card class="mat-elevation-z2">
+              <mat-card-header>
+                <mat-card-title>Competición {{ comp.id }}</mat-card-title>
+                <mat-card-subtitle>
+                  {{ comp.date | date:'shortTime' }} — {{ comp.venue.fullName }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div
+                  class="d-flex justify-content-between align-items-center py-2"
+                  *ngFor="let c of comp.competitors"
+                >
+                  <!-- Local / Visitante y nombre de equipo -->
+                  <div>
+                    <strong>
+                      {{ c.homeAway === 'home' ? 'Local' : 'Visitante' }}
+                    </strong>
+                    {{ c.team.displayName || c.team.id }}
+                  </div>
+  
+                  <!-- Resultado del equipo -->
+                  <div>
+                    <mat-chip color="primary">
+                      {{ c.score?.value ?? '–' }}
+                    </mat-chip>
+                  </div>
+  
+                  <!-- Botón ver equipo -->
+                  <div>
+                    <button
+                      mat-stroked-button
+                      color="accent"
+                      [routerLink]="['/team', c.team.id]"
+                      (click)="$event.stopPropagation()"
+                    >
+                      Ver Equipo
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  
+    <!-- Partidos pasados -->
+    <section *ngIf="pastMatches.length > 0" class="mt-5">
+      <h2>Partidos Pasados</h2>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let event of pastMatches">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ event.name }} ({{ event.shortName }})</mat-panel-title>
+            <mat-panel-description>{{ event.date | date:'short' }}</mat-panel-description>
+          </mat-expansion-panel-header>
+  
+          <div *ngFor="let comp of event.competitions" class="mb-3">
+            <mat-card class="mat-elevation-z2">
+              <mat-card-header>
+                <mat-card-title>Competición {{ comp.id }}</mat-card-title>
+                <mat-card-subtitle>
+                  {{ comp.date | date:'shortTime' }} — {{ comp.venue.fullName }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div
+                  class="d-flex justify-content-between align-items-center py-2"
+                  *ngFor="let c of comp.competitors"
+                >
+                  <div>
+                    <strong>
+                      {{ c.homeAway === 'home' ? 'Local' : 'Visitante' }}
+                    </strong>
+                    {{ c.team.displayName || c.team.id }}
+                  </div>
+                  <div>
+                    <mat-chip color="primary">
+                      {{ c.score?.value ?? '–' }}
+                    </mat-chip>
+                  </div>
+                  <div>
+                    <button
+                      mat-stroked-button
+                      color="accent"
+                      [routerLink]="['/team', c.team.id]"
+                      (click)="$event.stopPropagation()"
+                    >
+                      Ver Equipo
+                    </button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  
+    <!-- Mensaje si no hay partidos en ninguna categoría -->
+    <div *ngIf="!upcomingMatches.length && !pastMatches.length" class="text-center my-5">
+      <p>No hay partidos disponibles.</p>
+    </div>
+  </ng-template>
+  
+  
+  
+  
