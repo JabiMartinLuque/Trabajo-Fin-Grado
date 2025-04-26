@@ -49,6 +49,9 @@
                 <mat-icon matListIcon>stadium</mat-icon>
                 <div matLine>{{ m.name }}</div>
                 <div matLine class="secondary">{{ m.date | date:'short' }}</div>
+                <button mat-icon-button (click)="goToMatch(m.id)">
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
               </mat-list-item>
             </mat-list>
           </ng-container>
@@ -61,33 +64,53 @@
   
     <mat-divider></mat-divider>
   
-    <!-- === Ligas favoritas === -->
-    <section>
-      <h3>Partidos de mis ligas favoritas</h3>
-      <mat-accordion multi="false">
-        <mat-expansion-panel *ngFor="let lg of favoriteLeagues"
-          (opened)="fetchLeagueMatches(lg.slug)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ lg.displayName }}</mat-panel-title>
-          </mat-expansion-panel-header>
-  
-          <ng-container *ngIf="leagueMatches?.length; else noLeague">
-            <mat-list>
-              <mat-list-item *ngFor="let block of leagueMatches">
-                <mat-icon matListIcon>calendar_today</mat-icon>
-                <div *ngFor="let event of block.events">
-                    <div matLine>{{ event.name  }}</div>
-                    <div matLine class="secondary">{{ event.date | date:'short' }}</div>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </ng-container>
-          <ng-template #noLeague>
-            <p class="empty">No hay partidos para esta liga.</p>
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </section>
+  <!-- === Ligas favoritas === -->
+  <section>
+    <h3>Partidos de mis ligas favoritas</h3>
+
+    <mat-accordion multi="false">
+      <mat-expansion-panel
+        *ngFor="let lg of favoriteLeagues"
+        (opened)="fetchLeagueMatches(lg.slug)"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ lg.displayName }}</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <ng-container *ngIf="leagueMatches?.length; else noLeague">
+          <mat-list>
+
+            <!-- BLOQUE de eventos -->
+        <ng-container *ngFor="let block of leagueMatches">
+
+          <!-- fila del encabezado (icono + fecha) -->
+          <mat-list-item>
+            <mat-icon matListIcon>calendar_today</mat-icon>
+          </mat-list-item>
+
+          <!-- eventos del bloque, SIN icono -->
+          <mat-list-item *ngFor="let ev of block.events" class="event-item">
+            <a matLine [routerLink]="['/match', ev.id]">{{ ev.name }}</a>
+            <div matLine class="secondary">
+              {{ ev.date | date:'short' }}
+            </div>
+
+          </mat-list-item>
+
+        </ng-container>
+        </mat-list>
+      </ng-container>
+
+      <ng-template #noLeague>
+        <p class="empty">No hay partidos para esta liga.</p>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</section>
+
+
+
+
   
   </div>
   

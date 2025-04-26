@@ -24,7 +24,7 @@ import { TeamDetailsNavbarComponent } from './features/team-details/team-details
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //http://localhost:4200/home
+    { path: 'home', component: HomeComponent}, //http://localhost:4200/home
     { path: 'login', component: LoginComponent}, //http://localhost:4200/login
     { path: 'register', component: RegisterComponent}, //http://localhost:4200/register
     { path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
@@ -53,7 +53,7 @@ export const routes: Routes = [
       ] 
     }, //http://localhost:4200/team/12345
     {
-    path: ':league/:league', //http://localhost:4200/league/esp.1
+    path: 'league/:league', //http://localhost:4200/league/esp.1
     component: LeagueComponent,
     canActivate: [AuthGuard],
     children: [

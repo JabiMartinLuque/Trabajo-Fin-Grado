@@ -8,6 +8,7 @@ import { AthletesService } from '../leagues/athletes/athletes.service';
 import { LeagueService } from '../leagues/league.service';
 import { TeamsService } from '../leagues/teams/teams.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -22,9 +23,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   user: User | null = null;
@@ -114,11 +115,16 @@ export class HomeComponent {
     }
   }
   fetchLeagueMatches(leagueId: string): void {
-    if(this.leagueMatches.length <= 0) {
-      this.homeService.getMatchesByLeague(leagueId).subscribe((matches: any) => {
-        console.log(matches);
-        this.leagueMatches.push(matches);
-      });    }
+    this.leagueMatches = [];
+
+
+    this.homeService.getMatchesByLeague(leagueId)
+      .subscribe({
+        next: (block: ScoreboardDTO) => {
+          this.leagueMatches.push(block);
+        },
+        error: err => console.error(err)
+      });
   } 
 
   goToMatch(matchId: string) {

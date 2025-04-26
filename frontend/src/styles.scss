@@ -1,54 +1,224 @@
+/* ---------- styles.scss ---------- */
 @use '@angular/material' as mat;
+@use '@angular/cdk'     as cdk;
 
-// 1) Estilos base de Material
+/* 1) Core ------------------------------------------------------------ */
 @include mat.core();
 
-// 2) Define paletas M2 personalizadas inspiradas en colores de fútbol
-$mi-primary: mat.m2-define-palette(mat.$m2-green-palette, 600, 500, 700);
+/* 2) Paletas --------------------------------------------------------- */
+$mi-primary: mat.m2-define-palette(mat.$m2-green-palette, 700, 500, 900);
 $mi-accent : mat.m2-define-palette(mat.$m2-orange-palette, A200, A100, A400);
 $mi-warn   : mat.m2-define-palette(mat.$m2-red-palette);
 
-// 3) Define el tema (light)
-$mi-theme: mat.m2-define-light-theme((
-  color: (
-    primary: $mi-primary,
-    accent : $mi-accent,
-    warn   : $mi-warn
-  )
+/* 3) Tipografía ------------------------------------------------------ */
+$h4: mat.m2-define-typography-level(48px, 52px, 700);
+$mi-type: mat.m2-define-typography-config(
+  $font-family: ('Poppins', sans-serif),
+  $headline-4 : $h4
+);
+
+/* 4) Temas ----------------------------------------------------------- */
+$mi-light: mat.m2-define-light-theme((
+  color: (primary:$mi-primary, accent:$mi-accent, warn:$mi-warn),
+  typography: $mi-type
+));
+$mi-dark : mat.m2-define-dark-theme((
+  color: (primary:$mi-primary, accent:$mi-accent, warn:$mi-warn),
+  typography: $mi-type
 ));
 
-// 4) Genera los estilos de todos los componentes de Angular Material
-@include mat.all-component-themes($mi-theme);
+/* 5) Componentes + overlay ------------------------------------------ */
+@include mat.all-component-themes($mi-light);
+@include cdk.overlay();               /* ← único mixin necesario */
 
-// 5) Resto de tus estilos globales
+@media (prefers-color-scheme: dark) {
+  @include mat.all-component-themes($mi-dark);
+  /* no hace falta llamar otra vez a overlay: las estructuras son las mismas */
+}
+
+/* 6) Globales -------------------------------------------------------- */
 html, body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  color: #333;
-  background-color: mat.m2-get-color-from-palette($mi-primary, 50); 
-  /* Usa un verde claro de fondo (puedes ajustar el 50 a otro tono) */
+  font-family: 'Poppins', sans-serif;
+  background: mat.m2-get-color-from-palette($mi-primary, 50);
 }
 
 :root {
-  --card-bg: #fff; 
-  --card-shadow: rgba(0, 0, 0, 0.08);
-  --avatar-gradient: linear-gradient(
-    45deg,
-    #{mat.get-theme-color($mi-theme, primary, 500)},
-    #{mat.get-theme-color($mi-theme, accent, A200)}
-  );
-  --text-color: #333;
+  --space-xs: .5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  /* variables de color */
+  --clr-surface      : #{mat.m2-get-color-from-palette($mi-primary, 50)};
+  --clr-surface-dark : #{mat.m2-get-color-from-palette($mi-primary, 800)};
+  --clr-on-surface   : #{mat.m2-get-color-from-palette($mi-primary, 900)};
+  --clr-primary      : #{mat.m2-get-color-from-palette($mi-primary, 600)};
+  --clr-primary-light: #{mat.m2-get-color-from-palette($mi-primary, 300)};
+  --clr-accent       : #{mat.m2-get-color-from-palette($mi-accent , A200)};
+  --clr-warn         : #{mat.m2-get-color-from-palette($mi-warn   , 600)};
+
+  /* tarjeta / sombra */
+  --card-bg          : var(--clr-surface);
+  --card-shadow      : rgba(0 0 0 / 0.08);
+
+  --brand-900 : #{mat.m2-get-color-from-palette($mi-primary, 900)}; /* verde más oscuro */
+  --brand-700 : #{mat.m2-get-color-from-palette($mi-primary, 700)};
+  --brand-300 : #{mat.m2-get-color-from-palette($mi-primary, 300)};
+  --on-brand  : #{mat.m2-get-contrast-color-from-palette($mi-primary, 900)}; /* normalmente blanco */
 }
 
-/* Ejemplo de estilos comunes que podrían lucir mejor */
+/* Modo oscuro (si lo activas por media-query o clase .dark) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-surface      : #{mat.m2-get-color-from-palette($mi-dark, surface, 900)};
+    --clr-surface-dark : #{mat.m2-get-color-from-palette($mi-dark, surface, 700)};
+    --clr-on-surface   : #{mat.m2-get-color-from-palette($mi-dark, on-surface, 100)};
+    --clr-primary      : #{mat.m2-get-color-from-palette($mi-primary, 300)};
+    --clr-primary-light: #{mat.m2-get-color-from-palette($mi-primary, 100)};
+    --clr-accent       : #{mat.m2-get-color-from-palette($mi-accent , A100)};
+    --clr-warn         : #{mat.m2-get-color-from-palette($mi-warn   , 300)};
+    --card-bg          : var(--clr-surface-dark);
+  }
+}
+
 h1, h2, h3, h4 {
-  margin: 0.5rem 0;
+  margin: .5rem 0;
   color: mat.m2-get-color-from-palette($mi-primary, 900);
 }
 
 .mat-card {
-  background-color: var(--card-bg);
-  box-shadow: 0 2px 5px var(--card-shadow);
+  background: var(--card-bg);
+  @include mat.elevation(2);
   margin-bottom: 1rem;
 }
+
+/* ============================================================
+   LISTAS MDC – dejar que el texto envuelva y respete padding
+   ============================================================ */
+
+/* 1. Item de lista */
+.mat-mdc-list-item {
+  align-items: flex-start;
+  gap: var(--space-xs);
+
+  /* la caja de texto debe crecer y romper línea */
+  .mdc-list-item__content {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  /* líneas principales y secundarias */
+  .mdc-list-item__primary-text,
+  .mdc-list-item__secondary-text {
+    display: block;                 /* cada línea en bloque */
+    white-space: normal !important; /* permite wrapping */
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-break: break-word;         /* rompe palabras largas */
+  }
+
+  .mdc-list-item__secondary-text {
+    font-size: .75rem;
+    opacity: .72;
+  }
+
+  /* botón a la derecha */
+  button.mat-icon-button {
+    margin-left: auto;
+  }
+}
+
+/* 2. Encabezado del expansion-panel MDC */
+.mat-mdc-expansion-panel-header {
+  padding-inline: var(--space-sm) !important;
+
+  .mat-mdc-expansion-panel-header-title {
+    flex: 1 1 auto !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+  }
+}
+
+/* 3. Cuerpo del panel */
+.mat-mdc-expansion-panel-body {
+  padding: var(--space-sm) var(--space-sm) var(--space-xs);
+}
+
+/* ——— ZONA “SIN CORTES” PARA LIST ITEMS MDC ——— */
+:where(.mat-mdc-list-item) {
+  overflow: visible !important;               /* liberar contenedor */
+}
+
+:where(.mat-mdc-list-item .mdc-list-item__content) {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;
+}
+
+:where(.mat-mdc-list-item .mdc-list-item__primary-text,
+       .mat-mdc-list-item .mdc-list-item__secondary-text) {
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;
+}
+
+/* ---------- EXPANSION PANEL ---------- */
+:where(.mat-mdc-expansion-panel) {
+  background: var(--clr-surface-dark);
+  color: var(--clr-on-surface);
+  border-radius: 8px;
+}
+
+:where(.mat-mdc-expansion-panel-header) {
+  background: transparent;
+  min-height: 56px;
+}
+
+:where(.mat-mdc-expansion-panel-header.mat-expanded) {
+  background: var(--clr-primary-light);   /* header abierto */
+}
+
+:where(.mat-mdc-expansion-panel-body) {
+  background: var(--clr-surface);
+}
+
+/* ---------- LIST ITEM ---------- */
+:where(.mat-mdc-list-item) {
+  padding-block: var(--space-xs);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--clr-on-surface) 10%, transparent);
+}
+
+:where(.mat-mdc-list-item:last-child) { border-bottom: none; }
+
+:where(.mdc-list-item__primary-text)   { font-weight: 600; }
+:where(.mdc-list-item__secondary-text) { color: var(--clr-accent); }
+
+/* Icono y botón en color primario ----------------------------------- */
+:where(.mat-mdc-list-item mat-icon),
+:where(.mat-mdc-list-item button.mat-icon-button mat-icon) {
+  color: var(--clr-primary);
+}
+
+/* títulos de sección */
+.home-container h3 {
+  margin-block: var(--space-md) var(--space-sm);
+  color      : var(--clr-primary);
+  font-weight: 700;
+}
+
+/* icono de despliegue (flecha) siempre visible */
+:where(.mat-mdc-expansion-indicator) {
+  color: var(--clr-on-surface);
+}
+
+.home-container h3 {
+  color: var(--brand-700);
+}
+
+

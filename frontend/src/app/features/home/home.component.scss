@@ -1,0 +1,67 @@
+/* home.component.scss */
+
+/* Listas dentro de un mismo mat-list-item (bloques de liga) */
+.events-block {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;   /* que ocupe todo el ancho */
+}
+
+.empty {
+  padding: .5rem 1rem;
+  font-style: italic;
+  opacity: .7;
+}
+
+/* ========== ROMPER ELIPSIS DEFINITIVAMENTE ========== */
+.mat-list-item .mat-list-text .mat-line {
+  white-space: normal !important;    /* permite el wrap */
+  overflow: visible !important;
+  text-overflow: unset !important;
+  word-break: break-word;            /* divide palabras muy largas */
+}
+
+/* asegurar que la caja del texto pueda crecer */
+.mat-list-item .mat-list-text {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;           /* evita que flexbox "reviente" */
+}
+
+.mat-expansion-panel-header.mat-expansion-panel-header {
+  padding-inline: var(--space-sm);
+}
+
+/* header expandido */
+:where(.mat-mdc-expansion-panel-header.mat-expanded) {
+  background: var(--brand-300);
+}
+
+/* lista secundaria ligeramente indentada */
+.sub-list {
+  padding-left: 40px;
+}
+
+:where(.sub-list .mat-mdc-list-item mat-icon) {
+  display: none;           /* oculta iconos de los items internos */
+}
+
+/* El contenedor animado de Material deja un max-height inline.
+   Al quitarlo, el panel usa la altura real del contenido. */
+   :where(.mat-mdc-expansion-panel-content) {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+/* margen izquierdo coherente con filas que NO llevan icono */
+.event-item {
+  padding-left: 40px;            /* mismo espacio que deja matListIcon */
+}
+
+/* date header en negrita y con algo de separación */
+.date-header {
+  font-weight: 600;
+  padding-top: .25rem;
+}
+
+  
+

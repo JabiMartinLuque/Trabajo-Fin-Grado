@@ -15,7 +15,7 @@ export interface LoginResponse {
 })
 export class AuthService {
   private loginUrl = `${environment.apiUrl}/auth/login`; // Ajusta la URL según tu backend
-  private registerUrl = `${environment.apiUrl}/auth/login`; // URL de registro
+  private registerUrl = `${environment.apiUrl}/auth/register`; // URL de registro
 
 
   constructor(private http: HttpClient) {}

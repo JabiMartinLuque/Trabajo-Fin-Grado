@@ -1,117 +1,80 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <!-- Marca o logo de la aplicación -->
-    <a class="navbar-brand" href="/">furbo</a>
-    
-    <!-- Botón para colapsar el navbar en pantallas pequeñas -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <!-- Enlaces del navbar -->
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="/home" routerLinkActive="active">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a 
-            class="nav-link dropdown-toggle" 
-            href="#" 
-            id="leaguesDropdown" 
-            role="button" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false"
-            (click)="$event.preventDefault()"
-          >
-            Leagues
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="leaguesDropdown">
-            <li>
-              <a class="dropdown-item" routerLink="/league/esp.1">
-                Spain (LaLiga)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/league/eng.1" >
-                England (Premier League)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/league/fra.1" >
-                France (Ligue 1)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/league/ger.1" >
-                Germany (Bundesliga)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/league/ita.1" >
-                Italy (Serie A)
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/matches" routerLinkActive="active">Matches</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/login" routerLinkActive="active">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register" routerLinkActive="active">Register</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a 
-            class="nav-link dropdown-toggle" 
-            href="#" 
-            id="transactionsDropdown" 
-            role="button" 
-            data-bs-toggle="dropdown" 
-            aria-expanded="false"
-            (click)="$event.preventDefault()"
-          >
-            Transactions
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="leaguesDropdown">
-            <li>
-              <a class="dropdown-item" routerLink="/transactions/esp.1">
-                Spain (LaLiga)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/transactions/eng.1" >
-                England (Premier League)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/transactions/fra.1" >
-                France (Ligue 1)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/transactions/ger.1" >
-                Germany (Bundesliga)
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="/transactions/ita.1" >
-                Italy (Serie A)
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/profile" routerLinkActive="active">Profile</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<!-- ===== APP BAR / NAVBAR ================================================= -->
+<mat-toolbar class="app-toolbar" color="primary">
 
-<!-- Aquí se inyectarán los componentes según la ruta -->
-<router-outlet></router-outlet>
+  <!-- hamburguesa para móvil -->
+  <button
+    mat-icon-button
+    class="app-burger"
+    (click)="drawer.toggle()"
+    aria-label="Open menu"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- logo / marca -->
+  <span class="app-brand" routerLink="/">furbo</span>
+
+  <span class="spacer"></span>   <!-- empuja el nav a la derecha -->
+
+  <!-- ===== LINKS DESKTOP ================================================ -->
+  <nav class="app-nav">
+
+    <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
+
+    <!-- Leagues -->
+    <button mat-button [matMenuTriggerFor]="leagues">Leagues</button>
+    <mat-menu #leagues="matMenu">
+      <button mat-menu-item routerLink="/league/esp.1">Spain (LaLiga)</button>
+      <button mat-menu-item routerLink="/league/eng.1">England (PL)</button>
+      <button mat-menu-item routerLink="/league/fra.1">France (Ligue 1)</button>
+      <button mat-menu-item routerLink="/league/ger.1">Germany (Bundesliga)</button>
+      <button mat-menu-item routerLink="/league/ita.1">Italy (Serie A)</button>
+    </mat-menu>
+
+    <a mat-button routerLink="/matches" routerLinkActive="active">Matches</a>
+    <a mat-button routerLink="/login"    routerLinkActive="active">Login</a>
+    <a mat-button routerLink="/register" routerLinkActive="active">Register</a>
+
+    <!-- Transactions -->
+    <button mat-button [matMenuTriggerFor]="tx">Transactions</button>
+    <mat-menu #tx="matMenu">
+      <button mat-menu-item routerLink="/transactions/esp.1">Spain (LaLiga)</button>
+      <button mat-menu-item routerLink="/transactions/eng.1">England (PL)</button>
+      <button mat-menu-item routerLink="/transactions/fra.1">France (Ligue 1)</button>
+      <button mat-menu-item routerLink="/transactions/ger.1">Germany (Bundesliga)</button>
+      <button mat-menu-item routerLink="/transactions/ita.1">Italy (Serie A)</button>
+    </mat-menu>
+
+    <a mat-button routerLink="/profile" routerLinkActive="active">Profile</a>
+  </nav>
+</mat-toolbar>
+
+<!-- ===== SIDENAV PARA MÓVIL =========================================== -->
+<mat-sidenav-container class="app-sidenav-container">
+  <mat-sidenav #drawer class="app-sidenav" mode="over">
+    <mat-nav-list>
+
+      <a mat-list-item routerLink="/home" (click)="drawer.close()">Home</a>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Leagues</mat-panel-title>
+        </mat-expansion-panel-header>
+        <a mat-list-item routerLink="/league/esp.1" (click)="drawer.close()">Spain (LaLiga)</a>
+        <a mat-list-item routerLink="/league/eng.1" (click)="drawer.close()">England (PL)</a>
+        <a mat-list-item routerLink="/league/fra.1" (click)="drawer.close()">France (Ligue 1)</a>
+        <a mat-list-item routerLink="/league/ger.1" (click)="drawer.close()">Germany (Bundesliga)</a>
+        <a mat-list-item routerLink="/league/ita.1" (click)="drawer.close()">Italy (Serie A)</a>
+      </mat-expansion-panel>
+
+      <a mat-list-item routerLink="/matches"   (click)="drawer.close()">Matches</a>
+      <a mat-list-item routerLink="/transactions/esp.1" (click)="drawer.close()">Transactions</a>
+      <a mat-list-item routerLink="/profile"   (click)="drawer.close()">Profile</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Vistas de la aplicación -->
+  <router-outlet></router-outlet>
+</mat-sidenav-container>
+
 
