@@ -3,8 +3,12 @@ package com.tfg.tfg_backend.controller;
 import com.tfg.tfg_backend.model.User;
 import com.tfg.tfg_backend.repository.UserRepository;
 import com.tfg.tfg_backend.security.JwtUtil;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,24 +36,19 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String,Object> login(@RequestBody Map<String,String> request) {
-        // Permitir que se envíe email en lugar de username
-        String loginId = request.get("username");
-        if (loginId == null) {
-        loginId = request.get("email");
-        }
-        User user = userRepository.findByUsername(loginId)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    public ResponseEntity<Map<String,Object>> login(@RequestBody Map<String, String> request) {
+        User user = userRepository.findByUsername(request.get("username"))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario no encontrado"));
 
         if (!passwordEncoder.matches(request.get("password"), user.getPassword())) {
-            throw new RuntimeException("Invalid password");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Contraseña inválida");
         }
 
         String token = jwtUtil.generateToken(user.getUsername());
         Map<String,Object> resp = new HashMap<>();
         resp.put("token", token);
         resp.put("userId", user.getId());
-        return resp;
+        return ResponseEntity.ok(resp);
     }
 
 }
