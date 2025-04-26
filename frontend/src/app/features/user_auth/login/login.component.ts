@@ -30,9 +30,9 @@ export class LoginComponent {
     this.authService.login(this.user).subscribe({
       next: (res: any) => {
         console.log('Respuesta del backend:', res);
-        localStorage.setItem('token', res.token); // Almacena el token
-        localStorage.setItem('userId', res.userId.toString()); // Almacena el ID del usuario
-        this.router.navigate(['/profile']); // Redirige al perfil
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('userId', res.userId.toString());
+        this.router.navigate(['/home']);
       },
       error: (error) => {
         console.error('Error en el login:', error);
