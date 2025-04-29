@@ -2,7 +2,6 @@
 .profile-container {
   justify-content: center;
   padding: 2rem;
-  background-color: #f2f2f2; /* O el que prefieras */
 }
 
 /* TARJETA DE PERFIL */
@@ -11,7 +10,6 @@
   max-width: 800px;
   margin: auto;
   padding: 1rem;
-  background-color: #ffffff;
   /* Para que no corte contenido y crezca verticalmente */
   overflow: visible;
   flex-direction: column;

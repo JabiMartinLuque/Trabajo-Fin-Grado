@@ -1,25 +1,53 @@
-<div class="all-leagues" *ngIf="!isLoading; else loading">
-    <h3>Gestionar Ligas Favoritas</h3>
-  
-    <div *ngIf="errorMsg" class="alert alert-danger">
-      {{ errorMsg }}
-    </div>
-  
-    <div *ngIf="allLeagues && allLeagues.length">
-      <div *ngFor="let league of allLeagues" class="league-row">
-        <input
-          type="checkbox"
-          [checked]="favoriteLeagueIds.has(league.slug)"
-          (change)="toggleFavorite(league)"
-        />
-        <span>{{ league.name }}</span>
-      </div>
-    </div>
-    <div *ngIf="allLeagues && !allLeagues.length">
-      <p>No se encontraron ligas disponibles.</p>
-    </div>
+<div class="leagues-container" *ngIf="!isLoading; else loading">
+
+  <h3 class="title">Gestionar ligas favoritas</h3>
+
+  <mat-card *ngIf="errorMsg" class="error-card" appearance="outlined">
+    {{ errorMsg }}
+  </mat-card>
+
+  <div
+    class="cards-grid"
+    *ngIf="allLeagues?.length; else empty"
+  >
+    <!-- ------ Tarjeta de liga ------ -->
+    <mat-card
+      *ngFor="let lg of allLeagues | slice:0:5"
+      class="league-card"
+      [class.selected]="favoriteLeagueIds.has(lg.slug)"
+      (click)="toggleFavorite(lg)"
+    >
+    <mat-checkbox
+        class="fav-checkbox"
+        [checked]="favoriteLeagueIds.has(lg.slug)"
+        (click)="$event.stopPropagation()"         
+        (change)="onCheckboxChange(lg)"
+      ></mat-checkbox>
+
+      <img
+        mat-card-image
+        class="league-logo"
+        [src]="lg.logos[0].href"
+        [alt]="lg.logos[0].alt || lg.name"
+      />
+
+      <mat-card-content>
+        <h4>{{ lg.displayName }}</h4>
+        <p class="country">{{ lg.country.name }}</p>
+      </mat-card-content>
+    </mat-card>
   </div>
-  
-  <ng-template #loading>
-    <p>Cargando ligas...</p>
-  </ng-template>
+
+</div>
+
+<!-- estados -->
+<ng-template #empty>
+  <p class="info">No se encontraron ligas disponibles.</p>
+</ng-template>
+
+<ng-template #loading>
+  <div class="loading-box">
+    <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+    <span>Cargando ligas…</span>
+  </div>
+</ng-template>

@@ -81,7 +81,7 @@
 
         <!-- Ligas favoritas -->
         <h3 class="section-title">Ligas Favoritas</h3>
-        <button mat-raised-button color="primary" routerLink="favorites/leagues">Mis Ligas</button>
+        <button mat-raised-button color="primary" [routerLink]="['/favorites/leagues']">Mis Ligas</button>
         <div *ngIf="favoriteLeagues && favoriteLeagues.length > 0;" class="leagues-section">
           <mat-list class="leagues-list">
             <mat-list-item *ngFor="let league of favoriteLeagues" class="league-item">
@@ -118,7 +118,5 @@
 <div class="profile-container">
   <!-- Aquí van otros elementos de la página de perfil -->
 
-  <!-- Necesario para mostrar los children -->
-  <router-outlet></router-outlet>
 </div>
 

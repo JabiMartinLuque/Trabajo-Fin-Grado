@@ -28,16 +28,12 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent}, //http://localhost:4200/login
     { path: 'register', component: RegisterComponent}, //http://localhost:4200/register
     { path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
-    {
-      path: 'profile',
-      component: ProfileComponent,
-      canActivate: [AuthGuard],
-      children: [
-        { path: 'favorites/teams', component: FavoritesTeamsComponent, canActivate: [AuthGuard] },
-        { path: 'favorites/players', component: FavoritesAthletesComponent, canActivate: [AuthGuard] },
-        { path: 'favorites/leagues', component: FavoritesLeaguesComponent, canActivate: [AuthGuard] }
-      ]
-    }, //http://localhost:4200/profile
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+
+  // Ahora son rutas independientes
+  { path: 'favorites/teams',   component: FavoritesTeamsComponent,    canActivate: [AuthGuard] },
+  { path: 'favorites/players', component: FavoritesAthletesComponent,  canActivate: [AuthGuard] },
+  { path: 'favorites/leagues', component: FavoritesLeaguesComponent,  canActivate: [AuthGuard] }, //http://localhost:4200/profile
 
     { path: 'match/:id', component: MatchDetailComponent, canActivate: [AuthGuard]}, //http://localhost:4200/match/12345
     { path: 'transactions/:league', component: TransactionsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/transactions

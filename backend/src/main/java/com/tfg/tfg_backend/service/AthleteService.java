@@ -28,7 +28,7 @@ public class AthleteService {
         List<String> result = new ArrayList<>();
         // URL base para obtener atletas de la liga
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" 
-                + league + "/seasons/" + season + "/athletes?lang=en&region=es";
+                + league + "/seasons/" + season + "/athletes?lang=es&region=es";
         
         int currentPage = 1;
         int totalPages = 1;
@@ -72,7 +72,7 @@ public class AthleteService {
 
     public AthleteDTO getAthleteById(String athleteId) throws IOException {
         // URL base para obtener detalles de un atleta (ajusta según la documentación de la API)
-        String url = "https://sports.core.api.espn.com/v2/sports/soccer/athletes/" + athleteId + "?lang=en&region=es";
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/athletes/" + athleteId + "?lang=es&region=es";
         return restTemplate.getForObject(url, AthleteDTO.class);
     }
 
@@ -88,7 +88,7 @@ public class AthleteService {
         List<AthleteDTO> result = new ArrayList<>();
         // URL base para obtener atletas del equipo (ajusta según la documentación de la API)
         String baseUrl = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/seasons/2024/teams/"
-                         + teamId + "/athletes?lang=en&region=es";
+                         + teamId + "/athletes?lang=es&region=es";
 
         int currentPage = 1;
         int totalPages = 1;

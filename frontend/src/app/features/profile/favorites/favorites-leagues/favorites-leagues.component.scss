@@ -1,0 +1,74 @@
+/* contenedor principal */
+.leagues-container {
+    max-width: 960px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  
+  .title {
+    margin: 1rem 0 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--brand-700);
+  }
+  
+  /* grilla responsive: 2 columnas desktop, 1 en móvil */
+  .cards-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  /* tarjeta */
+  .league-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 180ms;
+  
+    &:hover { transform: translateY(-4px); }
+  
+    &.selected {
+      border: 2px solid var(--brand-700);
+    }
+  }
+  
+  /* logo */
+  .league-logo {
+    object-fit: contain;
+    height: 120px;
+    padding: 1rem;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.3));
+  }
+  
+  /* texto */
+  .country {
+    font-size: .85rem;
+    opacity: .7;
+    margin: .25rem 0 0;
+  }
+  
+  /* checkbox en la esquina */
+  .fav-checkbox {
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    pointer-events: none;        /* clic reservado al card */
+  }
+  
+  /* tarjetas de error / info */
+  .error-card {
+    border-left: 4px solid var(--clr-warn);
+    color: var(--clr-warn);
+    margin-bottom: 1rem;
+  }
+  
+  .info { text-align: center; opacity: .75; }
+  
+  .loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: 3rem 0;
+  }
+  

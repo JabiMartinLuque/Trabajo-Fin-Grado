@@ -7,12 +7,18 @@ import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
 import { FavoritesService } from '../favorites.service';
 
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectionList } from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-favorites-leagues',
-  imports: [CommonModule],
+  imports: [CommonModule, MatCardModule, MatListModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule],
   templateUrl: './favorites-leagues.component.html',
-  styleUrl: './favorites-leagues.component.css'
+  styleUrl: './favorites-leagues.component.scss'
 })
 export class FavoritesLeaguesComponent implements OnInit {
   private profileSvc = inject(ProfileService);
@@ -69,7 +75,7 @@ export class FavoritesLeaguesComponent implements OnInit {
       // Llamada al backend: removeFavoriteLeague(...)
       this.favoriteLeaguesSvc.removeFavoriteLeague(leagueId).subscribe({
         next: () => {
-          this.favoriteLeagueIds.delete(leagueId.toString());
+          this.favoriteLeagueIds.delete(leagueId);
         },
         error: err => console.error('Error al quitar liga', err)
       });
@@ -84,4 +90,15 @@ export class FavoritesLeaguesComponent implements OnInit {
       });
     }
   }
+
+  onCheckboxChange(lg: LeagueDTO): void {
+  // clona el Set para que Angular detecte el cambio
+  const favs = new Set(this.favoriteLeagueIds);
+  favs.has(lg.slug) ? favs.delete(lg.slug) : favs.add(lg.slug);
+  this.favoriteLeagueIds = favs;
+
+  this.toggleFavorite(lg);          // tu llamada existente al servicio
+}
+
+  
 }

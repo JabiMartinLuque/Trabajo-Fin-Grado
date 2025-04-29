@@ -33,7 +33,6 @@ public class LeagueController {
         return ResponseEntity.ok(league);
     }
 
-    // Endpoint para obtener información de una liga por su nombre
     @GetMapping("")
     public List<LeagueDTO> getAllLeagues() {
         return leagueService.getAllLeagues();

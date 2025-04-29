@@ -1,7 +1,7 @@
 // src/app/services/favorites.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -21,17 +21,23 @@ export class FavoritesService {
     );
   }
   addFavoriteLeague(leagueId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.post(
       `${this.baseUrl}/leagues/add`,
-      { userId: this.userId, leagueId }
-    );
+      { userId: this.userId, leagueId },
+      { responseType: 'text' }   // ← texto, no JSON
+    ).pipe(map(() => void 0));   //   castea a void
   }
+  
   removeFavoriteLeague(leagueId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.delete(
       `${this.baseUrl}/leagues/remove`,
-      { userId: this.userId, leagueId }
-    );
+      {
+        body: { userId: this.userId, leagueId },
+        responseType: 'text'          // ← texto, no JSON
+      }
+    ).pipe(map(() => void 0));        // ← castea a void
   }
+  
 
   // ——— EQUIPOS ———
   getFavoriteTeams(): Observable<string[]> {
