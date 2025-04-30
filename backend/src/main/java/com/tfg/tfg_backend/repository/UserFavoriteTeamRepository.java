@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface UserFavoriteTeamRepository extends JpaRepository<UserFavoriteTeam, Long> {
     List<UserFavoriteTeam> findByUserId(Long userId);
+    UserFavoriteTeam findByUserIdAndTeamId(Long userId, String teamId);
 }
 

@@ -15,15 +15,18 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDividerModule } from '@angular/material/divider';
 import { HomeService } from './home.service';
 import { TeamEventDTO } from '../../dtos/team-event.dto';
-import { ScoreboardDTO } from '../../dtos/scoreboard';
+import { ScoreboardDTO, EventDTO } from '../../dtos/scoreboard';
 
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule, MatTabChangeEvent } from '@angular/material/tabs';
+
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
+  imports: [CommonModule, MatExpansionModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinnerModule, RouterModule, MatCardModule, MatTabsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -38,6 +41,9 @@ export class HomeComponent {
   athleteMatches: TeamEventDTO[] = []; // Lista de partidos de jugadores
   teamMatches: TeamEventDTO[] = []; // Lista de partidos de equipos
   leagueMatches: ScoreboardDTO[] = []; // Lista de partidos de ligas
+  flattenedLeagueEvents: EventDTO[] = []; // Lista de eventos de ligas aplanada
+
+  selectedLeagueSlug: string | null = null;
 
   constructor(
       private profileService: ProfileService, 
@@ -79,33 +85,45 @@ export class HomeComponent {
   
     this.user?.favoritePlayers?.forEach((fav) => {
       this.athletesService.getAthleteByid(fav.playerId).subscribe((athlete: any) => {
-        console.log(athlete);
         this.favoritePlayers.push(athlete);
+        this.fetchAthleteMatches(athlete.id); // Fetch matches for the athlete
       });
     });
   
     this.user?.favoriteTeams?.forEach((fav) => {
       this.teamsService.getTeamByid(fav.teamId).subscribe((team: any) => {
         this.favoriteTeams.push(team);
+        this.fetchTeamMatches(team.id); // Fetch matches for the team
       });
     });
 
     this.user?.favoriteLeagues?.forEach((fav) => {
       this.leaguesService.getLeagueById(fav.leagueId).subscribe((league: any) => {
         this.favoriteLeagues.push(league);
+        //this.fetchLeagueMatches(league.slug); // Fetch matches for the league
       });
     });
-    
+
+    setTimeout(() => {
+      if (this.favoriteLeagues.length > 0) {
+        this.selectedLeagueSlug = this.favoriteLeagues[0].slug;
+        this.fetchLeagueMatches(this.selectedLeagueSlug);
+      }
+    }, 0);
   }
 
   fetchAthleteMatches(athleteId: string): void {
-    if(this.athleteMatches.length <= 0) {
-      this.homeService.getMatchesByAthlete(athleteId).subscribe((matches: any) => {
-        console.log(matches);
-        this.athleteMatches.push(matches);
+    this.homeService.getMatchesByAthlete(athleteId)
+      .subscribe((matches: TeamEventDTO) => {
+        // Une viejos y nuevos
+        const all = [...this.athleteMatches, matches];
+        // Filtra por id único
+        this.athleteMatches = all.filter((m, idx, arr) =>
+          arr.findIndex(x => x.id === m.id) === idx
+        );
       });
-    }
   }
+  
   fetchTeamMatches(teamId: string): void {
     if(this.teamMatches.length <= 0) {
       this.homeService.getMatchesByTeam(teamId).subscribe((matches: any) => {
@@ -116,16 +134,17 @@ export class HomeComponent {
   }
   fetchLeagueMatches(leagueId: string): void {
     this.leagueMatches = [];
-
+    this.flattenedLeagueEvents = [];
 
     this.homeService.getMatchesByLeague(leagueId)
       .subscribe({
         next: (block: ScoreboardDTO) => {
           this.leagueMatches.push(block);
+          this.flattenedLeagueEvents = this.leagueMatches.flatMap(league => league.events);
         },
         error: err => console.error(err)
       });
-  } 
+  }
 
   goToMatch(matchId: string) {
     this.router.navigate(['/match', matchId]);

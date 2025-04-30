@@ -1,123 +1,192 @@
+<!-- home.component.html -->
 <div class="home-container" *ngIf="!isLoading; else loading">
 
-    <h2>Bienvenido, {{ user?.username }}</h2>
-  
-    <!-- === Jugadores favoritos === -->
-    <section>
-      <h3>Partidos de mis jugadores favoritos</h3>
-      <mat-accordion multi="false">
-        <mat-expansion-panel *ngFor="let ath of favoritePlayers"
-          (opened)="fetchAthleteMatches(ath.id)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ ath.fullName }}</mat-panel-title>
-          </mat-expansion-panel-header>
-  
-          <ng-container *ngIf="athleteMatches?.length; else noMatches">
-            <mat-list>
-              <mat-list-item *ngFor="let m of athleteMatches">
-                <mat-icon matListIcon>sports_soccer</mat-icon>
-                <div matLine>{{ m.name }}</div>
-                <div matLine class="secondary">{{ m.date | date:'short' }}</div>
-                <button mat-icon-button (click)="goToMatch(m.id)">
-                  <mat-icon>open_in_new</mat-icon>
-                </button>
-              </mat-list-item>
-            </mat-list>
-          </ng-container>
-          <ng-template #noMatches>
-            <p class="empty">No hay partidos para este jugador.</p>
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </section>
-  
-    <mat-divider></mat-divider>
-  
-    <!-- === Equipos favoritos === -->
-    <section>
-      <h3>Partidos de mis equipos favoritos</h3>
-      <mat-accordion multi="false">
-        <mat-expansion-panel *ngFor="let tm of favoriteTeams"
-          (opened)="fetchTeamMatches(tm.id)">
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ tm.displayName }}</mat-panel-title>
-          </mat-expansion-panel-header>
-  
-          <ng-container *ngIf="teamMatches?.length; else noTeam">
-            <mat-list>
-              <mat-list-item *ngFor="let m of teamMatches">
-                <mat-icon matListIcon>stadium</mat-icon>
-                <div matLine>{{ m.name }}</div>
-                <div matLine class="secondary">{{ m.date | date:'short' }}</div>
-                <button mat-icon-button (click)="goToMatch(m.id)">
-                  <mat-icon>open_in_new</mat-icon>
-                </button>
-              </mat-list-item>
-            </mat-list>
-          </ng-container>
-          <ng-template #noTeam>
-            <p class="empty">No hay partidos para este equipo.</p>
-          </ng-template>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </section>
-  
-    <mat-divider></mat-divider>
-  
-  <!-- === Ligas favoritas === -->
+  <h2>Bienvenido, {{ user?.username }}</h2>
+
+  <!-- ====================== JUGADORES FAVORITOS ====================== -->
+  <section>
+    <h3>Partidos de mis jugadores favoritos</h3>
+    <ng-container *ngIf="athleteMatches.length; else noMatches">
+      <div class="card-grid">
+        <mat-card class="match-card" *ngFor="let m of athleteMatches">
+          <mat-card-header>
+            <div class="teams-info">
+              <div class="team">
+                <img
+                  class="team-logo"
+                  [src]="m.competitions[0].competitors[0].team.logo"
+                  [alt]="m.competitions[0].competitors[0].team.name"
+                />
+                <span class="team-name">
+                  {{ m.competitions[0].competitors[0].team.name }}
+                </span>
+              </div>
+              <span class="vs">vs</span>
+              <div class="team">
+                <img
+                  class="team-logo"
+                  [src]="m.competitions[0].competitors[1].team.logo"
+                  [alt]="m.competitions[0].competitors[1].team.name"
+                />
+                <span class="team-name">
+                  {{ m.competitions[0].competitors[1].team.name }}
+                </span>
+              </div>
+            </div>
+            <mat-card-subtitle>{{ m.date | date:'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="goToMatch(m.id)">
+              Ver partido
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-container>
+    <ng-template #noMatches>
+      <p class="empty">No hay partidos para este jugador.</p>
+    </ng-template>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- ====================== EQUIPOS FAVORITOS ====================== -->
+  <section>
+    <h3>Partidos de mis equipos favoritos</h3>
+    <ng-container *ngIf="teamMatches.length; else noTeam">
+      <div class="card-grid">
+        <mat-card class="match-card" *ngFor="let m of teamMatches">
+          <mat-card-header>
+            <div class="teams-info">
+              <div class="team">
+                <img
+                  class="team-logo"
+                  [src]="m.competitions[0].competitors[0].team.logo"
+                  [alt]="m.competitions[0].competitors[0].team.name"
+                />
+                <span class="team-name">
+                  {{ m.competitions[0].competitors[0].team.name }}
+                </span>
+              </div>
+              <span class="vs">vs</span>
+              <div class="team">
+                <img
+                  class="team-logo"
+                  [src]="m.competitions[0].competitors[1].team.logo"
+                  [alt]="m.competitions[0].competitors[1].team.name"
+                />
+                <span class="team-name">
+                  {{ m.competitions[0].competitors[1].team.name }}
+                </span>
+              </div>
+            </div>
+            <mat-card-subtitle>{{ m.date | date:'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="goToMatch(m.id)">
+              Ver partido
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-container>
+    <ng-template #noTeam>
+      <p class="empty">No hay partidos para este equipo.</p>
+    </ng-template>
+  </section>
+
+  <mat-divider></mat-divider>
+
+  <!-- ====================== LIGAS FAVORITAS ====================== -->
   <section>
     <h3>Partidos de mis ligas favoritas</h3>
-
-    <mat-accordion multi="false">
-      <mat-expansion-panel
-        *ngFor="let lg of favoriteLeagues"
-        (opened)="fetchLeagueMatches(lg.slug)"
+    <mat-tab-group
+      mat-stretch-tabs
+      color="primary"
+      (selectedIndexChange)="
+        leagueMatches = [];
+        flattenedLeagueEvents = [];
+        fetchLeagueMatches(favoriteLeagues[$event].slug)
+      "
+    >
+      <mat-tab
+        *ngFor="let lg of favoriteLeagues; let idx = index"
+        [label]="lg.displayName"
       >
-        <mat-expansion-panel-header>
-          <mat-panel-title>{{ lg.displayName }}</mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <ng-container *ngIf="leagueMatches?.length; else noLeague">
-          <mat-list>
-
-            <!-- BLOQUE de eventos -->
-        <ng-container *ngFor="let block of leagueMatches">
-
-          <!-- fila del encabezado (icono + fecha) -->
-          <mat-list-item>
-            <mat-icon matListIcon>calendar_today</mat-icon>
-          </mat-list-item>
-
-          <!-- eventos del bloque, SIN icono -->
-          <mat-list-item *ngFor="let ev of block.events" class="event-item">
-            <a matLine [routerLink]="['/match', ev.id]">{{ ev.name }}</a>
-            <div matLine class="secondary">
-              {{ ev.date | date:'short' }}
-            </div>
-
-          </mat-list-item>
-
+        <ng-container *ngIf="flattenedLeagueEvents.length; else noLeague">
+          <div class="card-grid">
+            <mat-card
+              class="match-card"
+              *ngFor="let ev of flattenedLeagueEvents"
+            >
+              <mat-card-header>
+                <div class="teams-info">
+                  <div class="team">
+                    <img
+                      class="team-logo"
+                      [src]="
+                        ev.competitions[0].competitors[0].team.logo
+                      "
+                      [alt]="
+                        ev.competitions[0].competitors[0].team.name
+                      "
+                    />
+                    <span class="team-name">
+                      {{
+                        ev.competitions[0].competitors[0].team.name
+                      }}
+                    </span>
+                  </div>
+                  <span class="vs">vs</span>
+                  <div class="team">
+                    <img
+                      class="team-logo"
+                      [src]="
+                        ev.competitions[0].competitors[1].team.logo
+                      "
+                      [alt]="
+                        ev.competitions[0].competitors[1].team.name
+                      "
+                    />
+                    <span class="team-name">
+                      {{
+                        ev.competitions[0].competitors[1].team.name
+                      }}
+                    </span>
+                  </div>
+                </div>
+                <mat-card-subtitle>
+                  {{ ev.date | date:'short' }}
+                </mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-actions>
+                <button
+                  mat-button
+                  color="primary"
+                  [routerLink]="['/match', ev.id]"
+                >
+                  Ver detalles
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
         </ng-container>
-        </mat-list>
-      </ng-container>
 
-      <ng-template #noLeague>
-        <p class="empty">No hay partidos para esta liga.</p>
-      </ng-template>
-    </mat-expansion-panel>
-  </mat-accordion>
-</section>
+        <ng-template #noLeague>
+          <p class="empty">No hay partidos para esta liga.</p>
+        </ng-template>
 
+      </mat-tab>
+    </mat-tab-group>
+  </section>
 
+</div>
 
-
-  
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Cargando tus datos…</p>
   </div>
-  
-  <ng-template #loading>
-    <div class="loading-container">
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-      <p>Cargando tus datos...</p>
-    </div>
-  </ng-template>
-  
+</ng-template>
+
+

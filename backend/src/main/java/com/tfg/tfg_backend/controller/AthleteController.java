@@ -31,9 +31,9 @@ public class AthleteController {
         return ResponseEntity.ok(athletes);
     }
 
-    @GetMapping("/team/{team}")
-    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@PathVariable("team") String teamId) throws IOException { //http://localhost:8080/api/athletes/team/86
-        List<AthleteDTO> athletes = athleteService.getAthletesByTeam(teamId);
+    @GetMapping("league/{league}/team/{team}")
+    public ResponseEntity<List<AthleteDTO>> getAthletesByTeam(@PathVariable("team") String teamId, @PathVariable("league") String leagueId) throws IOException { //http://localhost:8080/api/athletes/team/86
+        List<AthleteDTO> athletes = athleteService.getAthletesByTeam(teamId, leagueId);
         return ResponseEntity.ok(athletes);
     }
 

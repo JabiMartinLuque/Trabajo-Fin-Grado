@@ -46,16 +46,20 @@ export class FavoritesService {
     );
   }
   addFavoriteTeam(teamId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.post(
       `${this.baseUrl}/teams/add`,
-      { userId: this.userId, teamId }
-    );
+      { userId: this.userId, teamId },
+      { responseType: 'text' }   // ← texto, no JSON
+    ).pipe(map(() => void 0));   //   castea a void
   }
   removeFavoriteTeam(teamId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.delete(
       `${this.baseUrl}/teams/remove`,
-      { userId: this.userId, teamId }
-    );
+      {
+        body: { userId: this.userId, teamId },
+        responseType: 'text'          // ← texto, no JSON
+      }
+    ).pipe(map(() => void 0));        // ← castea a void
   }
 
   // ——— JUGADORES ———
@@ -65,15 +69,19 @@ export class FavoritesService {
     );
   }
   addFavoritePlayer(playerId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.post(
       `${this.baseUrl}/players/add`,
-      { userId: this.userId, playerId }
-    );
+      { userId: this.userId, playerId },
+      { responseType: 'text' }   // ← texto, no JSON
+    ).pipe(map(() => void 0));   //   castea a void
   }
   removeFavoritePlayer(playerId: string): Observable<void> {
-    return this.http.post<void>(
+    return this.http.delete(
       `${this.baseUrl}/players/remove`,
-      { userId: this.userId, playerId }
-    );
+      {
+        body: { userId: this.userId, playerId },
+        responseType: 'text'          // ← texto, no JSON
+      }
+    ).pipe(map(() => void 0));        // ← castea a void
   }
 }

@@ -4,6 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { TeamDTO } from '../../../dtos/team.dto'; 
 
+
 @Injectable({
     providedIn: 'root'
   })
@@ -19,5 +20,10 @@ import { TeamDTO } from '../../../dtos/team.dto';
         console.log(this.http.get<TeamDTO>(url));
         return this.http.get<TeamDTO>(url);
         
+    }
+
+    getTeamsByLeague(leagueId: string): Observable<TeamDTO[]> {
+        const url = `${this.apiUrl}/league/${leagueId}`;
+        return this.http.get<TeamDTO[]>(url);
     }
 }

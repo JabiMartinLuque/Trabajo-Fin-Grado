@@ -19,4 +19,11 @@ import { AthleteDTO } from '../../../dtos/athlete.dto';
         return this.http.get<AthleteDTO>(url);
         
     }
+
+    getAthletesByTeam(teamId: string, leagueId: string): Observable<AthleteDTO[]> {
+        const url = `${this.apiUrl}/league/${leagueId}/team/${teamId}`;
+        console.log(url);
+        console.log(this.http.get<AthleteDTO[]>(url));
+        return this.http.get<AthleteDTO[]>(url);
+    }
 }

@@ -39,13 +39,17 @@ public class FavoriteTeamController {
     }
 
     // Endpoint para eliminar un equipo favorito
-    @DeleteMapping("/remove/{favoriteId}")
-    public ResponseEntity<String> removeFavoriteTeam(@PathVariable Long favoriteId) {
-        if (!favoriteTeamRepository.existsById(favoriteId)) {
+    @DeleteMapping("/remove")
+    public ResponseEntity<String> removeFavoriteTeam(@RequestBody FavoriteTeamRequest request) {
+        // Supongamos que en el repositorio implementas este método para buscar la asociación
+        UserFavoriteTeam favorite = favoriteTeamRepository.findByUserIdAndTeamId(request.getUserId(), request.getTeamId());
+        if (favorite == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Favorite team not found");
         }
-        favoriteTeamRepository.deleteById(favoriteId);
+        // Elimina el primer registro encontrado
+        favoriteTeamRepository.delete(favorite);
         return ResponseEntity.ok("Favorite team removed successfully!");
+        
     }
 
     // Endpoint para listar los equipos favoritos de un usuario

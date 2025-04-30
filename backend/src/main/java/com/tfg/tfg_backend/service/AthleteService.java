@@ -37,6 +37,7 @@ public class AthleteService {
         while (morePages) {
             String paginatedUrl = url + "&page=" + currentPage;
             String jsonResponse = restTemplate.getForObject(paginatedUrl, String.class);
+            System.out.println(jsonResponse);
             JsonNode root = objectMapper.readTree(jsonResponse);
             totalPages = root.path("pageCount").asInt(1);
 
@@ -84,10 +85,10 @@ public class AthleteService {
      * @return Lista de AthleteDTO con los detalles de cada atleta.
      * @throws IOException
      */
-    public List<AthleteDTO> getAthletesByTeam(String teamId) throws IOException {
+    public List<AthleteDTO> getAthletesByTeam(String teamId, String leagueId) throws IOException {
         List<AthleteDTO> result = new ArrayList<>();
         // URL base para obtener atletas del equipo (ajusta según la documentación de la API)
-        String baseUrl = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/seasons/2024/teams/"
+        String baseUrl = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" + leagueId + "/seasons/2024/teams/"
                          + teamId + "/athletes?lang=es&region=es";
 
         int currentPage = 1;

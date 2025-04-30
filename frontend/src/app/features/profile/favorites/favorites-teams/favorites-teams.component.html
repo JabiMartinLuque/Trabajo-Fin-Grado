@@ -1,1 +1,50 @@
-<p>favorites-teams works!</p>
+<div class="favorites-teams-container">
+
+    <!-- Paso 1: Selección de Liga -->
+    <h3>Elige una liga</h3>
+    <div class="cards-grid">
+      <mat-card *ngFor="let lg of allLeagues"
+                class="league-card"
+                [class.selected]="selectedLeagueSlug === lg.slug"
+                (click)="onLeagueSelect(lg.slug)">
+        <img mat-card-image [src]="lg.logos[0].href" [alt]="lg.displayName">
+        <mat-card-content>
+          <h4>{{ lg.displayName }}</h4>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <mat-progress-spinner *ngIf="isLoadingLeagues"
+                          mode="indeterminate"
+                          diameter="30"></mat-progress-spinner>
+  
+    <hr *ngIf="selectedLeagueSlug">
+  
+    <!-- Paso 2: Listado de Equipos -->
+    <div *ngIf="selectedLeagueSlug">
+      <h3>Equipos en {{ getSelectedLeagueDisplayName() }}</h3>
+  
+      <div class="cards-grid">
+        <mat-card *ngFor="let team of allTeams"
+                  class="team-card"
+                  [class.selected]="isFavorite(team)">
+          <mat-checkbox class="fav-checkbox"
+                        [checked]="isFavorite(team)"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleFavorite(team)"></mat-checkbox>
+  
+          <img mat-card-image [src]="team.logo" [alt]="team.displayName">
+          <mat-card-content>
+            <h4>{{ team.displayName }}</h4>
+          </mat-card-content>
+        </mat-card>
+      </div>
+  
+      <mat-progress-spinner *ngIf="isLoadingTeams"
+                            mode="indeterminate"
+                            diameter="30"></mat-progress-spinner>
+      <p *ngIf="!isLoadingTeams && !allTeams.length">No hay equipos disponibles.</p>
+    </div>
+  
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+  </div>
+  

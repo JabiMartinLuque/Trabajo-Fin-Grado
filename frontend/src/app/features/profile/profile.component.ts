@@ -24,7 +24,7 @@ import { LeagueDTO } from '../../dtos/league.dto';
   selector: 'app-profile',
   imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinner, RouterModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
   user: User | null = null;
