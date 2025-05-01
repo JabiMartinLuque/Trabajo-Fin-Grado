@@ -1,0 +1,394 @@
+.match-detail-card {
+    //max-width: 900px;
+    margin: auto;
+    .match-avatar {
+      background: var(--clr-primary-light);
+    }
+    .match-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .match-date {
+      font-size: .9rem;
+      opacity: .75;
+    }
+  }
+  
+  .competition-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+    font-size: .9rem;
+  }
+  
+  .competition-status {
+    margin-bottom: 1rem;
+  
+    mat-chip {
+      font-weight: 600;
+    }
+  }
+  
+  .match-tabs {
+    margin-top: 1rem;
+  }
+  
+  /* ── Resumen ───────────────────────────────────────────────────────── */
+  
+  .details-list {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    padding: 1rem 0;
+  }
+  
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  
+    .minute {
+      font-weight: 600;
+      width: 3rem;
+    }
+    mat-icon {
+      font-size: 1.1rem;
+      opacity: .8;
+    }
+    .detail-text {
+      font-weight: 500;
+    }
+    .actor {
+      font-style: italic;
+      opacity: .75;
+    }
+    .score {
+      font-weight: 600;
+      margin-left: auto;
+    }
+  }
+  
+  /* ── Alineación ────────────────────────────────────────────────────── */
+  
+  .lineup-section {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0;
+  
+    .lineup-team {
+      flex: 1;
+      background: var(--clr-surface-dark);
+      border-radius: 4px;
+      padding: .75rem;
+  
+      h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .formation {
+        font-size: .85rem;
+        opacity: .75;
+        margin-bottom: .5rem;
+      }
+      mat-list-item {
+        font-size: .85rem;
+        padding: .25rem 0;
+      }
+    }
+  }
+  
+  /* ── Estadísticas ─────────────────────────────────────────────────── */
+  
+  .stats-section {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  
+    .stats-team {
+      mat-table {
+        width: 100%;
+        margin-bottom: .75rem;
+      }
+      h4 {
+        margin: 0 0 .5rem;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+  
+  /* ── Texto vacío ───────────────────────────────────────────────────── */
+  
+  .empty {
+    text-align: center;
+    opacity: .7;
+    padding: 1rem 0;
+  }
+
+/* ── Resumen en dos columnas ───────────────────────────────────────── */
+.summary-container {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.summary-column {
+  flex: 1;
+  background: var(--clr-surface);
+  border-radius: 4px;
+  padding: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  &.home { border-right: 2px solid var(--clr-primary-light); }
+  &.away { border-left: 2px solid var(--clr-accent); }
+
+  .team-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+
+    .team-logo-summary {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+    .team-name-summary {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  }
+
+  .detail-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+
+    .minute {
+      width: 2.5rem;
+      font-weight: 600;
+    }
+    mat-icon {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .detail-text {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+/* ───── Alineación visual ───────────────────────────────────────── */
+
+.formation-field {
+  display: flex; flex-wrap: wrap; gap: 2rem;
+  .formation-row {
+    display: grid;
+    justify-items: center;
+    align-items: start;
+    gap: .75rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.formation-side {
+  flex: 1 1 300px;
+  background: var(--clr-surface);
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+  .side-title {
+    margin: 0 0 .75rem;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+/* camiseta con clip-path */
+.player-shirt {
+  position: relative;
+  width: 60px;
+  height: 70px;
+  background: var(--clr-primary);
+  clip-path: polygon(
+    20% 0%, 80% 0%,
+    100% 30%, 100% 100%,
+    0% 100%, 0% 30%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .shirt-number {
+    font-size: 1rem;
+    font-weight: 700;
+    color: white;
+  }
+  .shirt-name {
+    font-size: 0.6rem;
+    color: white;
+    text-align: center;
+    margin-top: 0.25rem;
+    line-height: 1.1;
+  }
+}
+
+/* suplentes con otro color */
+.bench .player-shirt {
+  background: var(--clr-accent);
+}
+
+/* sección de suplentes */
+.bench {
+  margin-top: 1rem;
+  h5 {
+    margin: 0 0 .5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .bench-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+}
+
+/* para 4-3-3 en la columna home o away */
+.formation-side.formation-4-3-3 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(3,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(3,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: 1fr; }
+}
+
+/* para 4-1-4-1 */
+.formation-side.formation-4-1-4-1 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(1,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(1,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(5) { grid-template-columns: 1fr; }
+}
+
+/* estilo para la tabla */
+.stats-section {
+  margin-top: 1rem;
+
+  .stats-title {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  mat-table {
+    width: 100%;
+    overflow: auto;
+  }
+
+  /* celdas resaltadas */
+  .highlight {
+    background-color: rgba(76,175,80,0.2); /* verde claro */
+    font-weight: 600;
+  }
+  
+  /* cabeceras centradas */
+  mat-header-cell {
+    text-align: center;
+    font-weight: 700;
+  }
+  /* alinear valores al centro */
+  mat-cell {
+    text-align: center;
+  }
+}
+
+/* --- Marcador vistoso en header --- */
+/* ── Forzar mat-card-header en columna y centrar todo ── */
+.match-detail-card {
+  mat-card-header {
+    display: flex !important;          /* reescribimos el flex */
+    flex-direction: column;            /* apilamos vertical */
+    align-items: center;               /* centramos horizontal */
+    text-align: center;                /* para subtítulos, etc. */
+
+    /* Opcional: espacio extra tras la fecha */
+    .match-date {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Ahora el scoreboard ocupa toda la anchura disponible */
+    .scoreboard {
+      width: 100%;
+      display: flex;
+      justify-content: center;         /* centramos el contenido */
+      margin-top: 0.5rem;
+      gap: 1rem;
+    }
+  }
+}
+
+
+.team-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &.away {
+    flex-direction: row-reverse; /* logo a la derecha para visitante */
+  }
+
+  .team-logo-small {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  }
+
+  .score {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--clr-primary);
+  }
+}
+
+.dash {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #bbb;
+}
+
+/* Tamaño máximo del logo en el marcador */
+.scoreboard .team-score .team-logo-small {
+  width: 32px;        /* ancho fijo */
+  height: 32px;       /* alto fijo */
+  max-width: 32px;    /* nunca más grande */
+  max-height: 32px;   /* nunca más alto */
+  object-fit: contain;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Por si algún estilo de mat-card-avatar lo escala */
+.scoreboard .team-score.mat-card-avatar,
+.scoreboard .team-score .mat-card-avatar,
+.scoreboard .team-score img[mat-card-avatar] {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+
+
+  

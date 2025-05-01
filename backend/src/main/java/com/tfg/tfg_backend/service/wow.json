@@ -1,0 +1,617 @@
+{
+    "id": "724692",
+    "uid": "s:600~l:3951~e:724692",
+    "date": "2025-01-06T18:00Z",
+    "name": "Real Madrid en CD Minera",
+    "shortName": "RMA @ MIN",
+    "season": {
+      "year": 2024,
+      "type": 12920,
+      "slug": "round-of-32"
+    },
+    "competitions": [
+      {
+        "id": "724692",
+        "uid": "s:600~l:740~e:724692~c:724692",
+        "date": "2025-01-06T18:00Z",
+        "startDate": "2025-01-06T18:00Z",
+        "attendance": 14000,
+        "timeValid": true,
+        "recent": false,
+        "status": {
+          "clock": 5400,
+          "displayClock": "90'+3'",
+          "period": 2,
+          "type": {
+            "id": "28",
+            "name": "STATUS_FULL_TIME",
+            "state": "post",
+            "completed": true,
+            "description": "Tiempo Completo",
+            "detail": "Finalizado",
+            "shortDetail": "F"
+          }
+        },
+        "venue": {
+          "id": "3881",
+          "fullName": "Cartagonova",
+          "address": {
+            "city": "Cartagena",
+            "country": "España"
+          }
+        },
+        "format": {
+          "regulation": {
+            "periods": 2
+          }
+        },
+        "notes": [],
+        "geoBroadcasts": [],
+        "broadcasts": [],
+        "broadcast": "",
+        "competitors": [
+          {
+            "id": "22437",
+            "uid": "s:600~t:22437",
+            "type": "team",
+            "order": 0,
+            "homeAway": "home",
+            "winner": false,
+            "advance": false,
+            "form": "PGG",
+            "score": "0",
+            "team": {
+              "id": "22437",
+              "uid": "s:600~t:22437",
+              "abbreviation": "MIN",
+              "displayName": "CD Minera",
+              "shortDisplayName": "Minera",
+              "name": "CD Minera",
+              "location": "CD Minera",
+              "color": "000000",
+              "alternateColor": "C60000",
+              "isActive": true,
+              "logo": "",
+              "links": [
+                {
+                  "rel": [
+                    "clubhouse",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/_/id/22437/cd-minera",
+                  "text": "Sede",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "stats",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/estadisticas/_/id/22437/cd-minera",
+                  "text": "Estadísticas",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "schedule",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/calendario/_/id/22437/cd-minera",
+                  "text": "Calendario",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "squad",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/plantel/_/id/22437/cd-minera",
+                  "text": "Plantel",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                }
+              ]
+            },
+            "statistics": [
+              {
+                "name": "appearances",
+                "abbreviation": "Ap",
+                "displayValue": "16"
+              },
+              {
+                "name": "foulsCommitted",
+                "abbreviation": "FC",
+                "displayValue": "11"
+              },
+              {
+                "name": "wonCorners",
+                "abbreviation": "CW",
+                "displayValue": "0"
+              },
+              {
+                "name": "goalAssists",
+                "abbreviation": "A",
+                "displayValue": "0"
+              },
+              {
+                "name": "possessionPct",
+                "abbreviation": "PP",
+                "displayValue": "33.5"
+              },
+              {
+                "name": "shotAssists",
+                "abbreviation": "SHAST",
+                "displayValue": "3"
+              },
+              {
+                "name": "shotsOnTarget",
+                "abbreviation": "TM",
+                "displayValue": "1"
+              },
+              {
+                "name": "totalGoals",
+                "abbreviation": "G",
+                "displayValue": "0"
+              },
+              {
+                "name": "totalShots",
+                "abbreviation": "TT",
+                "displayValue": "4"
+              }
+            ]
+          },
+          {
+            "id": "86",
+            "uid": "s:600~t:86",
+            "type": "team",
+            "order": 1,
+            "homeAway": "away",
+            "winner": true,
+            "advance": true,
+            "form": "PGGPG",
+            "score": "5",
+            "team": {
+              "id": "86",
+              "uid": "s:600~t:86",
+              "abbreviation": "MAD",
+              "displayName": "Real Madrid",
+              "shortDisplayName": "Real Madrid",
+              "name": "Real Madrid",
+              "location": "Real Madrid",
+              "color": "ffffff",
+              "alternateColor": "f28800",
+              "isActive": true,
+              "logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+              "links": [
+                {
+                  "rel": [
+                    "clubhouse",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/_/id/86/real-madrid",
+                  "text": "Sede",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "stats",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/estadisticas/_/id/86/real-madrid",
+                  "text": "Estadísticas",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "schedule",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/calendario/_/id/86/real-madrid",
+                  "text": "Calendario",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                },
+                {
+                  "rel": [
+                    "squad",
+                    "desktop",
+                    "team"
+                  ],
+                  "href": "https://www.espn.es/futbol/equipo/plantel/_/id/86/real-madrid",
+                  "text": "Plantel",
+                  "isExternal": false,
+                  "isPremium": false,
+                  "isHidden": false
+                }
+              ],
+              "venue": {
+                "id": "1568"
+              }
+            },
+            "statistics": [
+              {
+                "name": "appearances",
+                "abbreviation": "Ap",
+                "displayValue": "16"
+              },
+              {
+                "name": "foulsCommitted",
+                "abbreviation": "FC",
+                "displayValue": "13"
+              },
+              {
+                "name": "wonCorners",
+                "abbreviation": "CW",
+                "displayValue": "9"
+              },
+              {
+                "name": "goalAssists",
+                "abbreviation": "A",
+                "displayValue": "4"
+              },
+              {
+                "name": "possessionPct",
+                "abbreviation": "PP",
+                "displayValue": "66.5"
+              },
+              {
+                "name": "shotAssists",
+                "abbreviation": "SHAST",
+                "displayValue": "24"
+              },
+              {
+                "name": "shotsOnTarget",
+                "abbreviation": "TM",
+                "displayValue": "21"
+              },
+              {
+                "name": "totalGoals",
+                "abbreviation": "G",
+                "displayValue": "5"
+              },
+              {
+                "name": "totalShots",
+                "abbreviation": "TT",
+                "displayValue": "33"
+              }
+            ]
+          }
+        ],
+        "details": [
+          {
+            "type": {
+              "id": "70",
+              "text": "Gol, anotación"
+            },
+            "clock": {
+              "value": 286,
+              "displayValue": "5'"
+            },
+            "team": {
+              "id": "86"
+            },
+            "scoreValue": 1,
+            "scoringPlay": true,
+            "redCard": false,
+            "yellowCard": false,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "235818",
+                "displayName": "Federico Valverde",
+                "shortName": "F Valverde",
+                "fullName": "Federico Valverde",
+                "jersey": "8",
+                "team": {
+                  "id": "86"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/235818/federico-valverde",
+                    "isHidden": false
+                  }
+                ],
+                "position": "M"
+              }
+            ]
+          },
+          {
+            "type": {
+              "id": "94",
+              "text": "Tarjeta amarilla"
+            },
+            "clock": {
+              "value": 565,
+              "displayValue": "10'"
+            },
+            "team": {
+              "id": "22437"
+            },
+            "scoreValue": 0,
+            "scoringPlay": false,
+            "redCard": false,
+            "yellowCard": true,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "279747",
+                "displayName": "Juan Miguel Heredero",
+                "shortName": "J Heredero",
+                "fullName": "Juan Miguel Heredero",
+                "jersey": "3",
+                "team": {
+                  "id": "22437"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/279747/juan-miguel-heredero",
+                    "isHidden": false
+                  }
+                ],
+                "position": "D"
+              }
+            ]
+          },
+          {
+            "type": {
+              "id": "137",
+              "text": "Gol de cabeza"
+            },
+            "clock": {
+              "value": 765,
+              "displayValue": "13'"
+            },
+            "team": {
+              "id": "86"
+            },
+            "scoreValue": 1,
+            "scoringPlay": true,
+            "redCard": false,
+            "yellowCard": false,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "285150",
+                "displayName": "Eduardo Camavinga",
+                "shortName": "E Camavinga",
+                "fullName": "Eduardo Camavinga",
+                "jersey": "6",
+                "team": {
+                  "id": "86"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/285150/eduardo-camavinga",
+                    "isHidden": false
+                  }
+                ],
+                "position": "M"
+              }
+            ]
+          },
+          {
+            "type": {
+              "id": "70",
+              "text": "Gol, anotación"
+            },
+            "clock": {
+              "value": 1670,
+              "displayValue": "28'"
+            },
+            "team": {
+              "id": "86"
+            },
+            "scoreValue": 1,
+            "scoringPlay": true,
+            "redCard": false,
+            "yellowCard": false,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "310452",
+                "displayName": "Arda Güler",
+                "shortName": "A Güler",
+                "fullName": "Arda Güler",
+                "jersey": "15",
+                "team": {
+                  "id": "86"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/310452/arda-guler",
+                    "isHidden": false
+                  }
+                ],
+                "position": "M"
+              }
+            ]
+          },
+          {
+            "type": {
+              "id": "70",
+              "text": "Gol, anotación"
+            },
+            "clock": {
+              "value": 3280,
+              "displayValue": "55'"
+            },
+            "team": {
+              "id": "86"
+            },
+            "scoreValue": 1,
+            "scoringPlay": true,
+            "redCard": false,
+            "yellowCard": false,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "76762",
+                "displayName": "Luka Modric",
+                "shortName": "L Modric",
+                "fullName": "Luka Modric",
+                "jersey": "10",
+                "team": {
+                  "id": "86"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/76762/luka-modric",
+                    "isHidden": false
+                  }
+                ],
+                "position": "M"
+              }
+            ]
+          },
+          {
+            "type": {
+              "id": "70",
+              "text": "Gol, anotación"
+            },
+            "clock": {
+              "value": 5265,
+              "displayValue": "88'"
+            },
+            "team": {
+              "id": "86"
+            },
+            "scoreValue": 1,
+            "scoringPlay": true,
+            "redCard": false,
+            "yellowCard": false,
+            "penaltyKick": false,
+            "ownGoal": false,
+            "shootout": false,
+            "athletesInvolved": [
+              {
+                "id": "310452",
+                "displayName": "Arda Güler",
+                "shortName": "A Güler",
+                "fullName": "Arda Güler",
+                "jersey": "15",
+                "team": {
+                  "id": "86"
+                },
+                "links": [
+                  {
+                    "rel": [
+                      "playercard",
+                      "desktop",
+                      "athlete"
+                    ],
+                    "href": "https://www.espn.es/futbol/jugador/_/id/310452/arda-guler",
+                    "isHidden": false
+                  }
+                ],
+                "position": "M"
+              }
+            ]
+          }
+        ],
+        "wasSuspended": false,
+        "playByPlayAvailable": true,
+        "playByPlayAthletes": true
+      }
+    ],
+    "status": {
+      "clock": 5400,
+      "displayClock": "90'+3'",
+      "period": 2,
+      "type": {
+        "id": "28",
+        "name": "STATUS_FULL_TIME",
+        "state": "post",
+        "completed": true,
+        "description": "Tiempo Completo",
+        "detail": "Finalizado",
+        "shortDetail": "F"
+      }
+    },
+    "venue": {
+      "displayName": "Cartagonova"
+    },
+    "links": [
+      {
+        "language": "es-ES",
+        "rel": [
+          "summary",
+          "desktop",
+          "event"
+        ],
+        "href": "https://www.espn.es/futbol/partido/_/juegoId/724692/real-madrid-cd-minera",
+        "text": "Resumen",
+        "shortText": "Resumen",
+        "isExternal": false,
+        "isPremium": false,
+        "isHidden": false
+      },
+      {
+        "language": "es-ES",
+        "rel": [
+          "stats",
+          "desktop",
+          "event"
+        ],
+        "href": "https://www.espn.es/futbol/numeritos/_/juegoId/724692",
+        "text": "Estadísticas",
+        "shortText": "Estadísticas",
+        "isExternal": false,
+        "isPremium": false,
+        "isHidden": false
+      }
+    ]
+  }

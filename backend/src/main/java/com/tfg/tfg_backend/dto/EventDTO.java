@@ -81,6 +81,9 @@ public class EventDTO {
         @JsonProperty("competitors")
         private List<CompetitorDTO> competitors;
 
+        @JsonProperty("details")
+        private List<DetailDTO> details; // Añadido para los detalles del evento
+
         // Getters y setters
 
         public String getStartDate() {
@@ -113,6 +116,14 @@ public class EventDTO {
 
         public void setStatus(StatusDTO status) {
             this.status = status;
+        }
+
+        public List<DetailDTO> getDetails() {
+            return details;
+        }
+
+        public void setDetails(List<DetailDTO> details) {
+            this.details = details;
         }
     }
 
@@ -197,17 +208,13 @@ public class EventDTO {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class VenueDTO {
 
-        @JsonProperty("displayName")
-        private String displayName;
+        private String fullName;
 
-        // Getters y setters
-
-        public String getDisplayName() {
-            return displayName;
+        public String getFullName() {
+            return fullName;
         }
-
-        public void setDisplayName(String displayName) {
-            this.displayName = displayName;
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
     }
 
@@ -225,6 +232,10 @@ public class EventDTO {
 
         @JsonProperty("team")
         private TeamDTO team;
+
+        private LineUpDTO lineUp; // Añadido para la alineación
+
+        private List<StatisticDTO> statistics; // Añadido para las estadísticas
 
         // Getters y setters
 
@@ -260,6 +271,229 @@ public class EventDTO {
             this.team = team;
         }
 
+        public LineUpDTO getLineUp() {
+            return lineUp;
+        }
+
+        public void setLineUp(LineUpDTO lineUp) {
+            this.lineUp = lineUp;
+        }
+
+        public List<StatisticDTO> getStatistics() {
+            return statistics;
+        }
+
+        public void setStatistics(List<StatisticDTO> statistics) {
+            this.statistics = statistics;
+        }
+
     }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class DetailDTO {
+        private TypeDetailDTO type;
+        private ClockDTO clock;
+        private TeamIDDTO team;
+        private String scoreValue;
+        private Boolean scoringPlay;
+        private Boolean redCard;
+        private Boolean yellowCard;
+        private Boolean penaltyKick;
+        private Boolean ownGoal;
+        private Boolean shootout;
+        private List<AthleteInvolvedDTO> athletesInvolved;
+
+        public TypeDetailDTO getType() {
+            return type;
+        }
+        public void setType(TypeDetailDTO type) {
+            this.type = type;
+        }
+        public ClockDTO getClock() {
+            return clock;
+        }
+        public void setClock(ClockDTO clock) {
+            this.clock = clock;
+        }
+        public TeamIDDTO getTeam() {
+            return team;
+        }
+        public void setTeam(TeamIDDTO team) {
+            this.team = team;
+        }
+        public String getScoreValue() {
+            return scoreValue;
+        }
+        public void setScoreValue(String scoreValue) {
+            this.scoreValue = scoreValue;
+        }
+        public Boolean getScoringPlay() {
+            return scoringPlay;
+        }
+        public void setScoringPlay(Boolean scoringPlay) {
+            this.scoringPlay = scoringPlay;
+        }
+        public Boolean getRedCard() {
+            return redCard;
+        }
+        public void setRedCard(Boolean redCard) {
+            this.redCard = redCard;
+        }
+        public Boolean getYellowCard() {
+            return yellowCard;
+        }
+        public void setYellowCard(Boolean yellowCard) {
+            this.yellowCard = yellowCard;
+        }
+        public Boolean getPenaltyKick() {
+            return penaltyKick;
+        }
+        public void setPenaltyKick(Boolean penaltyKick) {
+            this.penaltyKick = penaltyKick;
+        }
+        public Boolean getOwnGoal() {
+            return ownGoal;
+        }
+        public void setOwnGoal(Boolean ownGoal) {
+            this.ownGoal = ownGoal;
+        }
+        public Boolean getShootout() {
+            return shootout;
+        }
+        public void setShootout(Boolean shootout) {
+            this.shootout = shootout;
+        }
+        public List<AthleteInvolvedDTO> getAthletesInvolved() {
+            return athletesInvolved;
+        }
+        public void setAthletesInvolved(List<AthleteInvolvedDTO> athletesInvolved) {
+            this.athletesInvolved = athletesInvolved;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class TypeDetailDTO {
+        private String id;
+        private String text;
+
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+        public String getText() {
+            return text;
+        }
+        public void setText(String text) {
+            this.text = text;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class ClockDTO {
+        private String value;
+        private String displayValue;
+
+        public String getValue() {
+            return value;
+        }
+        public void setValue(String value) {
+            this.value = value;
+        }
+        public String getDisplayValue() {
+            return displayValue;
+        }
+        public void setDisplayValue(String displayValue) {
+            this.displayValue = displayValue;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class TeamIDDTO {
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+        
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class AthleteInvolvedDTO {
+        private String id;
+        private String displayName;
+        private String shortName;
+        private String fullName;
+        private String jersey;
+        private TeamIDDTO team;
+
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+        public String getDisplayName() {
+            return displayName;
+        }
+        public void setDisplayName(String displayName) {
+            this.displayName = displayName;
+        }
+        public String getShortName() {
+            return shortName;
+        }
+        public void setShortName(String shortName) {
+            this.shortName = shortName;
+        }
+        public String getFullName() {
+            return fullName;
+        }
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
+        public String getJersey() {
+            return jersey;
+        }
+        public void setJersey(String jersey) {
+            this.jersey = jersey;
+        }
+        public TeamIDDTO getTeam() {
+            return team;
+        }
+        public void setTeam(TeamIDDTO team) {
+            this.team = team;
+        }
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class StatisticDTO {
+        private String name;
+        private String abbreviation;
+        private String displayValue;
+
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+        public String getAbbreviation() {
+            return abbreviation;
+        }
+        public void setAbbreviation(String abbreviation) {
+            this.abbreviation = abbreviation;
+        }
+        public String getDisplayValue() {
+            return displayValue;
+        }
+        public void setDisplayValue(String displayValue) {
+            this.displayValue = displayValue;
+        }
+    }
+        
 }
 

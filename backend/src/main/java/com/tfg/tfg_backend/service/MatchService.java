@@ -9,11 +9,14 @@ import com.tfg.tfg_backend.dto.ScoreboardDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamEventDTO;
 import com.tfg.tfg_backend.dto.ScoreValueDTO;
+import com.tfg.tfg_backend.dto.LineUpDTO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.sound.sampled.Line;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -165,7 +168,7 @@ public class MatchService {
 
     public EventDTO getMatchById(String id) throws IOException, JsonMappingException, JsonProcessingException {
         String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard/" + id + "?lang=es&region=es";
-        return restTemplate.getForObject(url, EventDTO.class);
+        return resolveReferences(restTemplate.getForObject(url, EventDTO.class));
     }
 
     public TeamEventDTO getAthleteMatches(String id) throws IOException, JsonMappingException, JsonProcessingException {
@@ -234,9 +237,67 @@ public class MatchService {
                             competitor.setTeam(team);
                         }
                     }
+
+                    if(competitor.getLineup() != null) {
+                        String lineupRef = competitor.getLineup().getRef();
+                        System.out.println("Lineup Ref: " + lineupRef);
+                        if (lineupRef != null && !lineupRef.isEmpty()) {
+                            // Llamada a ESPN para obtener el objeto LineupDTO completo
+                            LineUpDTO lineup = restTemplate.getForObject(lineupRef, LineUpDTO.class);
+                            competitor.setLineup(lineup);
+                        }
+                    }
                 }
             }
         }
         return event;
+    }
+
+    private EventDTO resolveReferences(EventDTO event) throws IOException, JsonMappingException, JsonProcessingException {
+        // Aquí puedes resolver las referencias de los equipos y atletas
+        for (EventDTO.CompetitionDTO competition : event.getCompetitions()) {
+            if (competition.getCompetitors() != null) {
+                for (EventDTO.CompetitorDTO competitor : competition.getCompetitors()) {
+                    // Para SCORE
+                    String league = getLeagueByTeamId(competitor.getTeam().getId());
+
+                    String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + 
+                    "/events/" + event.getId() + "/competitions/" + event.getId() + "/competitors/" + competitor.getTeam().getId() + "/roster?lang=es&region=es";
+
+                    LineUpDTO lineup = restTemplate.getForObject(url, LineUpDTO.class);
+                    competitor.setLineUp(lineup);
+                }
+            }
+        }
+        
+        return event;
+    }
+
+    private String getLeagueByTeamId(String teamId) throws JsonMappingException, JsonProcessingException {
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
+                + teamId + "/leagues?lang=es&region=es";
+        String response = restTemplate.getForObject(url, String.class);
+        JsonNode root = objectMapper.readTree(response);
+        JsonNode items = root.path("items");
+    
+        if (items.isArray() && items.size() > 0) {
+            for (JsonNode item : items) {
+                String leagueRef = item.path("$ref").asText();
+                if (leagueRef != null && !leagueRef.isEmpty()) {
+                    String[] parts = leagueRef.split("/");
+                    if (parts.length > 7) {
+                        String leagueSegment = parts[7];
+                        if (leagueSegment.contains("?")) {
+                            leagueSegment = leagueSegment.split("\\?")[0];
+                        }
+                        // Busca específicamente "esp.1"
+                        if ("esp.1".equals(leagueSegment) || "eng.1".equals(leagueSegment) || "fra.1".equals(leagueSegment) || "ger.1".equals(leagueSegment) || "ita.1".equals(leagueSegment)) {
+                            return leagueSegment;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

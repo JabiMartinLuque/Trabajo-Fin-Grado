@@ -2,6 +2,8 @@ package com.tfg.tfg_backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.security.KeyStore.Entry;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -520,7 +522,7 @@ public class TeamEventDTO {
         private Reference teamRef;
         private Reference scoreRef;
         private Reference linescores;
-        private Reference roster;
+        private Reference rosterRef;
         private Reference statistics;
         private Reference leaders;
         private Reference record;
@@ -528,6 +530,8 @@ public class TeamEventDTO {
 
         private ScoreValueDTO score;
         private TeamDTO team;
+        @JsonProperty("roster")
+        private LineUpDTO lineup;
 
         public String getRef() {
             return ref;
@@ -589,11 +593,11 @@ public class TeamEventDTO {
         public void setLinescores(Reference linescores) {
             this.linescores = linescores;
         }
-        public Reference getRoster() {
-            return roster;
+        public Reference getRosterRef() {
+            return rosterRef;
         }
-        public void setRoster(Reference roster) {
-            this.roster = roster;
+        public void setRosterRef(Reference rosterRef) {
+            this.rosterRef = rosterRef;
         }
         public Reference getStatistics() {
             return statistics;
@@ -630,6 +634,12 @@ public class TeamEventDTO {
         }
         public void setTeam(TeamDTO team) {
             this.team = team;
+        }
+        public LineUpDTO getLineup() {
+            return lineup;
+        }
+        public void setLineup(LineUpDTO lineup) {
+            this.lineup = lineup;
         }
     }
 
@@ -700,5 +710,4 @@ public class TeamEventDTO {
             this.clock = clock;
         }
     }
-
 }

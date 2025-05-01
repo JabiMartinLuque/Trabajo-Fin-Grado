@@ -32,7 +32,7 @@
                 <strong>Competition Start:</strong> {{ comp.startDate | date:'shortTime' }}
               </p>
               <p>
-                <strong>Venue:</strong> {{ comp.venue.displayName }}
+                <strong>Venue:</strong> {{ comp.venue.fullName }}
               </p>
               <div *ngIf="comp.status">
                 <p>

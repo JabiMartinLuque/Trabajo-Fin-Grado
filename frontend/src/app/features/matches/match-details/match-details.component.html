@@ -1,54 +1,226 @@
-<!-- src/app/features/match-detail/match-detail.component.html -->
 <mat-card class="match-detail-card m-4">
-    <mat-card-header>
-      <!-- Avatar con ícono de partido -->
-      <div mat-card-avatar class="match-avatar">
-        <mat-icon color="primary" style="font-size: 40px;">sports_soccer</mat-icon>
-      </div>
-      <mat-card-title class="match-title">
-        {{ event.name }} ({{ event.shortName }})
-      </mat-card-title>
-      <mat-card-subtitle class="match-date">
-        {{ event.date | date:'medium' }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    
-    <mat-card-content>
-      <div *ngFor="let comp of event.competitions" class="competition-section" fxLayout="column" fxLayoutGap="8px">
-        <div class="competition-header" fxLayout="row" fxLayoutAlign="space-between center">
-          <span class="competition-start">
-            <strong>Inicio:</strong> {{ comp.startDate | date:'shortTime' }}
-          </span>
-          <span class="competition-venue">
-            <strong>Sede:</strong> {{ comp.venue.displayName }}
-          </span>
+  <mat-card-header>
+
+    <!-- Título y subtítulo -->
+    <mat-card-title class="match-title">
+      {{ event.name }} ({{ event.shortName }})
+    </mat-card-title>
+    <mat-card-subtitle class="match-date">
+      {{ event.date | date:'medium' }}
+    </mat-card-subtitle>
+
+    <!-- NUEVO BLOQUE: Resultado -->
+    <div class="scoreboard" *ngFor="let comp of event.competitions; first as isFirst">
+      <!-- Solo lo mostramos una vez -->
+      <ng-container *ngIf="isFirst">
+        <div class="team-score">
+          <img
+            class="team-logo-small"
+            [src]="getHome(comp).team.logo"
+            [alt]="getHome(comp).team.displayName"
+          />
+          <span class="score">{{ getHome(comp).score }}</span>
         </div>
-  
-        <!-- Estado del partido en directo -->
+        <span class="dash">–</span>
+        <div class="team-score away">
+          <span class="score">{{ getAway(comp).score }}</span>
+          <img
+            class="team-logo-small"
+            [src]="getAway(comp).team.logo"
+            [alt]="getAway(comp).team.displayName"
+          />
+        </div>
+      </ng-container>
+    </div>
+  </mat-card-header>
+
+
+  <mat-card-content>
+    <ng-container *ngFor="let comp of event.competitions">
+      <!-- Cabecera de competición -->
+      <div class="competition-section">
+        <div class="competition-header">
+          <span><strong>Inicio:</strong> {{ comp.startDate | date:'shortTime' }}</span>
+          <span><strong>Sede:</strong> {{ comp.venue.fullName }}</span>
+        </div>
         <div *ngIf="comp.status" class="competition-status">
           <mat-chip color="accent" selected>
-            {{ comp.status.type.name }} – {{ comp.status.displayClock }} ({{ comp.status.clock }} seg)
+            {{ comp.status.type.name }} – {{ comp.status.displayClock }}
           </mat-chip>
         </div>
-        
-        <mat-divider></mat-divider>
-        
-        <!-- Información de los competidores -->
-        <div class="competitors-section" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="space-between center">
-          <div *ngFor="let competitor of comp.competitors" class="competitor">
-            <h3 class="competitor-name">{{ competitor.team.displayName }}</h3>
-            <p class="competitor-score">
-              <strong>Score:</strong> {{ competitor.score }} 
-              <span *ngIf="competitor.homeAway === 'home'">(Local)</span>
-              <span *ngIf="competitor.homeAway === 'away'">(Visitante)</span>
-            </p>
-          </div>
-        </div>
       </div>
-    </mat-card-content>
-    
-    <mat-card-actions align="end">
-      <button mat-raised-button color="primary">Ver Detalles</button>
-    </mat-card-actions>
-  </mat-card>
+
+      <!-- Pestañas: Resumen / Alineación / Estadísticas -->
+      <mat-tab-group class="match-tabs">
+        <!-- 1. Resumen de jugadas -->
+        <mat-tab label="Resumen">
+          <div class="summary-container" *ngFor="let comp of event.competitions">
+            <!-- Columna HOME -->
+            <div class="summary-column home">
+              <div class="team-header">
+                <img
+                  class="team-logo-summary"
+                  [src]="getHomeTeamLogo(comp)"
+                  [alt]="getHomeTeamName(comp)"
+                />
+                <span class="team-name-summary">
+                  {{ getHomeTeamName(comp) }}
+                </span>
+              </div>
+              <div *ngFor="let d of getFilteredDetails(comp, 'home')" class="detail-item">
+                <span class="minute">{{ d.clock.displayValue }}</span>
+                <mat-icon *ngIf="d.scoringPlay">sports_soccer</mat-icon>
+                <mat-icon *ngIf="d.yellowCard">warning</mat-icon>
+                <mat-icon *ngIf="d.redCard">dangerous</mat-icon>
+                <span class="detail-text">{{ d.type.text }}</span>
+                <!-- Aquí iteramos sobre d.athletesInvolved -->
+                <span
+                  *ngFor="let ath of d.athletesInvolved; let i = index"
+                  class="actor"
+                >
+                  {{ ath.fullName }}<span *ngIf="i < d.athletesInvolved.length - 1">,</span>
+                </span>
+              </div>
+            </div>
+        
+            <!-- Columna AWAY -->
+            <div class="summary-column away">
+              <div class="team-header">
+                <img
+                  class="team-logo-summary"
+                  [src]="getAwayTeamLogo(comp)"
+                  [alt]="getAwayTeamName(comp)"
+                />
+                <span class="team-name-summary">
+                  {{ getAwayTeamName(comp) }}
+                </span>
+              </div>
+              <div *ngFor="let d of getFilteredDetails(comp, 'away')" class="detail-item">
+                <span class="minute">{{ d.clock.displayValue }}</span>
+                <mat-icon *ngIf="d.scoringPlay">sports_soccer</mat-icon>
+                <mat-icon *ngIf="d.yellowCard">warning</mat-icon>
+                <mat-icon *ngIf="d.redCard">dangerous</mat-icon>
+                <span class="detail-text">{{ d.type.text }}</span>
+                <!-- Y aquí igual -->
+                <span
+                  *ngFor="let ath of d.athletesInvolved; let i = index"
+                  class="actor"
+                >
+                  {{ ath.fullName }}<span *ngIf="i < d.athletesInvolved.length - 1">,</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- 2. Alineación -->
+        <mat-tab label="Alineación">
+          <div *ngFor="let comp of event.competitions" class="formation-field">
+        
+            <!-- aplicamos la formación por columna -->
+            <div
+              class="formation-side"
+              *ngFor="let side of sides"
+              [ngClass]=" getFormationClass(comp, side) "
+            >
+              <h4 class="side-title">
+                {{ side === 'home' 
+                   ? getHomeTeamName(comp)
+                   : getAwayTeamName(comp) 
+                }}
+              </h4>
+        
+              <!-- filas invertidas: ataque arriba, portero abajo -->
+              <ng-container *ngIf="getFormationRows(comp, side) as rows">
+                <ng-container 
+                  *ngFor="let rowCount of rows.slice().reverse(); let ri = index"
+                >
+                  <div
+                    class="formation-row"
+                    [style.gridTemplateColumns]="'repeat(' + rowCount + ', 1fr)'"
+                  >
+                    <div
+                      class="player-shirt"
+                      *ngFor="
+                        let p of getStartersByRow(
+                          comp,
+                          rows.length - 1 - ri,
+                          side
+                        )
+                      "
+                    >
+                      <div class="shirt-number">{{ p.jersey }}</div>
+                      <div class="shirt-name">{{ getPlayerName(p.playerId) }}</div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+        
+              <!-- suplentes -->
+              <div class="bench">
+                <h5>Suplentes</h5>
+                <div class="bench-list">
+                  <div
+                    class="player-shirt bench"
+                    *ngFor="let p of getSubstitutes(comp, side)"
+                  >
+                    <div class="shirt-number">{{ p.jersey }}</div>
+                    <div class="shirt-name">{{ getPlayerName(p.playerId) }}</div>
+                  </div>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+        </mat-tab>
+        
+        <!-- 3. Estadísticas -->
+        <mat-tab label="Estadísticas">
+          <ng-container *ngFor="let comp of event.competitions">
+            <div class="stats-section">
+        
+              <mat-table [dataSource]="getComparativeStats(comp)" class="mat-elevation-z1">
+        
+                <!-- Nombre de la estadística -->
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef>Estadística</mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+                </ng-container>
+        
+                <!-- Valor Home -->
+                <ng-container matColumnDef="home">
+                  <mat-header-cell *matHeaderCellDef>Local</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    [ngClass]="{'highlight': row.highest==='home'}"
+                  >
+                    {{ row.home }}
+                  </mat-cell>
+                </ng-container>
+        
+                <!-- Valor Away -->
+                <ng-container matColumnDef="away">
+                  <mat-header-cell *matHeaderCellDef>Visitante</mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    [ngClass]="{'highlight': row.highest==='away'}"
+                  >
+                    {{ row.away }}
+                  </mat-cell>
+                </ng-container>
+        
+                <!-- Definimos las columnas -->
+                <mat-header-row *matHeaderRowDef="['name','home','away']"></mat-header-row>
+                <mat-row        *matRowDef="let row; columns: ['name','home','away'];"></mat-row>
+        
+              </mat-table>
+            </div>
+          </ng-container>
+        </mat-tab>
+        
+      </mat-tab-group>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
+
   
