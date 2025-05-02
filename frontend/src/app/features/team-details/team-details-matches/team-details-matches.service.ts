@@ -16,5 +16,13 @@ export class TeamDetailsMatchesService {
     getMatchesByTeam(teamId: string): Observable<TeamEventDTO[]> {
         return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}`);
     }
+
+    getUpcomingByTeam(teamId: string): Observable<TeamEventDTO[]> {
+        return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}/upcoming`);
+    }
+
+    getPastByTeam(teamId: string): Observable<TeamEventDTO[]> {
+        return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}/past`);
+    }
     
 }

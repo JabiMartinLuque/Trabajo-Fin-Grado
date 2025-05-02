@@ -1,117 +1,100 @@
-/* contenedor principal */
+/* profile.component.scss */
+
 .profile-container {
   max-width: 960px;
-  margin-inline: auto;
+  margin: auto;
   padding: 1rem;
-}
-
-/* tarjeta */
-.profile-card {
-  padding-inline: 0;
-}
-
-/* secciones internas */
-.section {
-  padding-block: 1rem;
-}
-
-/* cabecera de sección (título + botón) */
-.section-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: .5rem;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-/* listas */
-.items-list .mat-mdc-list-item {
-  align-items: flex-start;
-  gap: .75rem;
+.profile-card {
+  background: var(--clr-surface);
+}
 
-  .mdc-list-item__primary-text {
-    white-space: normal;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  mat-icon {
+    font-size: 48px;
+    color: var(--clr-primary);
   }
 }
 
-/* nombre en negrita */
-.name { font-weight: 600; }
+/* Cada sección de favoritos */
+.favorites-section {
+  background: var(--clr-surface);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
-/* texto secundario: talla y color más suaves */
-.secondary {
-  font-size: .85rem;
-  opacity: .75;
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    h3 {
+      margin: 0;
+      color: var(--clr-primary);
+    }
+  }
+
+  /* Grid de tarjetas */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  /* Tarjeta individual */
+  .favorite-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    mat-card-title {
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+    mat-card-subtitle {
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.6);
+    }
+    img[mat-card-avatar], mat-icon[mat-card-avatar] {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      object-fit: cover;
+    }
+  }
+
+  /* Estado vacío */
+  .empty-state {
+    text-align: center;
+    color: rgba(0,0,0,0.5);
+    font-style: italic;
+    padding: 1rem 0;
+  }
 }
 
-/* logo equipo */
-.team-logo {
-  object-fit: contain;
-  width: 48px;
-  height: 48px;
-}
-
-/* info sin datos */
-.info {
-  opacity: .65;
-  text-align: center;
-}
-
-/* spinner centrado */
+/* Spinner centrado */
 .spinner-container {
   display: flex;
   justify-content: center;
   padding: 4rem 0;
 }
 
-/* evita corte de texto (MDC) */
-:host ::ng-deep .mdc-list-item__primary-text,
-:host ::ng-deep .mdc-list-item__secondary-text {
-  white-space: normal !important;
-  overflow: visible !important;
-  text-overflow: unset !important;
-  word-break: break-word;
+.favorite-card mat-icon[mat-card-avatar] {
+  color: var(--clr-primary);  /* o el color que prefieras */
 }
 
-/* ─── LIGAS favoritas: corrige alineación ─────────────────────────── */
-.leagues-list .mat-mdc-list-item {
-  align-items: center !important;   /* ► centra logo y texto */
-  gap: .75rem;                      /* ► separación uniforme */
-  min-height: 56px;                 /* altura estándar MDC */
-}
-
-/* avatar logo */
 .league-logo {
+  width: 50px;
+  height: 50px;
   object-fit: contain;
-  width: 48px;
-  height: 48px;
-  background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 2px rgb(0 0 0 /.25);
-  flex-shrink: 0;
-}
-
-:host ::ng-deep .league-item {
-  display: flex;
-  align-items: center;
-}
-
-:host ::ng-deep .league-logo {
-  object-fit: contain;
-  width: 48px;
-  height: 48px;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgb(0 0 0 /.25);
-  flex-shrink: 0;
-  margin-right: 16px; /* espacio entre imagen y texto */
-}
-
-/* Contenedor para agrupar el texto en columna */
-:host ::ng-deep .text-container {
-  display: flex;
-  flex-direction: column;
-}
-
-:host ::ng-deep .text-container .name,
-:host ::ng-deep .text-container .secondary {
-  margin: 0;
 }

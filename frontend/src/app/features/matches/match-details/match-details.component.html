@@ -14,11 +14,13 @@
       <!-- Solo lo mostramos una vez -->
       <ng-container *ngIf="isFirst">
         <div class="team-score">
-          <img
-            class="team-logo-small"
-            [src]="getHome(comp).team.logo"
-            [alt]="getHome(comp).team.displayName"
-          />
+          <a [routerLink]="['/team', getHome(comp).team.id, 'details']">
+            <img
+              class="team-logo-small"
+              [src]="getHome(comp).team.logo"
+              [alt]="getHome(comp).team.displayName"
+            />
+          </a>
           <span class="score">{{ getHome(comp).score }}</span>
         </div>
         <span class="dash">–</span>

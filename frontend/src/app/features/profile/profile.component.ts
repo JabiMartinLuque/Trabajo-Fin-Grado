@@ -18,11 +18,12 @@ import { AthletesService } from '../leagues/athletes/athletes.service';
 import { TeamsService } from '../leagues/teams/teams.service';
 import { LeagueService } from '../leagues/league.service';
 import { LeagueDTO } from '../../dtos/league.dto';
-
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule, MatProgressSpinner, RouterModule],
+  imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule
+    , MatProgressSpinner, RouterModule, MatChipsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })

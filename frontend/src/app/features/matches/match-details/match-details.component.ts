@@ -4,6 +4,7 @@ import { MatchDetailService } from './match-details.service';
 import { EventDTO, CompetitionDTO, EntryDTO } from '../../../dtos/scoreboard';
 import { CommonModule } from '@angular/common';
 import { AthletesService } from '../../leagues/athletes/athletes.service';
+import { RouterModule } from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -19,7 +20,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-match-details',
-  imports: [MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatChipsModule , CommonModule, FlexLayoutModule, MatTabsModule, MatListModule],
+  imports: [MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatChipsModule ,
+     CommonModule, FlexLayoutModule, MatTabsModule, MatListModule, RouterModule],
   templateUrl: './match-details.component.html',
   styleUrl: './match-details.component.scss'
 })
