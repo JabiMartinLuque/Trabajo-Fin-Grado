@@ -1,44 +1,74 @@
+<mat-card class="m-4 standing-card">
+  <!-- Spinner y error van igual... -->
 
-<mat-card class="m-4">
-  <mat-card-title>Clasificación de la Liga: {{ leagueId }}</mat-card-title>
+  <div *ngIf="!isLoading && standings?.length">
+    <table mat-table [dataSource]="standings" class="mat-elevation-z8 w-100 table-standing">
 
-  <!-- Spinner de carga -->
-  <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
+      <!-- Columna indicador (nota.color) -->
+      <ng-container matColumnDef="indicator">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+        mat-cell
+        *matCellDef="let row"
+        class="col-indicator"
+        [ngStyle]="{ 'border-left': row.notes ? '4px solid ' + row.notes.color : '' }"
+      ></td>
+      </ng-container>
 
-  <!-- Mensaje de error -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
+      <!-- Posición -->
+      <ng-container matColumnDef="pos">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
 
-  <!-- Tabla de clasificación -->
-  <div *ngIf="!isLoading && standings && standings.length > 0">
-    <table mat-table [dataSource]="standings" class="mat-elevation-z8 w-100">
-      <!-- Columna para el nombre del equipo -->
+      <!-- Equipo + logo -->
       <ng-container matColumnDef="team">
         <th mat-header-cell *matHeaderCellDef> Equipo </th>
-        <td mat-cell *matCellDef="let row" [routerLink]="['/team', row.team.id, 'details']"> {{ row.team.displayName }} </td>
-      </ng-container>
-
-      <!-- Generar columnas dinámicamente según los stats del primer registro -->
-      <ng-container *ngFor="let stat of (standings[0]?.records?.[0]?.stats || []); let i = index" [matColumnDef]="'stat' + i">
-        <th mat-header-cell *matHeaderCellDef> {{ stat.displayName }} </th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.records?.[0]?.stats[i]?.displayValue }}
+        <td mat-cell *matCellDef="let row" class="col-team"
+            [routerLink]="['/team', row.team.id, 'details']">
+      
+          <img class="team-logo" [src]="row.team.logo" [alt]="row.team.displayName" />
+          <span class="team-name">{{ row.team.displayName }}</span>
+      
+          <!-- Badge de competición europea según row.notes.description -->
+          <span
+            *ngIf="row.notes?.description"
+            class="competition-badge"
+            [ngClass]="{
+              'badge-champions': row.notes.description === 'Champions League',
+              'badge-europa'   : row.notes.description === 'Europa League',
+              'badge-conference': row.notes.description === 'Conference League qualifying'
+            }"
+          >
+            {{ row.notes.description }}
+          </span>
         </td>
       </ng-container>
+      
+      <!-- Estadísticas clave -->
+  <ng-container *ngFor="let stat of displayedStats" [matColumnDef]="stat.abbreviation">
+    <th mat-header-cell *matHeaderCellDef class="col-stat">
+      {{ stat.shortDisplayName }}
+    </th>
+    <td mat-cell *matCellDef="let row" class="col-stat">
+      {{ getStatDisplayValue(row, stat.abbreviation) }}
+    </td>
+  </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+    [ngStyle]="{ 'border-left': row.notes ? '4px solid ' + row.notes.color : '' }"
+  ></tr>
+</table>
   </div>
 
-  <!-- Mensaje en caso de no haber datos -->
-  <div *ngIf="!isLoading && (!standings || standings.length === 0)" class="text-center my-4">
+  <div *ngIf="!isLoading && !standings?.length" class="no-data">
     <p>No hay clasificación disponible.</p>
   </div>
 </mat-card>
+
 
   
   

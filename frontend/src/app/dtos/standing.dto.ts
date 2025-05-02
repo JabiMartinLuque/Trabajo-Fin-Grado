@@ -5,6 +5,7 @@ import { TeamDTO } from './team.dto'; // Asegúrate de tener definido TeamDTO
 export interface StandingDTO {
   team: TeamDTO;
   records: RecordDTO[];
+  notes: NoteDTO;
 }
 
 export interface RecordDTO {
@@ -26,4 +27,10 @@ export interface StatDTO {
   abbreviation: string;
   value: number;
   displayValue: string;
+}
+
+export interface NoteDTO {
+  color: string;
+  description: string;
+  rank: number;
 }

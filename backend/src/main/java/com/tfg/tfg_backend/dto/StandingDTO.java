@@ -10,6 +10,7 @@ public class StandingDTO {
 
     private TeamDTO team;
     private List<RecordDTO> records;
+    private NoteDTO note;
 
     // Getters y setters
     public TeamDTO getTeam() {
@@ -23,6 +24,12 @@ public class StandingDTO {
     }
     public void setRecords(List<RecordDTO> records) {
         this.records = records;
+    }
+    public NoteDTO getNote() {
+        return note;
+    }
+    public void setNote(NoteDTO note) {
+        this.note = note;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

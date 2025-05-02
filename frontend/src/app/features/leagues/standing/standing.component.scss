@@ -1,0 +1,93 @@
+/* standings.component.scss */
+.table-standing {
+  width: 100%;
+  border-collapse: collapse;
+
+  /* fila con borde de nota */
+  .standing-row {
+    &.has-note {
+      /* la celda .col-indicator pinta el color */
+    }
+  }
+
+  /* indicador: columna muy estrecha */
+  .col-indicator { flex: 0 0 4px; }
+  .col-pos       { flex: 0 0 40px; justify-content: center; }
+
+  /* equipo + logo */
+  .col-team {
+    gap: 0.5rem;
+    flex: 1;              /* que ocupe el espacio restante */
+    justify-content: flex-start; /* texto y logo a la izquierda */
+  }
+
+  .team-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  .team-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* estadísticas */
+  .col-stat {
+    flex: 0 0 50px;       /* o el ancho que prefieras */
+    justify-content: center;
+  }
+  /* encabezados */
+  mat-header-cell {
+    font-weight: 600;
+    text-align: center;
+  }
+  mat-header-cell.col-team {
+    text-align: left;
+  }
+
+  /* hover en fila completa */
+  tr.mat-row:hover {
+    background: rgba(0,0,0,0.04);
+  }
+}
+
+/* spinner y mensaje no data */
+.spinner-container, .no-data {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+/* --- Badge de competición --- */
+.competition-badge {
+  display: inline-block;
+  margin-left: .5rem;
+  padding: 2px 6px;
+  font-size: .75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Champions League: azul intenso */
+.badge-champions {
+  background-color: #1e3a8a;
+  color: #fff;
+}
+
+/* Europa League: naranja */
+.badge-europa {
+  background-color: #d97706;
+  color: #fff;
+}
+
+/* Conference League qualif.: verde azulado */
+.badge-conference {
+  background-color: #0f766e;
+  color: #fff;
+}
