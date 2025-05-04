@@ -1,67 +1,78 @@
-<div class="container mt-4">
-  <h1>Scoreboard - League: {{ league }}</h1>
+<!-- src/app/features/scoreboard/scoreboard.component.html -->
+<div class="scoreboard-container">
+  <h1 class="title">Scoreboard – League: {{ league }}</h1>
 
-  <!-- Spinner de carga -->
-  <div *ngIf="isLoading" class="d-flex justify-content-center my-4">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-  </div>
-
-  <!-- Mensaje de error -->
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-
-  <!-- Se muestra el contenido solo si hay eventos -->
-  <ng-container *ngIf="scoreboard && scoreboard.events && scoreboard.events.length > 0; else noEvents">
-    <div *ngFor="let event of scoreboard.events" class="mb-3">
-      <!-- Envolvemos la tarjeta en un enlace con routerLink -->
-      <a [routerLink]="['/match', event.id]" style="text-decoration: none; color: inherit;">
-        <mat-card class="event-card" style="cursor: pointer;">
-          <mat-card-header>
-            <div mat-card-avatar class="event-avatar">
-              <mat-icon>sports_soccer</mat-icon>
-            </div>
-            <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
-            <mat-card-subtitle>
-              {{ event.date | date:'short' }}
-            </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div *ngFor="let comp of event.competitions">
-              <p>
-                <strong>Competition Start:</strong> {{ comp.startDate | date:'shortTime' }}
-              </p>
-              <p>
-                <strong>Venue:</strong> {{ comp.venue.fullName }}
-              </p>
-              <div *ngIf="comp.status">
-                <p>
-                  <strong>Status:</strong> {{ comp.status.type.name }}
-                  <span *ngIf="comp.status.displayClock">
-                    - Live: {{ comp.status.displayClock }} ({{ comp.status.clock }} sec)
-                  </span>
-                </p>
-              </div>
-              <mat-divider></mat-divider>
-              <div *ngFor="let competitor of comp.competitors" class="competitor-row" style="display: flex; justify-content: space-between; margin: 8px 0;">
-                <span>{{ competitor.team.displayName }}</span>
-                <span>
-                  <strong>Score:</strong> {{ competitor.score }}
-                  <span *ngIf="competitor.homeAway === 'home'">(Home)</span>
-                  <span *ngIf="competitor.homeAway === 'away'">(Away)</span>
-                </span>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </a>
+  <ng-container *ngIf="isLoading; else loaded">
+    <div class="loading">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
   </ng-container>
 
-  <ng-template #noEvents>
-    <div class="text-center my-4">
-      <p>No events available.</p>
+  <ng-template #loaded>
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
     </div>
+
+    <ng-container *ngIf="scoreboard?.events?.length; else noEvents">
+      <div class="cards-grid">
+        <a
+          *ngFor="let event of scoreboard?.events"
+          [routerLink]="['/match', event.id]"
+          class="event-link"
+        >
+          <mat-card class="event-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title class="event-name">
+                {{ event.name }} ({{ event.shortName }})
+              </mat-card-title>
+              <mat-card-subtitle class="event-date">
+                {{ event.date | date:'short' }}
+              </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+              <div *ngFor="let comp of event.competitions" class="competition-block">
+                <div class="competition-info">
+                  <span><strong>Sede:</strong> {{ comp.venue.fullName }}</span>
+                  <ng-container *ngIf="comp.status">
+                    <span class="status-chip">
+                      <mat-chip color="accent" selected>
+                        {{ formatStatus(comp.status) }}
+                        <ng-container *ngIf="comp.status.displayClock">
+                          – {{ comp.status.displayClock }}
+                        </ng-container>
+                      </mat-chip>
+                    </span>
+                  </ng-container>
+                </div>
+
+                <div class="versus-row">
+                  <div class="competitor-block" *ngFor="let c of comp.competitors">
+                    <img
+                      class="competitor-logo"
+                      [src]="c.team.logo"
+                      [alt]="c.team.displayName"
+                    />
+                    <div class="competitor-info">
+                      <div class="competitor-name">{{ c.team.displayName }}</div>
+                      <div class="competitor-score">
+                        <strong>{{ c.score }}</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-template #noEvents>
+      <div class="no-events">
+        <p>No hay eventos disponibles.</p>
+      </div>
+    </ng-template>
   </ng-template>
 </div>
 

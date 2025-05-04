@@ -9,7 +9,7 @@
       {{ event.date | date:'medium' }}
     </mat-card-subtitle>
 
-    <!-- NUEVO BLOQUE: Resultado -->
+    <!-- Resultado -->
     <div class="scoreboard" *ngFor="let comp of event.competitions; first as isFirst">
       <!-- Solo lo mostramos una vez -->
       <ng-container *ngIf="isFirst">

@@ -21,6 +21,8 @@ import { TeamDetailsAthletesComponent } from './features/team-details/team-detai
 import { TeamDetailsMatchesComponent } from './features/team-details/team-details-matches/team-details-matches.component';
 import { TeamDetailsStatsComponent } from './features/team-details/team-details-stats/team-details-stats.component';
 import { TeamDetailsNavbarComponent } from './features/team-details/team-details-navbar/team-details-navbar.component';
+import { NewsComponent } from './features/leagues/news/news.component';
+
 
 export const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' }, //http://localhost:4200/home
@@ -54,7 +56,7 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'standing', component: StandingComponent },
-      { path: 'players', component: AthletesComponent },
+      { path: 'news', component: NewsComponent },
       { path: 'teams', component: TeamsComponent },
       { path: 'scoreboard', component: ScoreboardComponent },
       { path: '', redirectTo: 'standing', pathMatch: 'full' }

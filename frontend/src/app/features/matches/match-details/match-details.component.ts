@@ -5,6 +5,7 @@ import { EventDTO, CompetitionDTO, EntryDTO } from '../../../dtos/scoreboard';
 import { CommonModule } from '@angular/common';
 import { AthletesService } from '../../leagues/athletes/athletes.service';
 import { RouterModule } from '@angular/router';
+import { interval, Subject, switchMap, takeUntil, startWith, tap } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
@@ -26,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   styleUrl: './match-details.component.scss'
 })
 export class MatchDetailComponent implements OnInit {
+  private destroy$ = new Subject<void>();
   matchId: string = '';
   event!: EventDTO;
   isLoading: boolean = false;
@@ -35,6 +37,66 @@ export class MatchDetailComponent implements OnInit {
 
   sides: Array<'home' | 'away'> = ['home', 'away'];
 
+  /** Mapas de “formationClass” → (formationPlace → columna) */
+  private formationPositionMap: Record<string, Array<Record<number,number>>> = {
+    '4-2-3-1': [
+    { 3: 0, 6: 1, 5: 2, 2: 3 },
+    { 4: 0, 8: 1 },
+    { 11: 0, 10: 1, 7: 2 },
+    { 9: 0 }
+  ],
+
+    '4-1-4-1': [
+      { 3: 0, 6: 1, 5: 2, 2: 3 },
+      { 4: 0 },
+      { 11: 0, 10: 1, 8: 2, 7: 3 },
+      { 9: 0 }
+    ],
+
+    '4-3-3': [
+      { 3: 0, 6: 1, 5: 2, 2: 3 },
+      { 8: 0, 4: 1, 7: 2 },
+      { 11: 0, 9: 1, 10: 2 }
+    ],
+
+    '4-4-2': [
+      { 3: 0, 6: 1, 5: 2, 2: 3 },
+      { 11: 0, 8: 1, 4: 2, 7: 3 },
+      { 9: 0, 10: 1 }
+    ],
+
+    '5-3-2': [
+      { 3: 0, 4: 1, 5: 2, 6: 3, 2: 4 },
+      { 11: 0, 8: 1, 7: 3 },
+      { 9: 0, 10: 1 }
+    ],
+
+    '5-4-1': [
+      { 3: 0, 4: 1, 5: 2, 6: 3, 2: 4 },
+      { 11: 0, 10: 1, 8: 2, 7: 3 },
+      { 9: 0 }
+    ],
+
+    '3-4-3': [
+      { 3: 0, 5: 1, 6: 2 },
+      { 4: 0, 8: 1, 10: 2, 2: 3 },
+      { 11: 0, 9: 1, 7: 2 }
+    ],
+
+    '3-5-2': [
+      { 3: 0, 5: 1, 6: 2 },
+      { 4: 0, 8: 1, 10: 2, 2: 3, 7: 4 },
+      { 11: 0, 9: 1 }
+    ],
+
+    '3-4-2-1': [
+      { 4: 0, 5: 1, 6: 2 },
+      { 3: 0, 8: 1, 7: 2, 2: 3 },
+      { 11: 0, 10: 1 },
+      { 9: 0 }
+    ],
+  };
+
   constructor(
     private route: ActivatedRoute,
     private matchDetailService: MatchDetailService,
@@ -42,14 +104,29 @@ export class MatchDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Asumimos que la ruta tiene un parámetro llamado "id"
-    this.route.paramMap.subscribe(params => {
-      this.matchId = params.get('id') || '';
+    // Cada vez que cambie el param “id” en la ruta,
+    // arrancamos un polling que ejecute loadMatchDetail()
+    this.route.paramMap.pipe(
+      tap(params => {
+        this.matchId = params.get('id') || '';
+      }),
+      switchMap(() =>
+        // startWith(0) lanza inmediatamente la primera carga,
+        // luego cada 30 s repite
+        interval(30000).pipe(
+          startWith(0)
+        )
+      ),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
       this.loadMatchDetail();
     });
+  }
 
-    
-
+  ngOnDestroy(): void {
+    // Cancelamos el polling al salir del componente
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadMatchDetail(): void {
@@ -120,25 +197,47 @@ export class MatchDetailComponent implements OnInit {
     return [1, ...outfield];  // portero + resto
   }
 
+  private getRowPositionMap(formationClass: string, rowIndex: number): Record<number,number> {
+    const maps = this.formationPositionMap[formationClass];
+    return (maps && maps[rowIndex]) ? maps[rowIndex] : {};
+  }
 
   getStartersByRow(
     comp: CompetitionDTO,
     rowIndex: number,
-    side: 'home'|'away'
+    side: 'home' | 'away'
   ): EntryDTO[] {
-    const rows = this.getFormationRows(comp, side);
-    const start = rows.slice(0, rowIndex).reduce((a, b) => a + b, 0);
-    const count = rows[rowIndex];
-    return comp.competitors
-      .find(c => c.homeAway === side)!
-      .lineUp.entries
-      .filter(e => {
-        const pos = Number(e.formationPlace);
-        return pos > start && pos <= start + count;
+    const competitor = comp.competitors.find(c => c.homeAway === side)!;
+    const entries    = competitor.lineUp.entries;
+    const rows       = this.getFormationRows(comp, side); // [1,4,2,3,1] por ejemplo
+  
+    // PORTERO: filaIndex = 0 → sólo formationPlace === 1
+    if (rowIndex === 0) {
+      return entries
+        .filter(e => Number(e.formationPlace) === 1)
+        .sort(() => 0);
+    }
+  
+    // Para filas de campo usamos tu plantilla estática
+    const formationClass = competitor.lineUp.formation.formationClass;
+    const maps           = this.formationPositionMap[formationClass] || [];
+    const posMap         = maps[rowIndex - 1] || {};
+  
+    // Extraemos sólo los códigos que tú has definido en posMap
+    const placesInThisRow = Object.keys(posMap).map(k => Number(k));
+  
+    return entries
+      .filter(e => placesInThisRow.includes(Number(e.formationPlace)))
+      .sort((a, b) => {
+        const pa = Number(a.formationPlace);
+        const pb = Number(b.formationPlace);
+        const xa = posMap[pa] ?? 0;
+        const xb = posMap[pb] ?? 0;
+        return xa - xb;
       });
   }
   
-
+  
   /**(3) Suplentes – los con formationPlace===0 */
   getSubstitutes(comp: CompetitionDTO, side: 'home' | 'away'): EntryDTO[] {
     return comp.competitors
@@ -152,11 +251,13 @@ export class MatchDetailComponent implements OnInit {
   }
 
   /** Devuelve la clase “formation-X-Y-Z” según el homeAway */
-  getFormationClass(comp: CompetitionDTO, side: 'home' | 'away'): string {
-    const c = comp.competitors.find(co => co.homeAway === side);
-    return c?.lineUp.formation.formationClass
-      ? 'formation-' + c.lineUp.formation.formationClass
-      : '';
+  getFormationClass(comp: CompetitionDTO, side: 'home'|'away'): string {
+    const cls = comp.competitors
+      .find(c => c.homeAway === side)!
+      .lineUp
+      .formation
+      .formationClass;    // p.e. "4-2-3-1"
+    return `formation-${cls}`;   // ahora → "formation-4-2-3-1"
   }
 
   getComparativeStats(comp: CompetitionDTO) {
@@ -190,5 +291,6 @@ export class MatchDetailComponent implements OnInit {
   getAway(comp: CompetitionDTO) {
     return comp.competitors.find(c => c.homeAway === 'away')!;
   }
+  
 
 }

@@ -19,7 +19,7 @@ public class UserFavoriteLeague {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     // Asociación al usuario
     @ManyToOne(fetch = FetchType.LAZY)

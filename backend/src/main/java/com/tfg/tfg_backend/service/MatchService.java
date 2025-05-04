@@ -11,8 +11,10 @@ import com.tfg.tfg_backend.dto.TeamEventDTO;
 import com.tfg.tfg_backend.dto.ScoreValueDTO;
 import com.tfg.tfg_backend.dto.LineUpDTO;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,20 +47,45 @@ public class MatchService {
 
     public ScoreboardDTO getMatchesByLeague(String league, String startDate, String endDate) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-        LocalDate today = LocalDate.now();
-        
+        LocalDate today      = LocalDate.now();
+    
+        // puntos de referencia:
+        LocalDate prevFriday = today.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));       // viernes anterior (o de esta semana si es sáb/dom)
+        LocalDate mondayThis = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // lunes de esta semana
+        LocalDate nextMonday = today.with(TemporalAdjusters.next(DayOfWeek.MONDAY));           // próximo lunes
+    
+        // startDate por defecto:
         if (startDate == null || startDate.trim().isEmpty()) {
-            startDate = today.format(formatter);
+            DayOfWeek dow = today.getDayOfWeek();
+            if (dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY || dow == DayOfWeek.MONDAY) {
+                // sáb, dom o lunes → arrancamos en el viernes previo
+                startDate = prevFriday.format(formatter);
+            } else {
+                // martes–viernes → arrancamos en el lunes de esta semana
+                startDate = mondayThis.format(formatter);
+            }
         }
+    
+        // endDate por defecto:
         if (endDate == null || endDate.trim().isEmpty()) {
-            endDate = today.plusWeeks(1).format(formatter);
+            DayOfWeek dow = today.getDayOfWeek();
+            if (dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY) {
+                // fin de semana → extendemos hasta el lunes que viene
+                endDate = nextMonday.format(formatter);
+            } else {
+                // lunes–viernes → hasta hoy
+                endDate = today.format(formatter);
+            }
         }
-        
-        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/" 
-                + league + "/scoreboard?dates=" + startDate + "-" + endDate + "&lang=es&region=es";
-        
+    
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/"
+                   + league
+                   + "/scoreboard?dates="
+                   + startDate + "-" + endDate
+                   + "&lang=es&region=es";
+    
         return restTemplate.getForObject(url, ScoreboardDTO.class);
-}
+    }   
 
     /* 
     public ScoreboardDTO getMatchesByTeam(String teamId) {

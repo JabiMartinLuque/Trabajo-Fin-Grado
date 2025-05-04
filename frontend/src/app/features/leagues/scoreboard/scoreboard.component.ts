@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ScoreboardDTO } from '../../../dtos/scoreboard';
+import { ScoreboardDTO, StatusDTO } from '../../../dtos/scoreboard';
 import { ScoreboardService } from './scoreboard.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -8,15 +8,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDivider } from '@angular/material/divider';
 import { RouterModule } from '@angular/router';
-
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-scoreboard',
-  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatDivider, RouterModule],
+  imports: [CommonModule, MatCardModule, MatTableModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, RouterModule, MatChipsModule],
   templateUrl: './scoreboard.component.html',
-  styleUrl: './scoreboard.component.css'
+  styleUrl: './scoreboard.component.scss'
 })
 export class ScoreboardComponent implements OnInit {
   league: string = '';
@@ -51,5 +50,24 @@ export class ScoreboardComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  formatStatus(status: StatusDTO): string {
+    const key = status.type.name;
+    switch (key) {
+      case 'STATUS_SCHEDULED':
+        return 'Programado';
+      case 'STATUS_FULL_TIME':
+        return 'Finalizado';
+      case 'STATUS_IN_PROGRESS':
+        // Usa el displayClock si tienes tiempo en directo
+        return `En directo ${status.displayClock}`;
+      case 'STATUS_POSTPONED':
+        return 'Aplazado';
+      // Añade los que necesites…
+      default:
+        // Si viene algo raro, lo devolvemos tal cual
+        return key.replace('STATUS_', '').replace(/_/g, ' ').toLowerCase();
+    }
   }
 }

@@ -29,7 +29,10 @@
     "express": "^4.18.2",
     "frontend": "file:",
     "jwt-decode": "^4.0.0",
+    "ngx-owl-carousel-o": "^19.0.2",
+    "owl.carousel": "^2.3.4",
     "rxjs": "~7.8.0",
+    "swiper": "^8.4.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

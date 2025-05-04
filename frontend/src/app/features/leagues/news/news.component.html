@@ -1,0 +1,36 @@
+<!-- news.component.html -->
+<div class="news-container">
+  <div *ngIf="isLoading" class="loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <ng-container *ngFor="let block of news">
+      <h2 class="block-header">{{ block.header }}</h2>
+
+      <div class="articles-grid">
+        <mat-card *ngFor="let article of block.articles" class="article-card">
+
+          <!-- IMAGEN FIJA: solo la primera -->
+          <div class="article-image-container" *ngIf="article.images?.length">
+            <img
+              [src]="article.images[0].url"
+              [alt]="article.headline"
+              class="article-image"
+            />
+          </div>
+
+          <mat-card-content>
+            <h3 class="headline">{{ article.headline }}</h3>
+            <p class="description">{{ article.description }}</p>
+          </mat-card-content>
+
+        </mat-card>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+  

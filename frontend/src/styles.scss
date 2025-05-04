@@ -221,4 +221,47 @@ h1, h2, h3, h4 {
   color: var(--brand-700);
 }
 
+/* al final de styles.scss */
+.event-card {
+  /* Fecha (mat-card-subtitle) y texto de sede (competition-info span) */
+  .event-date,
+  .competition-info span {
+    color: var(--clr-on-surface) !important;
+  }
+
+  /* Nombre del evento (mat-card-title) */
+  .event-name {
+    color: var(--brand-700) !important;
+  }
+
+  /* Competidores (mat-card-subtitle) */
+  .competitor-name {
+    color: var(--clr-on-surface) !important;
+  }
+
+  /* Competidor (mat-card-subtitle) */
+  .competitor-block {
+    color: var(--clr-on-surface) !important;
+  }
+  /* Competidor (mat-card-subtitle) */
+  .competitor-block img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Competidor (mat-card-subtitle) */
+  .competitor-block .mat-card-subtitle {
+    color: var(--clr-on-surface) !important;
+  }
+  /* Competidor (mat-card-subtitle) */
+  .competitor-block .mat-card-subtitle span {
+    color: var(--clr-on-surface) !important;
+  }
+
+  /* Competidor (mat-card-subtitle) */
+  .competitor-block .mat-card-subtitle span {
+    color: var(--clr-on-surface) !important;
+  }
+}
 

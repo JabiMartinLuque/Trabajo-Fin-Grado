@@ -280,6 +280,47 @@
   .formation-row:nth-child(5) { grid-template-columns: 1fr; }
 }
 
+/* para 4-2-3-1 */
+.formation-side.formation-4-2-3-1 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(1,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(3,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(5) { grid-template-columns: 1fr; }
+}
+
+/* para 4-4-2 */
+.formation-side.formation-4-4-2 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: 1fr; }
+}
+
+/* para 3-5-2 */
+.formation-side.formation-3-5-2 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(5,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: 1fr; }
+}
+
+/* para 3-4-3 */
+.formation-side.formation-3-4-3 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(3,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(3,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: 1fr; }
+}
+
+/* para 3-4-2-1 */
+.formation-side.formation-3-4-2-1 {
+  .formation-row:nth-child(1) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(2) { grid-template-columns: repeat(4,1fr); }
+  .formation-row:nth-child(3) { grid-template-columns: repeat(2,1fr); }
+  .formation-row:nth-child(4) { grid-template-columns: 1fr; }
+}
+
 /* estilo para la tabla */
 .stats-section {
   margin-top: 1rem;
