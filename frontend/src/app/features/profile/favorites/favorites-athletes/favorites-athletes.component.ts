@@ -19,7 +19,7 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
   selector: 'app-favorites-athletes',
   imports: [CommonModule, MatCardModule, MatListModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule],
   templateUrl: './favorites-athletes.component.html',
-  styleUrl: './favorites-athletes.component.css'
+  styleUrl: './favorites-athletes.component.scss'
 })
 export class FavoritesAthletesComponent {
   // Paso 1: ligas

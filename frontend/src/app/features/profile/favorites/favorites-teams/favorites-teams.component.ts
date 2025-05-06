@@ -17,7 +17,7 @@ import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox
   selector: 'app-favorites-teams',
   imports: [CommonModule, MatCardModule, MatListModule, MatIconModule, MatProgressSpinnerModule, MatCheckboxModule],
   templateUrl: './favorites-teams.component.html',
-  styleUrl: './favorites-teams.component.css'
+  styleUrl: './favorites-teams.component.scss'
 })
 export class FavoritesTeamsComponent {
   isLoadingLeagues = false;

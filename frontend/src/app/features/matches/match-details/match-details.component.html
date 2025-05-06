@@ -26,11 +26,13 @@
         <span class="dash">–</span>
         <div class="team-score away">
           <span class="score">{{ getAway(comp).score }}</span>
-          <img
-            class="team-logo-small"
-            [src]="getAway(comp).team.logo"
-            [alt]="getAway(comp).team.displayName"
-          />
+          <a [routerLink]="['/team', getAway(comp).team.id, 'details']">
+            <img
+              class="team-logo-small"
+              [src]="getAway(comp).team.logo"
+              [alt]="getAway(comp).team.displayName"
+            />
+          </a>
         </div>
       </ng-container>
     </div>
@@ -46,9 +48,14 @@
           <span><strong>Sede:</strong> {{ comp.venue.fullName }}</span>
         </div>
         <div *ngIf="comp.status" class="competition-status">
-          <mat-chip color="accent" selected>
-            {{ comp.status.type.name }} – {{ comp.status.displayClock }}
-          </mat-chip>
+          <span class="status-chip">
+            <mat-chip color="accent" selected>
+              {{ formatStatus(comp.status) }}
+              <ng-container *ngIf="comp.status.displayClock">
+                – {{ comp.status.displayClock }}
+              </ng-container>
+            </mat-chip>
+          </span>
         </div>
       </div>
 

@@ -7,7 +7,7 @@
                 class="league-card"
                 [class.selected]="selectedLeagueSlug === lg.slug"
                 (click)="onLeagueSelect(lg.slug)">
-        <img mat-card-image [src]="lg.logos[0].href" [alt]="lg.displayName">
+        <img mat-card-image [src]="lg.logos[0].href" [alt]="lg.displayName" class="league-logo">
         <mat-card-content>
           <h4>{{ lg.displayName }}</h4>
         </mat-card-content>
@@ -32,7 +32,7 @@
                         (click)="$event.stopPropagation()"
                         (change)="toggleFavorite(team)"></mat-checkbox>
   
-          <img mat-card-image [src]="team.logo" [alt]="team.displayName">
+          <img mat-card-image [src]="team.logo" [alt]="team.displayName" class="team-logo">
           <mat-card-content>
             <h4>{{ team.displayName }}</h4>
           </mat-card-content>

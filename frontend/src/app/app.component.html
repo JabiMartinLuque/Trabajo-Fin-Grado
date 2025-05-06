@@ -12,14 +12,14 @@
   </button>
 
   <!-- logo / marca -->
-  <span class="app-brand" routerLink="/">furbo</span>
+  <span class="app-brand" routerLink="/">
+    <mat-icon>home</mat-icon>
+  </span>
 
   <span class="spacer"></span>   <!-- empuja el nav a la derecha -->
 
   <!-- ===== LINKS DESKTOP ================================================ -->
   <nav class="app-nav">
-
-    <a mat-button routerLink="/home" routerLinkActive="active">Home</a>
 
     <!-- Leagues -->
     <button mat-button [matMenuTriggerFor]="leagues">Leagues</button>
@@ -45,7 +45,11 @@
       <button mat-menu-item routerLink="/transactions/ita.1">Italy (Serie A)</button>
     </mat-menu>
 
-    <a mat-button routerLink="/profile" routerLinkActive="active">Profile</a>
+    <a mat-button routerLink="/profile" routerLinkActive="active">
+      <span class="profile-icon-wrapper">
+        <mat-icon>person</mat-icon>
+      </span>
+    </a>
   </nav>
 </mat-toolbar>
 
@@ -68,7 +72,18 @@
       </mat-expansion-panel>
 
       <a mat-list-item routerLink="/matches"   (click)="drawer.close()">Matches</a>
-      <a mat-list-item routerLink="/transactions/esp.1" (click)="drawer.close()">Transactions</a>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Transactions</mat-panel-title>
+        </mat-expansion-panel-header>
+        <a mat-list-item routerLink="/transactions/esp.1" (click)="drawer.close()">Spain (LaLiga)</a>
+        <a mat-list-item routerLink="/transactions/eng.1" (click)="drawer.close()">England (PL)</a>
+        <a mat-list-item routerLink="/transactions/fra.1" (click)="drawer.close()">France (Ligue 1)</a>
+        <a mat-list-item routerLink="/transactions/ger.1" (click)="drawer.close()">Germany (Bundesliga)</a>
+        <a mat-list-item routerLink="/transactions/ita.1" (click)="drawer.close()">Italy (Serie A)</a>
+      </mat-expansion-panel>
+      <a mat-list-item routerLink="/login"    (click)="drawer.close()">Login</a>
+      <a mat-list-item routerLink="/register" (click)="drawer.close()">Register</a>      
       <a mat-list-item routerLink="/profile"   (click)="drawer.close()">Profile</a>
     </mat-nav-list>
   </mat-sidenav>

@@ -16,7 +16,7 @@ import { MatTableModule } from '@angular/material/table';
   selector: 'app-team-details-stats',
   imports: [MatCardModule, MatProgressSpinnerModule, CommonModule, MatFormFieldModule, MatSelectModule, MatTableModule],
   templateUrl: './team-details-stats.component.html',
-  styleUrl: './team-details-stats.component.css'
+  styleUrl: './team-details-stats.component.scss'
 })
 export class TeamDetailsStatsComponent {
   team?: TeamDTO;

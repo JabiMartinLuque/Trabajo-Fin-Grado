@@ -1,5 +1,6 @@
 package com.tfg.tfg_backend.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +24,11 @@ public class TopPerformersController {
     }
     
     @GetMapping("/{team}")
-    public TopPerformersDTO getTopPerformers(
+    public ResponseEntity<TopPerformersDTO> getTopPerformers(
         @PathVariable("team") String team, 
         @RequestParam("season") String season, 
-        @RequestParam("league") String league) { //http://localhost:8080/api/topPerformers/teams/86?season=2024&league=esp.1
-        return topPerformersService.getTopPerformers(season, league, team);
+        @RequestParam("league") String league) { //http://localhost:8080/api/topPerformers/team/86?season=2024&league=esp.1
+        TopPerformersDTO respuesta = topPerformersService.getTopPerformers(season, league, team);
+        return ResponseEntity.ok(respuesta);
     }
 }

@@ -69,11 +69,11 @@ public class MatchService {
         // endDate por defecto:
         if (endDate == null || endDate.trim().isEmpty()) {
             DayOfWeek dow = today.getDayOfWeek();
-            if (dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY) {
-                // fin de semana → extendemos hasta el lunes que viene
+            if (dow == DayOfWeek.TUESDAY || dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY) {
+                // Si es martes (o fin de semana) → extendemos hasta el próximo lunes
                 endDate = nextMonday.format(formatter);
             } else {
-                // lunes–viernes → hasta hoy
+                // lunes, miércoles, jueves, viernes → hasta hoy
                 endDate = today.format(formatter);
             }
         }
@@ -85,7 +85,7 @@ public class MatchService {
                    + "&lang=es&region=es";
     
         return restTemplate.getForObject(url, ScoreboardDTO.class);
-    }   
+    }  
 
     /* 
     public ScoreboardDTO getMatchesByTeam(String teamId) {

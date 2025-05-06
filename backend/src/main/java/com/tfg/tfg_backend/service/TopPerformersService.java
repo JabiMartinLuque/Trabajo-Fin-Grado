@@ -14,6 +14,9 @@ public class TopPerformersService {
     }
 
     public TopPerformersDTO getTopPerformers(String season, String league, String team) {
+        if (season == null ) {
+            season = "2024"; // Valor por defecto
+        }
         String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/seasons/" + season + "/types/1/teams/" + team + "/leaders?lang=es&region=es";
         return restTemplate.getForObject(url, TopPerformersDTO.class);
     }

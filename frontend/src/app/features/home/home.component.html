@@ -12,22 +12,32 @@
           <mat-card-header>
             <div class="teams-info">
               <div class="team">
-                <img
-                  class="team-logo"
-                  [src]="m.competitions[0].competitors[0].team.logo"
-                  [alt]="m.competitions[0].competitors[0].team.name"
-                />
+                <a
+                  [routerLink]="['/team', m.competitions[0].competitors[0].team.id, 'details']"
+                  class="team-link"
+                >
+                  <img
+                    class="team-logo"
+                    [src]="m.competitions[0].competitors[0].team.logo"
+                    [alt]="m.competitions[0].competitors[0].team.name"
+                  />
+                </a>
                 <span class="team-name">
                   {{ m.competitions[0].competitors[0].team.name }}
                 </span>
               </div>
               <span class="vs">vs</span>
               <div class="team">
-                <img
-                  class="team-logo"
-                  [src]="m.competitions[0].competitors[1].team.logo"
-                  [alt]="m.competitions[0].competitors[1].team.name"
-                />
+                <a
+                  [routerLink]="['/team', m.competitions[0].competitors[1].team.id, 'details']"
+                  class="team-link"
+                >
+                  <img
+                    class="team-logo"
+                    [src]="m.competitions[0].competitors[1].team.logo"
+                    [alt]="m.competitions[0].competitors[1].team.name"
+                  />
+                </a>
                 <span class="team-name">
                   {{ m.competitions[0].competitors[1].team.name }}
                 </span>
@@ -59,22 +69,32 @@
           <mat-card-header>
             <div class="teams-info">
               <div class="team">
-                <img
-                  class="team-logo"
-                  [src]="m.competitions[0].competitors[0].team.logo"
-                  [alt]="m.competitions[0].competitors[0].team.name"
-                />
+                <a
+                  [routerLink]="['/team', m.competitions[0].competitors[0].team.id, 'details']"
+                  class="team-link"
+                >
+                  <img
+                    class="team-logo"
+                    [src]="m.competitions[0].competitors[0].team.logo"
+                    [alt]="m.competitions[0].competitors[0].team.name"
+                  />
+                </a>
                 <span class="team-name">
                   {{ m.competitions[0].competitors[0].team.name }}
                 </span>
               </div>
               <span class="vs">vs</span>
-              <div class="team">
-                <img
-                  class="team-logo"
-                  [src]="m.competitions[0].competitors[1].team.logo"
-                  [alt]="m.competitions[0].competitors[1].team.name"
-                />
+              <div class="team">   
+                <a
+                  [routerLink]="['/team', m.competitions[0].competitors[1].team.id, 'details']"
+                  class="team-link"
+                >
+                  <img
+                    class="team-logo"
+                    [src]="m.competitions[0].competitors[1].team.logo"
+                    [alt]="m.competitions[0].competitors[1].team.name"
+                  />
+                </a>
                 <span class="team-name">
                   {{ m.competitions[0].competitors[1].team.name }}
                 </span>
@@ -122,15 +142,20 @@
               <mat-card-header>
                 <div class="teams-info">
                   <div class="team">
-                    <img
-                      class="team-logo"
-                      [src]="
-                        ev.competitions[0].competitors[0].team.logo
-                      "
-                      [alt]="
-                        ev.competitions[0].competitors[0].team.name
-                      "
-                    />
+                    <a
+                      [routerLink]="['/team', ev.competitions[0].competitors[0].team.id, 'details']"
+                      class="team-link"
+                    >
+                      <img
+                        class="team-logo"
+                        [src]="
+                          ev.competitions[0].competitors[0].team.logo
+                        "
+                        [alt]="
+                          ev.competitions[0].competitors[0].team.name
+                        "
+                      />
+                    </a>
                     <span class="team-name">
                       {{
                         ev.competitions[0].competitors[0].team.name
@@ -139,15 +164,20 @@
                   </div>
                   <span class="vs">vs</span>
                   <div class="team">
-                    <img
-                      class="team-logo"
-                      [src]="
-                        ev.competitions[0].competitors[1].team.logo
-                      "
-                      [alt]="
-                        ev.competitions[0].competitors[1].team.name
-                      "
-                    />
+                    <a
+                      [routerLink]="['/team', ev.competitions[0].competitors[1].team.id, 'details']"
+                      class="team-link"
+                    >
+                      <img
+                        class="team-logo"
+                        [src]="
+                          ev.competitions[0].competitors[1].team.logo
+                        "
+                        [alt]="
+                          ev.competitions[0].competitors[1].team.name
+                        "
+                      />
+                    </a>
                     <span class="team-name">
                       {{
                         ev.competitions[0].competitors[1].team.name

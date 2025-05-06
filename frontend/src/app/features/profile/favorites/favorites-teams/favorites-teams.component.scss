@@ -1,0 +1,100 @@
+/* favorites-teams.component.scss */
+
+.favorites-teams-container {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  /* título */
+  > h3 {
+    margin: 1rem 0 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--clr-primary);
+  }
+
+  /* grilla responsive */
+  .cards-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .league-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 180ms;
+  
+    &:hover { transform: translateY(-4px); }
+  
+    &.selected {
+      border: 2px solid var(--brand-700);
+    }
+  }
+
+  .league-logo {
+    object-fit: contain;
+    height: 120px;
+    padding: 1rem;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.3));
+  }
+
+  /* tarjeta de equipo */
+  .team-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 180ms;
+  
+    &:hover { transform: translateY(-4px); }
+  
+    &.selected {
+      border: 2px solid var(--brand-700);
+    }
+  }
+
+  .team-logo {
+    object-fit: contain;
+    height: 120px;
+    padding: 1rem;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,.3));
+  }
+
+  .fav-checkbox {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    pointer-events: auto;  // Permitir interacción
+    z-index: 10;           // Asegúrate de que esté por encima
+  }
+
+  /* spinner centrado */
+  mat-progress-spinner {
+    display: block;
+    margin: 2rem auto;
+    color: var(--clr-primary);
+  }
+
+  /* mensaje de error */
+  .error {
+    color: var(--clr-warn);
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* mensaje “sin datos” */
+  .info {
+    text-align: center;
+    opacity: .75;
+    margin-top: 1rem;
+  }
+
+  /* separador suave */
+  hr {
+    border: none;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin: 1.5rem 0;
+  }
+}
+
+

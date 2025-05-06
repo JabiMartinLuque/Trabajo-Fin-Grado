@@ -38,6 +38,7 @@ public class TopPerformersDTO {
         this.categories = categories;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CategoryDTO {
         private String name;
         private String displayName;
@@ -77,12 +78,13 @@ public class TopPerformersDTO {
             this.leaders = leaders;
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class LeaderDTO{
             private String displayValue;
             private String shortDisplayValue;
             private String value;
 
-            private String athelteRef;
+            private String athleteRef;
 
             private String teamRef;
 
@@ -108,11 +110,11 @@ public class TopPerformersDTO {
                 this.value = value;
             }
 
-            public String getAthelteRef() {
-                return athelteRef;
+            public String getathleteRef() {
+                return athleteRef;
             }
-            public void setAthelteRef(String athelteRef) {
-                this.athelteRef = athelteRef;
+            public void setathleteRef(String athleteRef) {
+                this.athleteRef = athleteRef;
             }
             public String getTeamRef() {
                 return teamRef;
@@ -132,7 +134,7 @@ public class TopPerformersDTO {
                 if (athleteObj instanceof java.util.Map) {
                     Object ref = ((java.util.Map<?, ?>) athleteObj).get("$ref");
                     if (ref != null) {
-                        this.athelteRef = ref.toString();
+                        this.athleteRef = ref.toString();
                     }
                 }
             }

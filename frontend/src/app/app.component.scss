@@ -9,6 +9,18 @@
       margin-left: .25rem;
     }
   }
+
+  .app-brand {
+    display: inline-flex;
+    align-items: center;
+    overflow: visible;
+    padding-right: 1rem; // Aumenta el padding para dar más espacio
+  }
+  
+  .app-brand mat-icon {
+    font-size: 2rem;    // Asegúrate de que el tamaño sea el deseado
+    margin-right: 0.5rem;
+  }
   
   /* espacio entre logo y nav */
   .spacer { flex: 1 1 auto; }
@@ -31,4 +43,19 @@
   .app-sidenav-container { height: calc(100vh - 64px); } /* toolbar 64 px */
   .app-sidenav           { width: 220px; }
   
+  .profile-icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff; /* fondo blanco */
+    border-radius: 50%;
+    padding: 0.5rem; /* ajusta según sea necesario */
+    /* Opcional: agrega un borde para resaltar el círculo */
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  
+  .profile-icon-wrapper mat-icon {
+    font-size: 1.5rem; /* ajustar tamaño del icono si se requiere */
+    color: var(--brand-900); /* o el color que necesites */
+  }
   

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatchDetailService } from './match-details.service';
-import { EventDTO, CompetitionDTO, EntryDTO } from '../../../dtos/scoreboard';
+import { EventDTO, CompetitionDTO, EntryDTO, StatusDTO } from '../../../dtos/scoreboard';
 import { CommonModule } from '@angular/common';
 import { AthletesService } from '../../leagues/athletes/athletes.service';
 import { RouterModule } from '@angular/router';
@@ -84,9 +84,9 @@ export class MatchDetailComponent implements OnInit {
     ],
 
     '3-5-2': [
-      { 3: 0, 5: 1, 6: 2 },
-      { 4: 0, 8: 1, 10: 2, 2: 3, 7: 4 },
-      { 11: 0, 9: 1 }
+      { 4: 0, 5: 1, 6: 2 },
+      { 2: 0, 7: 1, 11: 2, 8: 3, 3: 4 },
+      { 10: 0, 9: 1 }
     ],
 
     '3-4-2-1': [
@@ -292,5 +292,26 @@ export class MatchDetailComponent implements OnInit {
     return comp.competitors.find(c => c.homeAway === 'away')!;
   }
   
+  formatStatus(status: StatusDTO): string {
+      const key = status.type.name;
+      switch (key) {
+        case 'STATUS_SCHEDULED':
+          return 'Programado';
+        case 'STATUS_FULL_TIME':
+          return 'Finalizado';
+        case 'STATUS_IN_PROGRESS':
+          // Usa el displayClock si tienes tiempo en directo
+          return `En directo ${status.displayClock}`;
+        case 'STATUS_POSTPONED':
+          return 'Aplazado';
+        case 'STATUS_FIRST_HALF':
+          return 'Primera parte';
+        case 'STATUS_SECOND_HALF':
+          return 'Segunda parte';
+        default:
+          // Si viene algo raro, lo devolvemos tal cual
+          return key.replace('STATUS_', '').replace(/_/g, ' ').toLowerCase();
+      }
+    }
 
 }

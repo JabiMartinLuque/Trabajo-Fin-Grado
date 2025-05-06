@@ -1,0 +1,120 @@
+:host {
+    display: block;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: var(--space-md);
+  }
+  
+  .top-performers-card {
+    background: var(--card-bg);
+    box-shadow: 0 2px 4px var(--card-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+  
+    mat-card-header {
+      background: var(--clr-surface-dark);
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+      .mat-card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--clr-primary);
+      }
+    }
+  
+    mat-card-content {
+      padding: var(--space-sm);
+  
+      .loading-container {
+        display: flex;
+        justify-content: center;
+        padding: var(--space-lg) 0;
+      }
+  
+      .error-message {
+        color: var(--clr-warn);
+        text-align: center;
+        padding: var(--space-sm);
+        font-weight: 500;
+      }
+  
+      mat-tab-group {
+        margin-top: var(--space-md);
+  
+        .mat-tab-header {
+          background: var(--clr-surface);
+          .mat-tab-label {
+            font-weight: 600;
+            color: var(--clr-on-surface);
+            &.mat-tab-label-active {
+              color: var(--clr-primary);
+            }
+          }
+          .mat-ink-bar {
+            background: var(--clr-accent);
+          }
+        }
+  
+        .mat-tab-body-wrapper {
+          background: var(--clr-surface);
+          padding: var(--space-md);
+        }
+  
+        mat-list {
+          padding: 0;
+  
+          .mat-list-item {
+            display: grid !important;
+            grid-template-columns: 40px 1fr auto;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-xs) var(--space-sm);
+            transition: background .2s;
+            border-radius: 4px;
+  
+            &:hover {
+              background: var(--clr-surface-dark);
+            }
+  
+            /* “Avatar” con iniciales */
+            .leader-avatar {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              background: var(--clr-primary-light);
+              color: var(--clr-on-primary-light);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-weight: 600;
+              font-size: 0.9rem;
+            }
+  
+            .leader-name {
+              font-weight: 500;
+              color: var(--clr-on-surface);
+            }
+  
+            .leader-value {
+              font-size: 1.1rem;
+              font-weight: 700;
+              color: var(--clr-accent);
+            }
+          }
+  
+          mat-divider {
+            margin: var(--space-xs) 0;
+            opacity: 0.3;
+          }
+        }
+      }
+  
+      .no-data {
+        text-align: center;
+        color: var(--clr-on-surface);
+        opacity: .7;
+        padding: var(--space-md);
+      }
+    }
+  }
+  
+  
