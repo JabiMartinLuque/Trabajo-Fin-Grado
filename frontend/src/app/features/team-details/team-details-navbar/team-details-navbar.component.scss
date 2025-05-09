@@ -1,0 +1,56 @@
+.team-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  
+    /* Bloque con logo + nombre */
+    .team-info {
+      display: flex;
+      align-items: center;
+  
+      .team-logo {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      }
+  
+      .team-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--on-primary);
+      }
+    }
+  
+    /* Empuja los botones al final */
+    .spacer {
+      flex: 1 1 auto;
+    }
+  
+    /* Estilo general de los botones */
+    button.mat-button {
+      font-weight: 500;
+      color: var(--on-primary);
+      margin: 0 0.25rem;
+  
+      &:hover {
+        background: rgba(255,255,255,0.1);
+      }
+    }
+  
+    /* Botón activo */
+    button.active {
+      background: rgba(255,255,255,0.2);
+      border-bottom: 3px solid var(--accent);
+      border-radius: 0;
+    }
+  }
+  
+  /* Variables de ejemplo (añádelas en tu :root si no existen) */
+  :root {
+    --on-primary   : #fff;
+    --accent       : #4caf50; /* verde principal */
+  }
+  

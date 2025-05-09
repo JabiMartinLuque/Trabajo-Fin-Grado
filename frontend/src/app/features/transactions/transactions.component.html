@@ -38,17 +38,15 @@
           </mat-card-title>
           <mat-card-subtitle>{{ transaction.date | date:'mediumDate' }}</mat-card-subtitle>
         </mat-card-header>
-
         <mat-divider></mat-divider>
-
         <mat-card-content>
           <p>
-            <strong>Tipo:</strong>
+            <strong>Tipo: </strong>
             <span class="info-value">{{ transaction.type }}</span>
           </p>
           <p>
-            <strong>Importe: </strong>
-            <span class="info-value">{{ transform(transaction.amount) }}</span>
+            <strong style="margin-right: 0.5rem;">Importe: </strong>
+            <span class="info-value" style="margin-right: 0.5rem;">{{ transform(transaction.amount) }}</span>
             ({{ transaction.displayAmount }})
           </p>
           <p class="d-flex align-items-center">

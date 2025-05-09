@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   selector: 'app-athlete-details',
   imports: [MatCardModule, MatDividerModule, MatProgressSpinnerModule, CommonModule, RouterModule, MatIconModule],
   templateUrl: './athlete-details.component.html',
-  styleUrl: './athlete-details.component.css'
+  styleUrl: './athlete-details.component.scss'
 })
 export class AthleteDetailsComponent implements OnInit {
   athlete?: AthleteDTO;

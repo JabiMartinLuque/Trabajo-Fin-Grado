@@ -42,14 +42,6 @@ public class TeamService {
         TeamDTO team = restTemplate.getForObject(url, TeamDTO.class);
         String league = team.getLeague();
         String currentSeason = team.getCurrentSeason();
-        if (team != null) {
-            // Reemplaza la referencia externa de athletes por la URL interna de tu backend
-            team.setAthletesRef("http://localhost:8080/api/teams/athletes/" + id);
-            team.setStatisticsRef("http://localhost:8080/api/statistics/team/" + id + "?league=" + league + "&season=" + currentSeason);
-            team.setLeadersRef("http://localhost:8080/api/topPerformers/team/" + id + "?league=" + league + "&season=" + currentSeason);
-            team.setEventsRef("http://localhost:8080/api/matches/team/" + id + "?season=" + currentSeason + "&league=" + league);
-            team.setSeasonsRef("http://localhost:8080/api/seasons/league/" + league + "/team/" + id);
-        }
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
         JsonNode root = objectMapper.readTree(jsonResponse);

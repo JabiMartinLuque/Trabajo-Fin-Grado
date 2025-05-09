@@ -1,0 +1,150 @@
+/* contenedor general */
+.team-matches-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+/* selector de mes */
+.month-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .month-field {
+    width: 300px;
+  }
+}
+
+.year-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .year-field {
+    width: 100px;
+  }
+}
+
+/* rejilla de tarjetas */
+.cards-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  margin-bottom: 2rem;
+}
+
+/* cada tarjeta de partido */
+.match-card {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+
+/* títulos de sección */
+.section-title {
+  margin: 1rem 0 0.5rem;
+  font-weight: 600;
+  color: var(--brand-500);
+}
+
+/* bloque de competición dentro de la tarjeta */
+.competition-block {
+  margin-bottom: 1rem;
+
+  h4 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  .competition-meta {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* lista horizontal de competidores */
+.competitors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .competitor {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .home-away {
+      font-size: 0.9rem;
+      font-weight: 500;
+      width: 70px;
+      text-transform: uppercase;
+    }
+    .team-name {
+      flex: 1;
+      font-weight: 600;
+    }
+    mat-chip {
+      font-weight: 600;
+    }
+  }
+}
+
+/* spinner centrado */
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 0;
+}
+
+/* mensaje de error */
+.error-message {
+  color: var(--clr-warn);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* sin partidos */
+.no-matches {
+  text-align: center;
+  opacity: 0.7;
+  margin: 3rem 0;
+}
+
+.team-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin: 0 .5rem;
+}
+
+:root {
+  /* Colores principales de tu branding */
+  --brand-50:  #f1faf7;
+  --brand-100: #d1f2e8;
+  --brand-200: #a3e5d1;
+  --brand-300: #75d8b9;
+  --brand-400: #47cba2;
+  --brand-500: #1ab18b; /* primary */
+  --brand-600: #149b71;
+  --brand-700: #0e8658;
+  --brand-800: #07603e;
+  --brand-900: #003c24;
+
+  /* Colores de advertencia / error */
+  --clr-warn:   #e53935;
+  --clr-success:#43a047;
+  --clr-info:   #1e88e5;
+}
+
+body {
+  background-color: #121212; /* ejemplo dark */
+  color: #eee;
+}
+
+  

@@ -25,7 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 export class TeamDetailsTopPerformersComponent {
   teamId!: string;
   topPerformers?: TopPerformersDTO;
-  team: TeamDTO | undefined;
+  team?: TeamDTO;
   athleteNames: Record<string, string> = {};
 
   isLoading = false;
@@ -53,7 +53,6 @@ export class TeamDetailsTopPerformersComponent {
       if (id) {
         this.teamId = id;
         this.loadTeam(id);
-        this.loadTopPerformers();
       } else {
         this.errorMessage = 'ID de equipo no proporcionado';
       }
@@ -65,7 +64,7 @@ export class TeamDetailsTopPerformersComponent {
     this.teamService.getTeamByid(id).subscribe({
       next: team => {
         this.team = team;
-        this.isLoading = false;
+        this.loadTopPerformers();
       },
       error: () => {
         this.errorMessage = 'No se pudo cargar los datos del equipo';

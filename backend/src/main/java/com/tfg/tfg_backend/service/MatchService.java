@@ -51,31 +51,25 @@ public class MatchService {
     
         // puntos de referencia:
         LocalDate prevFriday = today.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));       // viernes anterior (o de esta semana si es sáb/dom)
-        LocalDate mondayThis = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); // lunes de esta semana
-        LocalDate nextMonday = today.with(TemporalAdjusters.next(DayOfWeek.MONDAY));           // próximo lunes
+        LocalDate fridayThis = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));       // viernes de esta semana
+        LocalDate nextMonday = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));           // próximo lunes
     
         // startDate por defecto:
         if (startDate == null || startDate.trim().isEmpty()) {
             DayOfWeek dow = today.getDayOfWeek();
-            if (dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY || dow == DayOfWeek.MONDAY) {
+            
+            if (dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY || dow == DayOfWeek.MONDAY ) {
                 // sáb, dom o lunes → arrancamos en el viernes previo
                 startDate = prevFriday.format(formatter);
             } else {
-                // martes–viernes → arrancamos en el lunes de esta semana
-                startDate = mondayThis.format(formatter);
+                startDate = fridayThis.format(formatter);
             }
+                
         }
     
         // endDate por defecto:
         if (endDate == null || endDate.trim().isEmpty()) {
-            DayOfWeek dow = today.getDayOfWeek();
-            if (dow == DayOfWeek.TUESDAY || dow == DayOfWeek.SATURDAY || dow == DayOfWeek.SUNDAY) {
-                // Si es martes (o fin de semana) → extendemos hasta el próximo lunes
-                endDate = nextMonday.format(formatter);
-            } else {
-                // lunes, miércoles, jueves, viernes → hasta hoy
-                endDate = today.format(formatter);
-            }
+            endDate = nextMonday.format(formatter);
         }
     
         String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/"
@@ -122,7 +116,7 @@ public class MatchService {
      * @return Lista unificada de TeamEventDTO con los eventos
      * @throws IOException, JsonMappingException, JsonProcessingException
      */
-    public List<TeamEventDTO> getMatchesByTeamAcrossLeagues(String teamId, String season, String league)
+    public List<TeamEventDTO> getMatchesByTeamAcrossLeagues(String teamId, String season, String league, Integer year, Integer month)
             throws IOException, JsonMappingException, JsonProcessingException {
         if (season == null || season.trim().isEmpty()) {
             season = "2024";
@@ -161,33 +155,63 @@ public class MatchService {
             }
         }
 
-        // 2. Para cada competición, obtener los eventos del equipo para la temporada indicada.
         List<TeamEventDTO> allEvents = new ArrayList<>();
-        for (String leagueId : leagueIds) {
-            String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-                    + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es";
-            
-            int currentPage = 1;
-            int totalPages = 1;
-            boolean morePages = true;
-            while (morePages) {
-                String paginatedUrl = eventsUrl + "&page=" + currentPage;
-                String eventsResponse = restTemplate.getForObject(paginatedUrl, String.class);
-                JsonNode eventsRoot = objectMapper.readTree(eventsResponse);
-                totalPages = eventsRoot.path("pageCount").asInt(1);
-                JsonNode eventsItems = eventsRoot.path("items");
-                if (eventsItems.isArray()) {
-                    for (JsonNode eventNode : eventsItems) {
-                        // Obtener el $ref del evento para extraer el detalle completo.
-                        String eventRef = eventNode.path("$ref").asText();
-                        if (eventRef != null && !eventRef.isEmpty()) {
-                            TeamEventDTO detailedEvent = restTemplate.getForObject(eventRef, TeamEventDTO.class);
-                            allEvents.add(resolveReferences(detailedEvent));
+        if (month != null) {
+            for (String leagueId : leagueIds) {
+                String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
+
+                String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
+                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es&dates=" + year + monthStr + "01-" + year + monthStr + "31";
+                int currentPage = 1;
+                int totalPages = 1;
+                boolean morePages = true;
+                while (morePages) {
+                    String paginatedUrl = eventsUrl + "&page=" + currentPage;
+                    String eventsResponse = restTemplate.getForObject(paginatedUrl, String.class);
+                    JsonNode eventsRoot = objectMapper.readTree(eventsResponse);
+                    totalPages = eventsRoot.path("pageCount").asInt(1);
+                    JsonNode eventsItems = eventsRoot.path("items");
+                    if (eventsItems.isArray()) {
+                        for (JsonNode eventNode : eventsItems) {
+                            // Obtener el $ref del evento para extraer el detalle completo.
+                            String eventRef = eventNode.path("$ref").asText();
+                            if (eventRef != null && !eventRef.isEmpty()) {
+                                TeamEventDTO detailedEvent = restTemplate.getForObject(eventRef, TeamEventDTO.class);
+                                allEvents.add(resolveReferences(detailedEvent));
+                            }
                         }
                     }
+                    currentPage++;
+                    morePages = currentPage <= totalPages;
                 }
-                currentPage++;
-                morePages = currentPage <= totalPages;
+            }
+        } else {
+            for (String leagueId : leagueIds) {
+                String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
+                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es";
+                
+                int currentPage = 1;
+                int totalPages = 1;
+                boolean morePages = true;
+                while (morePages) {
+                    String paginatedUrl = eventsUrl + "&page=" + currentPage;
+                    String eventsResponse = restTemplate.getForObject(paginatedUrl, String.class);
+                    JsonNode eventsRoot = objectMapper.readTree(eventsResponse);
+                    totalPages = eventsRoot.path("pageCount").asInt(1);
+                    JsonNode eventsItems = eventsRoot.path("items");
+                    if (eventsItems.isArray()) {
+                        for (JsonNode eventNode : eventsItems) {
+                            // Obtener el $ref del evento para extraer el detalle completo.
+                            String eventRef = eventNode.path("$ref").asText();
+                            if (eventRef != null && !eventRef.isEmpty()) {
+                                TeamEventDTO detailedEvent = restTemplate.getForObject(eventRef, TeamEventDTO.class);
+                                allEvents.add(resolveReferences(detailedEvent));
+                            }
+                        }
+                    }
+                    currentPage++;
+                    morePages = currentPage <= totalPages;
+                }
             }
         }
         return allEvents;

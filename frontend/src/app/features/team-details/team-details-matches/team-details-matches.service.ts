@@ -13,8 +13,11 @@ export class TeamDetailsMatchesService {
     
     constructor(private http: HttpClient) {}
     
-    getMatchesByTeam(teamId: string): Observable<TeamEventDTO[]> {
-        return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}`);
+    getMatchesByTeam(teamId: string, season: number, month: number, year: number): Observable<TeamEventDTO[]> {
+        console.log(`Fetching matches for team ID: ${teamId}, month: ${month}, year: ${year}`);
+        return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}`, {
+            params: { month: month, year: year, season: season.toString() }
+          });
     }
 
     getUpcomingByTeam(teamId: string): Observable<TeamEventDTO[]> {
@@ -24,5 +27,5 @@ export class TeamDetailsMatchesService {
     getPastByTeam(teamId: string): Observable<TeamEventDTO[]> {
         return this.http.get<TeamEventDTO[]>(`${this.baseUrl}/team/${teamId}/past`);
     }
-    
+
 }

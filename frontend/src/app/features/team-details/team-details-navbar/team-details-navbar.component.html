@@ -1,20 +1,57 @@
-<mat-toolbar color="primary">
-    <span class="spacer"></span>
-    <button mat-button [routerLink]="['details']" routerLinkActive="active" queryParamsHandling="preserve">
-     Details
-    </button>
-    <button mat-button [routerLink]="['stats']" routerLinkActive="active" queryParamsHandling="preserve">
-     Statistics
-    </button>
-    <button mat-button [routerLink]="['athletes']" routerLinkActive="active" queryParamsHandling="preserve">
-      Players
-    </button>
-    <button mat-button [routerLink]="['matches']" routerLinkActive="active" queryParamsHandling="preserve">
-      Matches
-    </button>
-    <button mat-button [routerLink]="['top-performers']" routerLinkActive="active" queryParamsHandling="preserve">
-      Top Performers
-    </button>
-  </mat-toolbar>
+<mat-toolbar color="primary" class="team-toolbar">
+  <div class="team-info" *ngIf="team">
+    <img
+      class="team-logo"
+      [src]="team.logo"
+      [alt]="team.displayName + ' logo'"
+    />
+    <span class="team-name">{{ team.displayName }}</span>
+  </div>
 
-  <router-outlet></router-outlet>
+  <span class="spacer"></span>
+
+  <button
+    mat-button
+    routerLink="details"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    queryParamsHandling="preserve"
+  >
+    Details
+  </button>
+  <button
+    mat-button
+    routerLink="stats"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Statistics
+  </button>
+  <button
+    mat-button
+    routerLink="athletes"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Players
+  </button>
+  <button
+    mat-button
+    routerLink="matches"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Matches
+  </button>
+  <button
+    mat-button
+    routerLink="top-performers"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Top Performers
+  </button>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+

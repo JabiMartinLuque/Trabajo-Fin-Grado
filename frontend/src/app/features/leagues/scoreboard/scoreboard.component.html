@@ -1,7 +1,5 @@
 <!-- src/app/features/scoreboard/scoreboard.component.html -->
 <div class="scoreboard-container">
-  <h1 class="title">Scoreboard – League: {{ league }}</h1>
-
   <ng-container *ngIf="isLoading; else loaded">
     <div class="loading">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>

@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   selector: 'app-transactions',
   imports: [CommonModule, MatCardModule, MatDividerModule, MatProgressSpinnerModule, MatSelectModule, MatFormFieldModule, RouterModule, MatIconModule],
   templateUrl: './transactions.component.html',
-  styleUrl: './transactions.component.css'
+  styleUrl: './transactions.component.scss'
 })
 export class TransactionsComponent {
 

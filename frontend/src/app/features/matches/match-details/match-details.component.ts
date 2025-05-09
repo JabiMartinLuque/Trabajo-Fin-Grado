@@ -308,6 +308,12 @@ export class MatchDetailComponent implements OnInit {
           return 'Primera parte';
         case 'STATUS_SECOND_HALF':
           return 'Segunda parte';
+        case 'STATUS_OVERTIME':
+          return 'Prórroga';
+        case 'STATUS_PENALTY_SHOOTOUT':
+          return 'Penales';
+        case 'STATUS_FINAL_AET':
+          return 'Finalizado (AET)';
         default:
           // Si viene algo raro, lo devolvemos tal cual
           return key.replace('STATUS_', '').replace(/_/g, ' ').toLowerCase();

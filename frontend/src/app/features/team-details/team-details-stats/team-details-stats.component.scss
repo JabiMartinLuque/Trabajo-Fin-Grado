@@ -1,130 +1,79 @@
-:host {
-    display: block;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: var(--space-md);
+.team-stats-general-card {
+  background: var(--clr-surface);
+  color: var(--clr-on-surface);
+  border-radius: 8px;
+  padding: 1rem;
+
+  .mat-card-content {
+    padding: 0;
   }
-  
-  .statistics-card {
-    background: var(--card-bg);
-    box-shadow: 0 2px 4px var(--card-shadow);
-    border-radius: 8px;
-    overflow: hidden;
-  
-    mat-card-header {
+}
+
+/* Títulos de sección */
+.section-title {
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--clr-primary);
+  border-bottom: 2px solid var(--clr-primary-light);
+  padding-bottom: 0.25rem;
+}
+
+/* Wrapper con scroll horizontal si hiciera falta */
+.table-wrapper {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+
+    th.mat-header-cell, td.mat-cell {
+      padding: 0.75rem 1rem;
+      text-align: left;
+    }
+
+    th.mat-header-cell {
+      background: var(--clr-primary);
+      color: var(--on-surface);
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    tr.mat-row:nth-child(even) td.mat-cell {
       background: var(--clr-surface-dark);
-      border-bottom: 1px solid rgba(0,0,0,0.12);
-      .mat-card-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--clr-primary);
-      }
     }
-  
-    mat-card-content {
-      padding: var(--space-sm);
-  
-      .loading-container {
-        display: flex;
-        justify-content: center;
-        padding: var(--space-lg) 0;
-      }
-  
-      .alert {
-        margin: var(--space-sm) 0;
-        padding: var(--space-sm);
-        background: rgba(224, 67, 67, 0.1);
-        color: var(--clr-warn);
-        border-radius: 4px;
-      }
-  
-      /* selector de split */
-      .mat-form-field {
-        width: 100%;
-        margin-bottom: var(--space-md);
-        .mat-form-field-wrapper {
-          background: var(--clr-surface);
-          border-radius: 4px;
-        }
-      }
-  
-      /* tabla con cabecera sticky y cuerpo scrollable */
-      .table-wrapper {
-        max-height: 400px;
-        overflow: auto;
-        border: 1px solid rgba(0,0,0,0.08);
-        border-radius: 4px;
-  
-        table {
-          width: 100%;
-          border-collapse: separate;
-          border-spacing: 0;
-          
-          thead {
-            position: sticky;
-            top: 0;
-            background: var(--clr-surface-dark);
-            th {
-              padding: var(--space-sm);
-              color: var(--clr-on-surface);
-              font-weight: 600;
-              border-bottom: 2px solid rgba(0,0,0,0.12);
-            }
-          }
-  
-          tbody {
-            tr {
-              &:nth-child(even) {
-                background: rgba(0, 0, 0, 0.02);
-              }
-  
-              td {
-                vertical-align: top;
-                padding: var(--space-sm);
-                border-bottom: 1px solid rgba(0,0,0,0.08);
-                
-                &.category-cell {
-                  width: 200px;
-                  font-weight: 500;
-                  color: var(--clr-on-surface);
-                }
-  
-                &.stats-cell {
-                  /* grid de chips */
-                  display: grid;
-                  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-                  gap: var(--space-xs);
-  
-                  .stat-item {
-                    background: var(--clr-surface-dark);
-                    color: var(--clr-on-surface);
-                    padding: var(--space-xs) var(--space-sm);
-                    border-radius: 16px;
-                    font-size: 0.85rem;
-                    display: inline-block;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-  
-                    strong {
-                      font-weight: 600;
-                      margin-right: 4px;
-                      color: var(--clr-primary);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-  
-      .no-data {
-        text-align: center;
-        color: var(--clr-on-surface);
-        opacity: .7;
-        padding: var(--space-md);
-      }
+
+    td.mat-cell {
+      background: var(--clr-surface);
+      color: var(--clr-on-surface);
+      border-bottom: 1px solid var(--divider);
     }
   }
-  
+}
+
+/* Estados de carga / error / sin datos */
+.loading-container,
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  color: var(--clr-on-surface);
+}
+
+.error-message {
+  background: rgba(255, 0, 0, 0.1);
+  color: var(--clr-warn);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.table-wrapper table {
+  table-layout: fixed;
+  width: 100%;
+}

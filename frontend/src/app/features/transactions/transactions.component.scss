@@ -1,0 +1,150 @@
+/* transactions.component.scss */
+
+.transactions-container {
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  h2 {
+    margin: var(--space-md) 0;
+    font-weight: 700;
+    text-align: center;
+    color: var(--clr-primary);
+  }
+
+  .season-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+
+    mat-form-field {
+      width: 200px;
+      .mat-form-field-flex {
+        background: var(--clr-surface);
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    margin: var(--space-lg) 0;
+  }
+
+  .row {
+    /* Un poco más ancho para que no queden demasiado estrechas */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* filas de altura automática */
+    grid-auto-rows: auto;
+  }
+
+  /* Liberamos el overflow de las mat-card para que se vean sus sombras y bordes */
+  .row mat-card {
+    overflow: visible !important;
+  }
+
+  /* Aseguramos algo de padding interno y borde redondeado en la carta */
+  .hover-card {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+  /* Evitamos que la imagen o el contenido se desborde */
+  .hover-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: .5rem;
+  }
+
+  /* Si quieres un poco de espacio extra abajo */
+  .row > * {
+    margin-bottom: var(--space-md);
+  }
+
+  mat-card {
+    background: var(--card-bg);
+    box-shadow: 0 2px 4px var(--card-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+
+    mat-card-header {
+      align-items: center;
+
+      .avatar-clickable {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: var(--clr-surface);
+
+        img,
+        mat-icon {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          color: var(--clr-on-surface);
+        }
+      }
+
+      mat-card-title {
+        margin-left: var(--space-sm);
+        font-size: 1rem;
+        font-weight: 600;
+        a.athlete-link {
+          color: var(--clr-primary);
+          text-decoration: none;
+          &:hover {
+            color: var(--clr-accent);
+          }
+        }
+      }
+
+      mat-card-subtitle {
+        margin-left: auto;
+        font-size: 0.85rem;
+        color: var(--clr-on-surface);
+        opacity: 0.75;
+      }
+    }
+
+    mat-divider {
+      margin: 0;
+      opacity: 0.1;
+    }
+
+    mat-card-content {
+      padding: var(--space-sm);
+
+      p {
+        margin: var(--space-xs) 0;
+        display: flex;
+        align-items: center;
+        color: var(--clr-on-surface);
+
+        strong {
+          margin-right: var(--space-xs);
+          color: var(--clr-primary);
+        }
+
+        .info-value {
+          color: var(--clr-accent);
+          font-weight: 600;
+        }
+
+        img {
+          margin-right: var(--space-xs);
+          width: 24px;
+          height: 24px;
+          object-fit: cover;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+}

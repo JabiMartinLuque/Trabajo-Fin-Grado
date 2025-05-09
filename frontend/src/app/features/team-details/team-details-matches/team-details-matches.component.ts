@@ -13,13 +13,16 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { RouterModule } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-team-details-matches',
-  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule, MatTableModule, RouterModule, MatIconModule, MatChipsModule, MatExpansionModule],
+  imports: [CommonModule, MatCardModule, MatProgressSpinnerModule, MatTableModule, RouterModule, MatIconModule, MatChipsModule, MatExpansionModule, MatFormFieldModule, MatSelectModule, MatDividerModule],
   templateUrl: './team-details-matches.component.html',
-  styleUrl: './team-details-matches.component.css'
+  styleUrl: './team-details-matches.component.scss'
 })
 export class TeamDetailsMatchesComponent {
   matches: TeamEventDTO[] = []; // Array to hold team event data
@@ -27,14 +30,44 @@ export class TeamDetailsMatchesComponent {
   pastMatches: TeamEventDTO[] = [];
   isLoading: boolean = false; // Loading state
   errorMessage: string = ''; // Error message state
+  teamId: string = ''; // Team ID
+
+  selectedMonth: number = new Date().getMonth() + 1;
+  selectedYear: number = new Date().getFullYear();
+
+  monthOptions = [
+    { value: 1, name: 'Enero' },
+    { value: 2, name: 'Febrero' },
+    { value: 3, name: 'Marzo' },
+    { value: 4, name: 'Abril' },
+    { value: 5, name: 'Mayo' },
+    { value: 6, name: 'Junio' },
+    { value: 7, name: 'Julio' },
+    { value: 8, name: 'Agosto' },
+    { value: 9, name: 'Septiembre' },
+    { value: 10, name: 'Octubre' },
+    { value: 11, name: 'Noviembre' },
+    { value: 12, name: 'Diciembre' }
+  ];
+
+  yearOptions = [
+    { value: new Date().getFullYear(), name: new Date().getFullYear() },
+    { value: new Date().getFullYear() - 1, name: new Date().getFullYear() - 1 },
+    { value: new Date().getFullYear() - 2, name: new Date().getFullYear() - 2 },
+    { value: new Date().getFullYear() - 3, name: new Date().getFullYear() - 3 },
+    { value: new Date().getFullYear() - 4, name: new Date().getFullYear() - 4 },
+    { value: new Date().getFullYear() - 5, name: new Date().getFullYear() - 5 }
+  ];
 
   constructor(
     private route: ActivatedRoute, // ActivatedRoute is used to get route parameters
+    private router: Router, // RouterModule is used for navigation
     private teamDetailsMatchesService: TeamDetailsMatchesService // Service to fetch team event data
   ) {}
   ngOnInit(): void {
     this.route.parent?.paramMap.subscribe(params => {
       const id = params.get('id'); // Get the team ID from the route parameters
+      this.teamId = id || ''; // Set the team ID or an empty string if not found
       if (id) {
         this.loadMatches(id); // Load matches for the team
       } else {
@@ -42,9 +75,16 @@ export class TeamDetailsMatchesComponent {
       }
     });
   }
-  private loadMatches(teamId: string): void {
+  public loadMatches(teamId: string): void {
+    const date = new Date();
+    let season: number = 0;
     this.isLoading = true;
-    this.teamDetailsMatchesService.getMatchesByTeam(teamId).subscribe({
+    if (this.selectedMonth <= 8 ) {
+      season = this.selectedYear - 1;
+    } else {
+      season = this.selectedYear;
+    }
+    this.teamDetailsMatchesService.getMatchesByTeam(teamId, season, this.selectedMonth, this.selectedYear).subscribe({
       next: (data: TeamEventDTO[]) => {
         // 1) Orden cronológico ascendente (más antiguo primero)
         data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
@@ -63,8 +103,7 @@ export class TeamDetailsMatchesComponent {
       }
     });
   }
-  goToMatch(matchId: string): void {
-    // Navigate to the match details page using the matchId
-    window.location.href = '/matches/' + matchId;
+  goToMatch(matchId: string) {
+    this.router.navigate(['/match', matchId]);
   }
 }

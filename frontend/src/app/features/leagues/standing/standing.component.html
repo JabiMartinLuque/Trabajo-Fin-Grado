@@ -1,3 +1,14 @@
+<ng-container *ngIf="isLoading; else loaded">
+  <div class="loading">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-container>
+
+<ng-template #loaded>
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
 <mat-card class="m-4 standing-card">
   <!-- Spinner y error van igual... -->
 

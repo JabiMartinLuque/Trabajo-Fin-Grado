@@ -1,0 +1,124 @@
+/* src/app/features/athlete-details/athlete-details.component.scss */
+
+/* Contenedor principal del componente */
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+/* Mat-card principal */
+:host ::ng-deep mat-card.m-4 {
+  max-width: 800px;
+  margin: 2rem auto;
+  border-radius: 8px;
+  overflow: visible; /* para que sobresalgan sombras, etc. */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 2rem;
+}
+
+/* Avatar circular */
+:host ::ng-deep .athlete-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--clr-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  mat-icon {
+    font-size: 48px;
+    color: var(--clr-primary);
+  }
+}
+
+/* Título y subtítulo */
+:host ::ng-deep .mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+:host ::ng-deep .mat-card-subtitle {
+  font-size: 1rem;
+  color: var(--clr-on-surface);
+}
+
+/* Contenido con dos columnas */
+:host ::ng-deep .mat-card-content .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  /* Cada columna ocupa mitad en desktop */
+  & > .col-md-6 {
+    flex: 1 1 45%;
+    p {
+      margin: 0.5rem 0;
+    }
+  }
+}
+
+/* Divider con margen */
+:host ::ng-deep mat-divider {
+  margin: 1.5rem 0;
+}
+
+/* Spinner centrado */
+:host ::ng-deep .d-flex.justify-content-center {
+  display: flex !important;
+  justify-content: center !important;
+  margin: 2rem 0;
+}
+
+/* Mensaje de error */
+:host ::ng-deep .alert.alert-danger {
+  margin: 1rem;
+  color: var(--clr-warn);
+  border-left: 4px solid var(--clr-warn);
+  padding: 0.75rem 1rem;
+  background: rgba(var(--clr-warn-rgb), 0.1);
+}
+
+/* Responsive para móvil: columnas apiladas */
+@media (max-width: 600px) {
+  :host ::ng-deep .mat-card-content .row {
+    flex-direction: column;
+    & > .col-md-6 {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+/* src/app/features/athlete-details/athlete-details.component.scss */
+
+/* Contenedor principal: que el mat-card pueda crecer */
+:host {
+  display: block;
+  padding: 1rem;
+}
+
+/* Mat-card: quítale el max-width y haz que llene el ancho disponible */
+:host ::ng-deep mat-card.m-4 {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 2rem 0;        // ya no centramos con auto
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+.athlete-details-wrapper {
+  width: 100%;
+  padding-inline: 1rem;
+  /* opcional: para no pasarnos de ancho en desktop */
+  max-width: 1200px;
+  margin-inline: auto;
+}
+

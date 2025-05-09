@@ -13,8 +13,8 @@ export class TeamDetailsAthletesService {
 
     constructor(private http: HttpClient) {}
 
-    getTeamAthletesByTeam(teamId: String): Observable<AthleteDTO[]> {
-        return this.http.get<AthleteDTO[]>(this.baseUrl + '/team/' + teamId);
+    getTeamAthletesByTeam(teamId: String, leagueId: string): Observable<AthleteDTO[]> {
+        return this.http.get<AthleteDTO[]>(this.baseUrl + '/league/' + leagueId +  '/team/' + teamId);
     }
 
     getAthleteById(athleteId: String): Observable<AthleteDTO> {

@@ -1,17 +1,47 @@
-<mat-toolbar color="primary">
-    <span>League: {{ leagueId }}</span>
-    <span class="spacer"></span>
-    <button mat-button [routerLink]="['standing']" routerLinkActive="active" queryParamsHandling="preserve">
-      Standing
-    </button>
-    <button mat-button [routerLink]="['teams']" routerLinkActive="active" queryParamsHandling="preserve">
-      Teams
-    </button>
-    <button mat-button [routerLink]="['scoreboard']" routerLinkActive="active" queryParamsHandling="preserve">
-      Scoreboard
-    </button>
-    <button mat-button [routerLink]="['news']" routerLinkActive="active" queryParamsHandling="preserve">
-      News
-    </button>
-  </mat-toolbar>
+<mat-toolbar color="primary" class="league-toolbar">
+  <div class="league-info" *ngIf="league">
+    <img
+      class="league-logo"
+      [src]="league.logos[0].href"
+      [alt]="league.displayName + ' logo'"
+    />
+    <span class="league-name">{{ league.displayName }}</span>
+  </div>
+
+  <span class="spacer"></span>
+
+  <button
+    mat-button
+    routerLink="standing"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    queryParamsHandling="preserve"
+  >
+    Standing
+  </button>
+  <button
+    mat-button
+    routerLink="teams"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Teams
+  </button>
+  <button
+    mat-button
+    routerLink="scoreboard"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    Scoreboard
+  </button>
+  <button
+    mat-button
+    routerLink="news"
+    routerLinkActive="active"
+    queryParamsHandling="preserve"
+  >
+    News
+  </button>
+</mat-toolbar>
   

@@ -1,128 +1,121 @@
-<ng-container *ngIf="isLoading; else content">
-    <div class="d-flex justify-content-center my-5">
+<div class="team-matches-container">
+
+  <!-- Contenedor de selectores -->
+  <div class="selectors-container" style="display: flex; gap: 1rem; align-items: center;">
+    <!-- Selector de mes -->
+    <div class="month-selector" style="flex: 1;">
+      <mat-form-field appearance="fill" class="month-field" style="width: 100%;">
+        <mat-label>Selecciona mes</mat-label>
+        <mat-select [(value)]="selectedMonth" (selectionChange)="loadMatches(teamId)">
+          <mat-option *ngFor="let m of monthOptions" [value]="m.value">
+            {{ m.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- Selector de año -->
+    <div class="year-selector" style="flex: 1;">
+      <mat-form-field appearance="fill" class="year-field" style="width: 100%;">
+        <mat-label>Selecciona año</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="loadMatches(teamId)">
+          <mat-option *ngFor="let y of yearOptions" [value]="y.value">
+            {{ y.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Carga -->
+  <ng-container *ngIf="isLoading; else matchesContent">
+    <div class="loading-wrapper">
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
   </ng-container>
-  
-  <ng-template #content>
-    <div *ngIf="errorMessage" class="alert alert-danger">
+
+  <!-- Contenido -->
+  <ng-template #matchesContent>
+    <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
-  
+
     <!-- Próximos partidos -->
-    <section *ngIf="upcomingMatches.length > 0">
-      <h2>Próximos Partidos</h2>
-      <mat-accordion>
-        <mat-expansion-panel *ngFor="let event of upcomingMatches">
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ event.name }} ({{ event.shortName }})</mat-panel-title>
-            <mat-panel-description>{{ event.date | date:'short' }}</mat-panel-description>
-          </mat-expansion-panel-header>
-  
-          <div *ngFor="let comp of event.competitions" class="mb-3">
-            <mat-card class="mat-elevation-z2">
-              <mat-card-header>
-                <mat-card-title>Competición {{ comp.id }}</mat-card-title>
-                <mat-card-subtitle>
-                  {{ comp.date | date:'shortTime' }} — {{ comp.venue.fullName }}
-                </mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <div
-                  class="d-flex justify-content-between align-items-center py-2"
-                  *ngFor="let c of comp.competitors"
-                >
-                  <!-- Local / Visitante y nombre de equipo -->
-                  <div>
-                    <strong>
-                      {{ c.homeAway === 'home' ? 'Local' : 'Visitante' }}
-                    </strong>
-                    {{ c.team.displayName || c.team.id }}
-                  </div>
-  
-                  <!-- Resultado del equipo -->
-                  <div>
-                    <mat-chip color="primary">
-                      {{ c.score.value}}
-                    </mat-chip>
-                  </div>
-  
-                  <!-- Botón ver equipo -->
-                  <div>
-                    <button
-                      mat-stroked-button
-                      color="accent"
-                      [routerLink]="['/team', c.team.id]"
-                      (click)="$event.stopPropagation()"
-                    >
-                      Ver Equipo
-                    </button>
-                  </div>
+    <section *ngIf="upcomingMatches.length">
+      <h2 class="section-title">Próximos Partidos</h2>
+      <div class="cards-grid">
+        <mat-card class="match-card" *ngFor="let event of upcomingMatches" (click)="goToMatch(event.id)">
+          <mat-card-header>
+            <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
+            <mat-card-subtitle>{{ event.date | date:'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div *ngFor="let comp of event.competitions" class="competition-block">
+              <p class="competition-meta">
+                {{ comp.venue.fullName }}
+              </p>
+              <div class="competitors">
+                <div class="competitor" *ngFor="let c of comp.competitors">
+                  <img
+                    *ngIf="c.team.logo"
+                    class="team-logo"
+                    [src]="c.team.logo"
+                    [alt]="c.team.displayName + ' logo'"
+                    [routerLink]="['/team', c.team.id, 'details']"
+                  />
+                  <span class="team-name">{{ c.team.displayName || c.team.id }}</span>
+                  <mat-chip color="primary" selected>{{ c.score.value | number:'1.0-0' }}</mat-chip>
                 </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        
+      </div>
     </section>
-  
+
     <!-- Partidos pasados -->
-    <section *ngIf="pastMatches.length > 0" class="mt-5">
-      <h2>Partidos Pasados</h2>
-      <mat-accordion>
-        <mat-expansion-panel *ngFor="let event of pastMatches">
-          <mat-expansion-panel-header>
-            <mat-panel-title>{{ event.name }} ({{ event.shortName }})</mat-panel-title>
-            <mat-panel-description>{{ event.date | date:'short' }}</mat-panel-description>
-          </mat-expansion-panel-header>
-  
-          <div *ngFor="let comp of event.competitions" class="mb-3">
-            <mat-card class="mat-elevation-z2">
-              <mat-card-header>
-                <mat-card-title>Competición {{ comp.id }}</mat-card-title>
-                <mat-card-subtitle>
-                  {{ comp.date | date:'shortTime' }} — {{ comp.venue.fullName }}
-                </mat-card-subtitle>
-              </mat-card-header>
-              <mat-card-content>
-                <div
-                  class="d-flex justify-content-between align-items-center py-2"
-                  *ngFor="let c of comp.competitors"
-                >
-                  <div>
-                    <strong>
-                      {{ c.homeAway === 'home' ? 'Local' : 'Visitante' }}
-                    </strong>
-                    {{ c.team.displayName || c.team.id }}
-                  </div>
-                  <div>
-                    <mat-chip color="primary">
-                      {{ c.score.value}}
-                    </mat-chip>
-                  </div>
-                  <div>
-                    <button
-                      mat-stroked-button
-                      color="accent"
-                      [routerLink]="['/team', c.team.id]"
-                      (click)="$event.stopPropagation()"
-                    >
-                      Ver Equipo
-                    </button>
-                  </div>
+    <section *ngIf="pastMatches.length" class="past-section">
+      <h2 class="section-title">Partidos Pasados</h2>
+      <div class="cards-grid">
+        <mat-card class="match-card" *ngFor="let event of pastMatches" (click)="goToMatch(event.id)">
+          <mat-card-header>
+            <mat-card-title>{{ event.name }} ({{ event.shortName }})</mat-card-title>
+            <mat-card-subtitle>{{ event.date | date:'short' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content>
+            <div *ngFor="let comp of event.competitions" class="competition-block">
+              <p class="competition-meta">
+                {{ comp.venue.fullName }}
+              </p>
+              <div class="competitors">
+                <div class="competitor" *ngFor="let c of comp.competitors">
+                  <img
+                    *ngIf="c.team.logo"
+                    class="team-logo"
+                    [src]="c.team.logo"
+                    [alt]="c.team.displayName + ' logo'"
+                    [routerLink]="['/team', c.team.id, 'details']"
+                  />
+                  <span class="team-name">{{ c.team.displayName || c.team.id }}</span>
+                  <mat-chip color="primary" selected>{{ c.score.value | number:'1.0-0' }}</mat-chip>
                 </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </section>
-  
-    <!-- Mensaje si no hay partidos en ninguna categoría -->
-    <div *ngIf="!upcomingMatches.length && !pastMatches.length" class="text-center my-5">
+
+    <!-- Sin partidos -->
+    <div *ngIf="!upcomingMatches.length && !pastMatches.length" class="no-matches">
       <p>No hay partidos disponibles.</p>
     </div>
   </ng-template>
+
+</div>
+
   
   
   

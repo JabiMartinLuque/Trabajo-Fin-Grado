@@ -43,6 +43,11 @@
                 </span>
               </div>
             </div>
+            <!-- Mostrar el marcador solo si está disponible
+            <div class="match-score" style="text-align:center; font-size:1.25rem; margin-top:0.5rem;">
+              {{ m.competitions[0].competitors[0].score.value }} - {{ m.competitions[0].competitors[1].score.value }}
+            </div>
+            -->
             <mat-card-subtitle>{{ m.date | date:'short' }}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-actions>

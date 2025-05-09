@@ -64,9 +64,11 @@ public class MatchController {
          @GetMapping("/team/{team}")
          public ResponseEntity<List<TeamEventDTO>> getMatchesByTeamAndSeason( //http://localhost:8080/api/matches/team/86?season=2024
                  @PathVariable("team") String teamId,
+                 @RequestParam(value = "year", required = false) Integer year,
+                 @RequestParam(value = "month", required = false) Integer month,
                  @RequestParam(value = "season", required = false) String season,
                  @RequestParam(value = "league", required = false) String league) throws IOException, JsonMappingException, JsonProcessingException {
-        List<TeamEventDTO> events = matchService.getMatchesByTeamAcrossLeagues(teamId, season, league);
+        List<TeamEventDTO> events = matchService.getMatchesByTeamAcrossLeagues(teamId, season, league, year, month);
         return ResponseEntity.ok(events);
     }
 

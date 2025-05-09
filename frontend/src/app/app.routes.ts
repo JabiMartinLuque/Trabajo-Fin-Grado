@@ -42,7 +42,7 @@ export const routes: Routes = [
     { path: 'transactions/:league', component: TransactionsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/transactions
     { path: 'player/:id', component: AthleteDetailsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/athlete/12345
     { path: 'team/:id', 
-      component: TeamDetailsNavbarComponent, 
+      component: TeamDetailsNavbarComponent,
       canActivate: [AuthGuard], 
       children: [
         { path: 'details', component: TeamDetailsComponent, canActivate: [AuthGuard] },
