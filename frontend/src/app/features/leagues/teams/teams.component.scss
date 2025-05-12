@@ -1,0 +1,73 @@
+/* contenedor principal */
+.teams-container {
+    max-width: 960px;
+    margin-inline: auto;
+    padding: 1rem;
+  }
+  
+  /* grilla responsive: 2 columnas en desktop, 1 en móvil */
+  .cards-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  /* tarjeta de equipo */
+  .team-card {
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 180ms, box-shadow 180ms;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+  }
+  
+  /* logo del equipo */
+  .team-logo {
+    object-fit: contain;
+    height: 120px;
+    padding: 1rem;
+    background: var(--clr-surface);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  
+  /* nombre y apodo */
+  .team-name {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--clr-on-surface);
+  }
+  
+  .team-nickname {
+    font-size: 0.9rem;
+    color: rgba(0,0,0,0.6);
+    font-style: italic;
+  }
+  
+  /* tarjetas de error */
+  .error-card {
+    border-left: 4px solid var(--clr-warn);
+    color: var(--clr-warn);
+    margin-bottom: 1rem;
+  }
+  
+  /* mensaje sin datos */
+  .info {
+    text-align: center;
+    opacity: 0.75;
+    margin: 2rem 0;
+  }
+  
+  /* estado de carga */
+  .loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 3rem 0;
+  }
+  

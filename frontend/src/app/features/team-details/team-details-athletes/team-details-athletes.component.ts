@@ -9,13 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
-import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-team-details-athletes',
-  imports: [MatCardModule, MatProgressSpinnerModule, CommonModule, MatTableModule, RouterModule],
+  imports: [MatCardModule, MatProgressSpinnerModule, CommonModule, MatTableModule, MatIconModule, RouterModule],
   templateUrl: './team-details-athletes.component.html',
-  styleUrl: './team-details-athletes.component.css'
+  styleUrl: './team-details-athletes.component.scss'
 })
 export class TeamDetailsAthletesComponent {
   team?: TeamDTO; // Team data
@@ -28,7 +29,8 @@ export class TeamDetailsAthletesComponent {
     private teamDetailsAthletesService: TeamDetailsAthletesService,
     private commonModule: CommonModule, // CommonModule is imported but not used in this component
     private route: ActivatedRoute, // ActivatedRoute is used to get route parameters
-    private teamService: TeamsService // Service to fetch team data
+    private teamService: TeamsService, // Service to fetch team data
+    private router: Router // RouterModule is used for navigation
   ) {
   }
   ngOnInit(): void {
@@ -76,6 +78,11 @@ export class TeamDetailsAthletesComponent {
 
   goToAthlete(athleteId: string): void {
     // Navigate to the athlete details page using the athleteId
-    window.location.href = '/athletes/' + athleteId;
+    this.router.navigate(['player', athleteId]);
   }
+
+
+    hasAthletesWithPosition(position: string): boolean {
+      return this.athletes?.some(a => a.position?.displayName === position);
+    }
 }

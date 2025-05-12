@@ -1,1 +1,43 @@
-<p>teams works!</p>
+<div class="teams-container" *ngIf="!isLoading; else loading">  
+    <mat-card *ngIf="errorMessage" class="error-card" appearance="outlined">
+      {{ errorMessage }}
+    </mat-card>
+  
+    <div class="cards-grid" *ngIf="teams?.length; else empty">
+      <mat-card
+        *ngFor="let team of teams"
+        class="team-card"
+        [routerLink]="['/team', team.id, 'details']"
+      >
+        <img
+          mat-card-image
+          class="team-logo"
+          [src]="team.logo"
+          [alt]="team.displayName"
+        />
+  
+        <mat-card-content>
+          <h4 class="team-name">{{ team.displayName }}</h4>
+  
+          <p class="team-location" *ngIf="team.venue?.address">
+            <mat-icon inline>place</mat-icon>
+            {{ team.venue.address.city }}, {{ team.venue.address.country }}
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  
+  <ng-template #empty>
+    <p class="info">No se encontraron equipos para esta liga.</p>
+  </ng-template>
+  
+  <ng-template #loading>
+    <div class="loading-box">
+      <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
+      <span>Cargando equipos…</span>
+    </div>
+  </ng-template>
+  
+  
+  
