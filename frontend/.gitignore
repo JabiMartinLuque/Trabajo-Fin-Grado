@@ -40,7 +40,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
-# Local env files
-/frontend/src/environments/*.ts
-/backend/src/main/java/com/tfg/tfg_backend/service/EmailService.java
