@@ -1,6 +1,7 @@
 package com.tfg.tfg_backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,11 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Value("${local.url}")
+    private String resetLink;
+
     public void sendResetPasswordEmail(String to, String token, String username) {
-        String resetLink = "http://localhost:4200/reset-password?token=" + token; // Ajusta la URL según corresponda
+        resetLink = resetLink + "/reset-password?token=" + token; // Ajusta la URL según corresponda
         String subject = "Restablecimiento de contraseña";
         String body = "Hola " + username + ",\n\n"
                 + "Para restablecer tu contraseña, haz clic en el siguiente enlace:\n" 
