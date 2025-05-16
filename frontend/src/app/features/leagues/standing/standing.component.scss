@@ -11,8 +11,8 @@
   }
 
   /* indicador: columna muy estrecha */
-  .col-indicator { flex: 0 0 4px; }
-  .col-pos       { flex: 0 0 40px; justify-content: center; }
+  .col-indicator { flex: 0 0 4px;  text-align: center; }
+  .col-pos       { flex: 0 0 40px; justify-content: center;   text-align: center;}
 
   /* equipo + logo */
   .col-team {
@@ -38,6 +38,7 @@
   .col-stat {
     flex: 0 0 50px;       /* o el ancho que prefieras */
     justify-content: center;
+      text-align: center;
   }
   /* encabezados */
   mat-header-cell {

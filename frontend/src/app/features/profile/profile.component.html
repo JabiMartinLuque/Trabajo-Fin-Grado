@@ -55,7 +55,6 @@
       <div class="cards-grid">
         <mat-card *ngFor="let p of favoritePlayers" class="favorite-card">
           <mat-card-header>
-            <mat-icon mat-card-avatar>person</mat-icon>
             <mat-card-title>{{ p.fullName }}</mat-card-title>
             <mat-card-subtitle>
               {{ p.position.displayName || 'Desconocida' }}
@@ -64,7 +63,6 @@
           <mat-card-content>
             <p *ngIf="p.jersey">Camiseta: #{{ p.jersey }}</p>
             <p>
-              País:
               <img
                 *ngIf="p.flag?.href"
                 [src]="p.flag.href"

@@ -23,6 +23,8 @@ import { TeamDetailsStatsComponent } from './features/team-details/team-details-
 import { TeamDetailsNavbarComponent } from './features/team-details/team-details-navbar/team-details-navbar.component';
 import { NewsComponent } from './features/leagues/news/news.component';
 import { TeamDetailsTopPerformersComponent } from './features/team-details/team-details-top-performers/team-details-top-performers.component';
+import { ForgotPasswordComponent } from './features/user_auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './features/user_auth/reset-password/reset-password.component';
 
 
 export const routes: Routes = [
@@ -30,6 +32,8 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard]}, //http://localhost:4200/home
     { path: 'login', component: LoginComponent}, //http://localhost:4200/login
     { path: 'register', component: RegisterComponent}, //http://localhost:4200/register
+    { path: 'forgot-password', component: ForgotPasswordComponent}, //http://localhost:4200/forgot-password
+    { path: 'reset-password', component: ResetPasswordComponent}, //http://localhost:4200/reset-password
     { path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
 

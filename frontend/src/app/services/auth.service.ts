@@ -16,6 +16,7 @@ export interface LoginResponse {
 export class AuthService {
   private loginUrl = `${environment.apiUrl}/auth/login`; // Ajusta la URL según tu backend
   private registerUrl = `${environment.apiUrl}/auth/register`; // URL de registro
+  private forgotPasswordUrl = `${environment.apiUrl}/auth/forgot-password`; // URL de recuperación de contraseña
 
 
   constructor(private http: HttpClient) {}
@@ -27,4 +28,12 @@ export class AuthService {
   register(user: User): Observable<any> {
     return this.http.post(this.registerUrl, user, { responseType: 'text' });
   }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(this.forgotPasswordUrl, { email }, { responseType: 'text' });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+  return this.http.post(`${environment.apiUrl}/auth/reset-password`, { token, newPassword }, { responseType: 'text' });
+}
 }

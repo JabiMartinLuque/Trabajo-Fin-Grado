@@ -1,58 +1,89 @@
-.loading-spinner,
-.no-data {
+/* team-details-athletes.component.scss */
+
+/* Centrado del spinner de carga */
+.loading-spinner {
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
-  color: var(--clr-on-surface);
+  padding: 3rem 0;
 }
 
+/* Título de cada sección (rol) */
+.role-title {
+  margin: 2rem 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--clr-primary);
+  text-align: center;
+}
+
+/* Rejilla responsiva de tarjetas */
 .athletes-grid {
   display: grid;
   gap: 1rem;
-  /* 1 columna en móvil, 2 en tablet, 3+ en desktop */
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  margin: 1rem 0;
+  margin-bottom: 2rem;
+  /* De 1 columna en móvil, hasta 4 en desktop */
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  padding-inline: 1rem;
 }
 
+/* Tarjeta de jugador */
 .athlete-card {
   cursor: pointer;
-  transition: transform 150ms ease-in-out, box-shadow 150ms;
-  border: 2px solid transparent;
-
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  overflow: hidden;
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   }
 }
 
-.athlete-card.selected {
-  border-color: var(--clr-primary);
-}
-
+/* Avatar circular de la cabecera */
 .athlete-avatar {
-  width: 40px;
-  height: 40px;
-  img, mat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 0.5rem;
+  img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+  }
+  mat-icon {
+    font-size: 48px;
+    line-height: 48px;
+    color: var(--clr-on-surface-alt);
   }
 }
 
+/* Cabecera interna de la tarjeta */
+mat-card-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Nombre del atleta */
 .athlete-name {
-  font-size: 1rem;
   font-weight: 600;
+  font-size: 1rem;
+  margin: 0;
   color: var(--clr-on-surface);
 }
 
+/* Posición del atleta */
 .athlete-position {
   font-size: 0.85rem;
-  color: var(--clr-on-surface);
-  opacity: 0.75;
+  color: var(--clr-on-surface-alt);
+  opacity: 0.8;
 }
 
-.no-data p {
-  opacity: 0.7;
+/* Mensaje si no hay datos */
+.no-data {
   text-align: center;
+  padding: 2rem;
+  color: var(--clr-on-surface-alt);
+  font-style: italic;
 }
+

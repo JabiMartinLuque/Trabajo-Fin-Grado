@@ -15,6 +15,7 @@ import { User } from '../../../entities/user';
 export class RegisterComponent {
 
   usuario: User = new User('', '', '');
+  confirmPassword: string = '';
   errorMessage: string = '';
   successMessage: string = '';
 
@@ -23,6 +24,12 @@ export class RegisterComponent {
   register(): void {
     this.errorMessage = '';
     this.successMessage = '';
+
+    if(this.usuario.password !== this.confirmPassword) {
+      this.errorMessage = 'Las contraseñas no coinciden';
+      return;
+    }
+    
     this.authService.register(this.usuario).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
