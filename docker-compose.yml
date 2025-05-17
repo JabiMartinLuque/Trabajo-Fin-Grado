@@ -29,10 +29,21 @@ services:
     container_name: tfg-backend
     labels:
       - "traefik.enable=true"
+      # Router para la API (ya existente)
       - "traefik.http.routers.backend.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=myresolver"
       - "traefik.http.services.backend.loadbalancer.server.port=8080"
+      # Router adicional para servir /uploads
+      - "traefik.http.routers.backend-uploads.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/uploads`)"
+      - "traefik.http.routers.backend-uploads.entrypoints=websecure"
+      - "traefik.http.routers.backend-uploads.tls.certresolver=myresolver"
+      - "traefik.http.services.backend-uploads.loadbalancer.server.port=8080"
+      # Router adicional para servir la consola de H2
+      - "traefik.http.routers.backend-h2.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/h2-console`)"
+      - "traefik.http.routers.backend-h2.entrypoints=websecure"
+      - "traefik.http.routers.backend-h2.tls.certresolver=myresolver"
+      - "traefik.http.services.backend-h2.loadbalancer.server.port=8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     volumes:

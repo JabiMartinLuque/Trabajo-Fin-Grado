@@ -8,6 +8,9 @@
       font-size: 20px;
       margin-left: .25rem;
     }
+
+    display: flex;
+    align-items: center;  // Asegura que todos los elementos estén centrados verticalmente
   }
 
   .app-brand {
@@ -49,13 +52,25 @@
     align-items: center;
     background-color: #fff; /* fondo blanco */
     border-radius: 50%;
-    padding: 0.5rem; /* ajusta según sea necesario */
+    padding: 0; /* ajusta según sea necesario */
     /* Opcional: agrega un borde para resaltar el círculo */
     border: 1px solid rgba(0, 0, 0, 0.12);
+    width: 40px;  // o el tamaño deseado
+    height: 40px; // o el tamaño deseado
+    overflow: hidden;  // para recortar posibles excesos
+    margin-top: 8px;
+    margin-bottom: 4px;
+    margin-left: 18px;
   }
   
   .profile-icon-wrapper mat-icon {
     font-size: 1.5rem; /* ajustar tamaño del icono si se requiere */
     color: var(--brand-900); /* o el color que necesites */
   }
+
+  .profile-avatar-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
   

@@ -45,11 +45,15 @@
       <button mat-menu-item routerLink="/transactions/ita.1">Italy (Serie A)</button>
     </mat-menu>
 
+    <!-- Reemplaza el enlace al perfil -->
     <a mat-button routerLink="/profile" routerLinkActive="active">
       <span class="profile-icon-wrapper">
-        <mat-icon>person</mat-icon>
+        <img *ngIf="user?.profileImageUrl; else defaultIcon" [src]="user?.profileImageUrl" alt="Imagen de perfil" class="profile-avatar-icon"/>
       </span>
     </a>
+    <ng-template #defaultIcon>
+      <mat-icon>person</mat-icon>
+    </ng-template>
   </nav>
 </mat-toolbar>
 
