@@ -9,6 +9,7 @@ import { User } from '../../entities/user';
 })
 export class ProfileService {
   private apiUrl = `${environment.apiUrl}/users/profile`; // Ajusta la URL según tu backend
+  private apiUrlUser = `${environment.apiUrl}/users`; // Ajusta la URL según tu backend
 
   constructor(private http: HttpClient) { }
 
@@ -20,5 +21,15 @@ export class ProfileService {
     return this.http.get<User>(this.apiUrl, {
       params: { userId: userId.toString() }
     });
+  }
+
+  uploadProfileImage(userId: number, file: File): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post(`${this.apiUrlUser}/${userId}/profile-image`, formData, { responseType: 'text' });
+  }
+
+  updateProfile(user: User): Observable<User> {
+    return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user);
   }
 }

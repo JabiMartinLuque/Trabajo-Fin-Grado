@@ -11,9 +11,14 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+
 
 import { RouterModule } from '@angular/router';
 
+import { ProfileImageDialogComponent } from './profile-image-dialog/profile-image-dialog.component';
 import { AthletesService } from '../leagues/athletes/athletes.service';
 import { TeamsService } from '../leagues/teams/teams.service';
 import { LeagueService } from '../leagues/league.service';
@@ -23,7 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 @Component({
   selector: 'app-profile',
   imports: [CommonModule, MatCard, MatCardModule, MatDividerModule, MatListModule, MatIconModule
-    , MatProgressSpinner, RouterModule, MatChipsModule],
+    , MatProgressSpinner, RouterModule, MatChipsModule, MatFormFieldModule, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -35,11 +40,15 @@ export class ProfileComponent implements OnInit {
   favoriteTeams: TeamDTO[] = []; // Lista de equipos favoritos
   favoriteLeagues: LeagueDTO[] = []; // Lista de ligas favoritas
 
+  editing = { username: false, email: false };
+  private backup = { username: '', email: '' };
+
   constructor(
     private profileService: ProfileService, 
     private athletesService: AthletesService,
     private leaguesService: LeagueService, 
-    private teamsService: TeamsService) { }
+    private teamsService: TeamsService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -91,5 +100,51 @@ export class ProfileComponent implements OnInit {
     });
     
   }
+
+  openProfileImageDialog(): void {
+    const dialogRef = this.dialog.open(ProfileImageDialogComponent, {
+      width: '400px',
+      data: { imageUrl: this.user?.profileImageUrl, username: this.user?.username }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Actualiza la imagen de perfil del usuario
+        if(this.user) {
+          this.user.profileImageUrl = result;
+        }
+      }
+    });
+  }
+
+  toggleEdit(field: 'username'|'email') {
+    if (this.editing[field]) return;
+    if (this.user) {
+      this.backup[field] = this.user[field];
+      this.editing[field] = true;
+    }
+  }
+
+  cancelEdit() {
+  if (this.user) {
+    if (this.editing.username) this.user.username = this.backup.username;
+    if (this.editing.email)    this.user.email    = this.backup.email;
+  }
+  this.editing = { username: false, email: false };
+}
+
+saveEdit() {
+  if (this.user) {
+    this.profileService.updateProfile(this.user).subscribe({
+      next: (updatedUser) => {
+        this.user = updatedUser;
+        this.editing = { username: false, email: false };
+      },
+      error: () => {
+        this.cancelEdit();
+      }
+    });
+  }
+}
 
 }

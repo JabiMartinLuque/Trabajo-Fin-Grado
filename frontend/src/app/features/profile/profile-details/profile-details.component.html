@@ -1,0 +1,30 @@
+<div class="profile-details-container" *ngIf="!isLoading">
+  <mat-card class="profile-details-card">
+
+    <!-- CABECERA PERSONALIZADA -->
+    <div class="profile-header-vertical">
+      <div class="profile-avatar-container" (click)="openProfileImageDialog()">
+        <img
+          class="profile-avatar"
+          [src]="user?.profileImageUrl || 'assets/default-profile.png'"
+          [alt]="user?.username || 'Imagen de perfil'"
+        />
+      </div>
+      <div class="profile-text">
+        <h2 class="profile-name">{{ user?.username }}</h2>
+        <p class="profile-email">{{ user?.email }}</p>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- CONTENIDO CENTRADO -->
+    <mat-card-content class="profile-details-content">
+      <p><strong>Rol:</strong> {{ user?.role || 'Usuario' }}</p>
+    </mat-card-content>
+
+  </mat-card>
+</div>
+
+
+

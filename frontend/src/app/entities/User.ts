@@ -7,6 +7,7 @@ export class User {
   favoritePlayers?: FavoritePlayer[]; // Opcional: Lista de jugadores favoritos
   favoriteTeams?: FavoriteTeam[]; // Opcional: Lista de equipos favoritos
   favoriteLeagues?: FavoriteLeague[]; // Opcional: Lista de ligas favoritas
+  profileImageUrl?: string; // URL de la imagen de perfil del usuario
 
   constructor(username: string, email: string, password: string, role?: string) {
     this.username = username;

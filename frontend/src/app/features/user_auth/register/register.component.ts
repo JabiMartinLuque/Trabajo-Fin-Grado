@@ -25,11 +25,16 @@ export class RegisterComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
+    if (!this.validateEmail(this.usuario.email)) {
+      this.errorMessage = 'Por favor, introduce un email válido';
+      return;
+    }
+
     if(this.usuario.password !== this.confirmPassword) {
       this.errorMessage = 'Las contraseñas no coinciden';
       return;
     }
-    
+
     this.authService.register(this.usuario).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
@@ -39,9 +44,30 @@ export class RegisterComponent {
       },
       error: (error) => {
         console.error('Error en el registro:', error);
-        this.errorMessage = 'Ocurrió un error durante el registro. Por favor, intenta nuevamente.';
+        if (error.status === 400) {
+          // Extraemos el mensaje del error, puede venir como string o como objeto
+          let backendMsg = '';
+          if (typeof error.error === 'string') {
+            backendMsg = error.error;
+          } else if (error.error && error.error.message) {
+            backendMsg = error.error.message;
+          }
+          
+          if (backendMsg.includes("ya está registrado")) {
+            this.errorMessage = "Este email ya está registrado. Por favor, utiliza otro.";
+          } else {
+            this.errorMessage = 'Ocurrió un error durante el registro. Por favor, intenta nuevamente.';
+          }
+        } else {
+          this.errorMessage = 'Ocurrió un error durante el registro. Por favor, intenta nuevamente.';
+        }
       }
     });
+  }
+
+  validateEmail(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
   }
 
 }

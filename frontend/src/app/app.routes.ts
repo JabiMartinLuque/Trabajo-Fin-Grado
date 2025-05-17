@@ -25,6 +25,7 @@ import { NewsComponent } from './features/leagues/news/news.component';
 import { TeamDetailsTopPerformersComponent } from './features/team-details/team-details-top-performers/team-details-top-performers.component';
 import { ForgotPasswordComponent } from './features/user_auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './features/user_auth/reset-password/reset-password.component';
+import { ProfileDetailsComponent } from './features/profile/profile-details/profile-details.component';
 
 
 export const routes: Routes = [
@@ -36,6 +37,7 @@ export const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordComponent}, //http://localhost:4200/reset-password
     { path: 'matches', component: MatchesComponent, canActivate: [AuthGuard]}, //http://localhost:4200/matches
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'profile/details', component: ProfileDetailsComponent, canActivate: [AuthGuard] }, //http://localhost:4200/profile/details
 
   // Ahora son rutas independientes
   { path: 'favorites/teams',   component: FavoritesTeamsComponent,    canActivate: [AuthGuard] },

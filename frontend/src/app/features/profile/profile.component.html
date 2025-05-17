@@ -1,20 +1,55 @@
 <div class="profile-container" *ngIf="!isLoading; else loading">
 
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <mat-card-title>Perfil de Usuario</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ng-container *ngIf="user; else noUser">
-        <div class="user-info">
-          <div>
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-          </div>
+  <div class="profile-container" *ngIf="!isLoading; else loading">
+    <mat-card class="profile-card">
+      <mat-card-header>
+        <div class="profile-header">
+          <img
+            class="profile-image"
+            [src]="user?.profileImageUrl || 'assets/default-profile.png'"
+            [alt]="user?.username || 'Imagen de perfil'"
+            (click)="openProfileImageDialog()"
+          />
         </div>
-      </ng-container>
-    </mat-card-content>
-  </mat-card>
+      </mat-card-header>
+
+      <mat-card-content>
+        <ng-container *ngIf="user; else noUser">
+          <div class="editable-field">
+            <mat-icon class="edit-icon" (click)="toggleEdit('username')">edit</mat-icon>
+            <ng-container *ngIf="!editing.username; else editUsername">
+              <span class="field-label">Usuario:</span>
+              <span class="field-value">{{ user.username }}</span>
+            </ng-container>
+            <ng-template #editUsername>
+              <mat-form-field appearance="outline" class="field-input">
+                <input matInput [(ngModel)]="user.username" />
+              </mat-form-field>
+            </ng-template>
+          </div>
+
+          <div class="editable-field">
+            <mat-icon class="edit-icon" (click)="toggleEdit('email')">edit</mat-icon>
+            <ng-container *ngIf="!editing.email; else editEmail">
+              <span class="field-label">Email:</span>
+              <span class="field-value">{{ user.email }}</span>
+            </ng-container>
+            <ng-template #editEmail>
+              <mat-form-field appearance="outline" class="field-input">
+                <input matInput [(ngModel)]="user.email" />
+              </mat-form-field>
+            </ng-template>
+          </div>
+
+          <div class="edit-actions" *ngIf="editing.username || editing.email">
+            <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancelar</button>
+            <button mat-flat-button color="primary" (click)="saveEdit()">Guardar</button>
+          </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
 
   <!-- EQUIPOS FAVORITOS -->
   <section class="favorites-section">
