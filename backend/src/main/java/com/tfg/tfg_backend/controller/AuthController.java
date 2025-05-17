@@ -37,8 +37,14 @@ public class AuthController {
         this.resetTokenRepository = resetTokenRepository;
     }
 
-    @PostMapping("/register") //POST 
+    @PostMapping("/register")
     public String register(@RequestBody User user) {
+        // Verificar si el email ya existe
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El email ya está registrado");
+        }
+        // También puedes verificar por username si lo deseas
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return "User registered successfully!";

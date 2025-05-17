@@ -28,6 +28,9 @@
         @Column(nullable = false, unique = true)
         private String email;
 
+        @Column(name = "profile_image_url")
+        private String profileImageUrl;
+
         @Enumerated(EnumType.STRING)
         private Role role; // Rol del usuario (ADMIN, USER)
 

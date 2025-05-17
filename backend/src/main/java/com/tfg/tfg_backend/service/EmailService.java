@@ -11,7 +11,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${local.url}")
+    @Value("${prod.url}")
     private String resetLink;
 
     public void sendResetPasswordEmail(String to, String token, String username) {
