@@ -37,6 +37,7 @@ services:
       - SPRING_PROFILES_ACTIVE=prod
     volumes:
       - ./data/tfg_backend:/app/data 
+      - ./backend/uploads:/app/uploads
     networks:
       - tfg-network
 
