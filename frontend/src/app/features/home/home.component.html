@@ -1,11 +1,11 @@
 <!-- home.component.html -->
 <div class="home-container" *ngIf="!isLoading; else loading">
 
-  <h2>Bienvenido, {{ user?.username }}</h2>
+  <h2>Welcome, {{ user?.username }}</h2>
 
   <!-- ====================== JUGADORES FAVORITOS ====================== -->
   <section>
-    <h3>Partidos de mis jugadores favoritos</h3>
+    <h3>My Favorite Player Matches</h3>
     <ng-container *ngIf="athleteMatches.length; else noMatches">
       <div class="card-grid">
         <mat-card class="match-card" *ngFor="let m of athleteMatches">
@@ -52,14 +52,14 @@
           </mat-card-header>
           <mat-card-actions>
             <button mat-button color="primary" (click)="goToMatch(m.id)">
-              Ver partido
+              See match
             </button>
           </mat-card-actions>
         </mat-card>
       </div>
     </ng-container>
     <ng-template #noMatches>
-      <p class="empty">No hay partidos para este jugador.</p>
+      <p class="empty">There's no matches for this player.</p>
     </ng-template>
   </section>
 
@@ -67,7 +67,7 @@
 
   <!-- ====================== EQUIPOS FAVORITOS ====================== -->
   <section>
-    <h3>Partidos de mis equipos favoritos</h3>
+    <h3>My Favorite Team Matches</h3>
     <ng-container *ngIf="teamMatches.length; else noTeam">
       <div class="card-grid">
         <mat-card class="match-card" *ngFor="let m of teamMatches">
@@ -109,14 +109,14 @@
           </mat-card-header>
           <mat-card-actions>
             <button mat-button color="primary" (click)="goToMatch(m.id)">
-              Ver partido
+              See match
             </button>
           </mat-card-actions>
         </mat-card>
       </div>
     </ng-container>
     <ng-template #noTeam>
-      <p class="empty">No hay partidos para este equipo.</p>
+      <p class="empty">There's no matches for this team.</p>
     </ng-template>
   </section>
 
@@ -124,7 +124,7 @@
 
   <!-- ====================== LIGAS FAVORITAS ====================== -->
   <section>
-    <h3>Partidos de mis ligas favoritas</h3>
+    <h3>My Favorite League Matches</h3>
     <mat-tab-group
       mat-stretch-tabs
       color="primary"
@@ -200,7 +200,7 @@
                   color="primary"
                   [routerLink]="['/match', ev.id]"
                 >
-                  Ver detalles
+                  See match
                 </button>
               </mat-card-actions>
             </mat-card>
@@ -208,7 +208,7 @@
         </ng-container>
 
         <ng-template #noLeague>
-          <p class="empty">No hay partidos para esta liga.</p>
+          <p class="empty">There's no matches for this league.</p>
         </ng-template>
 
       </mat-tab>
@@ -220,7 +220,7 @@
 <ng-template #loading>
   <div class="loading-container">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    <p>Cargando tus datos…</p>
+    <p>Loading…</p>
   </div>
 </ng-template>
 

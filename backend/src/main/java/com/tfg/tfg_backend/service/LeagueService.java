@@ -19,7 +19,7 @@ public class LeagueService {
     }
 
     public LeagueDTO getLeagueById(String leagueId) {
-        String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + leagueId + "?lang=es&region=es";
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + leagueId + "?lang=en&region=en";
         return restTemplate.getForObject(url, LeagueDTO.class);
     }
 

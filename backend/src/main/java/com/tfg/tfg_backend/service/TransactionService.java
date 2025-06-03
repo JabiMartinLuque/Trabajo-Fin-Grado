@@ -31,7 +31,7 @@ public List<TransactionDTO> getSigningByLeagueAndSeason(String league, String se
     if (season == null || season.isEmpty()) {
         season = "2024";
     }
-    String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/seasons/" + season + "/transactions?lang=es&region=es";
+    String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/seasons/" + season + "/transactions?lang=en&region=en";
     String response = restTemplate.getForObject(url, String.class);
     JsonNode root = objectMapper.readTree(response);
     JsonNode items = root.path("items");

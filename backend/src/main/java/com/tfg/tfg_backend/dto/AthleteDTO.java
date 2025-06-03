@@ -43,8 +43,6 @@ public class AthleteDTO {
     // Información de la posición
     private Position position;
     
-    // Lista de enlaces
-    private List<Link> links;
     
     // Para campos que solo son referencias (por ejemplo, team, statistics, etc.), podemos extraer el "$ref"
     @JsonProperty("team")
@@ -218,12 +216,6 @@ public class AthleteDTO {
     public void setPosition(Position position) {
         this.position = position;
     }
-    public List<Link> getLinks() {
-        return links;
-    }
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
     public String getTeamRef() {
         return teamRef;
     }
@@ -326,58 +318,5 @@ public class AthleteDTO {
         }
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Link {
-        private String language;
-        private List<String> rel;
-        private String href;
-        private String text;
-        private String shortText;
-        private boolean isExternal;
-        private boolean isPremium;
-
-        public String getLanguage() {
-            return language;
-        }
-        public void setLanguage(String language) {
-            this.language = language;
-        }
-        public List<String> getRel() {
-            return rel;
-        }
-        public void setRel(List<String> rel) {
-            this.rel = rel;
-        }
-        public String getHref() {
-            return href;
-        }
-        public void setHref(String href) {
-            this.href = href;
-        }
-        public String getText() {
-            return text;
-        }
-        public void setText(String text) {
-            this.text = text;
-        }
-        public String getShortText() {
-            return shortText;
-        }
-        public void setShortText(String shortText) {
-            this.shortText = shortText;
-        }
-        public boolean isExternal() {
-            return isExternal;
-        }
-        public void setExternal(boolean isExternal) {
-            this.isExternal = isExternal;
-        }
-        public boolean isPremium() {
-            return isPremium;
-        }
-        public void setPremium(boolean isPremium) {
-            this.isPremium = isPremium;
-        }
-    }
 }
 

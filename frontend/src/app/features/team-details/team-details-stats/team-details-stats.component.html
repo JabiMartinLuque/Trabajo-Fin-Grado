@@ -16,18 +16,18 @@
     <div *ngIf="!isLoading && selectedSplit" class="table-wrapper">
       <ng-container *ngFor="let cat of selectedSplit.categories">
         <ng-container *ngIf="cat.displayName === 'General'">
-          <h2 class="section-title">Estadísticas Generales</h2>
+          <h2 class="section-title">General stats</h2>
           <table mat-table [dataSource]="getOrderedStats(getAllowedStats(cat.stats))" class="mat-elevation-z1">
           
             <!-- Nombre de la estadística -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Estadística </th>
+              <th mat-header-cell *matHeaderCellDef> Stats </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayName }} </td>
             </ng-container>
             
             <!-- Valor de la estadística -->
             <ng-container matColumnDef="value">
-              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <th mat-header-cell *matHeaderCellDef> Value </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayValue }} </td>
             </ng-container>
             
@@ -38,19 +38,19 @@
       </ng-container>
 
       <ng-container *ngFor="let cat of selectedSplit.categories">
-        <ng-container *ngIf="cat.displayName === 'Ofensiva'">
-          <h2 class="section-title">Estadísticas de Ataque</h2>
+        <ng-container *ngIf="cat.displayName === 'Offensive'">
+          <h2 class="section-title">Offensive stats</h2>
           <table mat-table [dataSource]="getOrderedAttackStats(getAllowedAttackStats(cat.stats))" class="mat-elevation-z1">
           
             <!-- Nombre de la estadística -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Estadística </th>
+              <th mat-header-cell *matHeaderCellDef> Stats </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayName }} </td>
             </ng-container>
             
             <!-- Valor de la estadística -->
             <ng-container matColumnDef="value">
-              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <th mat-header-cell *matHeaderCellDef> Value </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayValue }} </td>
             </ng-container>
             
@@ -61,19 +61,19 @@
       </ng-container>
 
       <ng-container *ngFor="let cat of selectedSplit.categories">
-        <ng-container *ngIf="cat.displayName === 'Defensiva'">
-          <h2 class="section-title">Estadísticas Defensivas</h2>
+        <ng-container *ngIf="cat.displayName === 'Defensive'">
+          <h2 class="section-title">Defensive stats</h2>
           <table mat-table [dataSource]="getOrderedDefensiveStats(getAllowedDefensiveStats(cat.stats))" class="mat-elevation-z1">
           
             <!-- Nombre de la estadística -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef> Estadística </th>
+              <th mat-header-cell *matHeaderCellDef> Stats </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayName }} </td>
             </ng-container>
             
             <!-- Valor de la estadística -->
             <ng-container matColumnDef="value">
-              <th mat-header-cell *matHeaderCellDef> Valor </th>
+              <th mat-header-cell *matHeaderCellDef> Value </th>
               <td mat-cell *matCellDef="let s"> {{ s.displayValue }} </td>
             </ng-container>
             

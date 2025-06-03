@@ -8,7 +8,7 @@
 
   <!-- Porteros -->
   <section *ngIf="hasAthletesWithPosition('Arquero')">
-    <h3 class="role-title">Porteros</h3>
+    <h3 class="role-title">Goalkeepers</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
@@ -39,7 +39,7 @@
 
   <!-- Defensas -->
   <section *ngIf="hasAthletesWithPosition('Defensor')">
-    <h3 class="role-title">Defensores</h3>
+    <h3 class="role-title">Defense</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
@@ -69,7 +69,7 @@
   </section>
   <!-- Mediocampistas -->
   <section *ngIf="hasAthletesWithPosition('Mediocampista')">
-    <h3 class="role-title">Mediocampistas</h3>
+    <h3 class="role-title">Midfielders</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
@@ -99,7 +99,7 @@
   </section>
   <!-- Delanteros -->
   <section *ngIf="hasAthletesWithPosition('Atacante')">
-    <h3 class="role-title">Delanteros</h3>
+    <h3 class="role-title">Forwards</h3>
     <div class="athletes-grid">      
       <ng-container *ngFor="let a of athletes">
         <mat-card

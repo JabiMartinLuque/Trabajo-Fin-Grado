@@ -148,3 +148,34 @@
     }
   }
 }
+
+@media (max-width: 600px) {
+  .transactions-container {
+    padding-inline: 0.5rem;
+
+    .season-selector {
+      flex-direction: column;
+      align-items: center;
+
+      mat-form-field {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .transactions-container {
+    --card-bg: #1e1e1e;
+    --card-shadow: rgba(0, 0, 0, 0.2);
+    --clr-primary: #e0e0e0;
+    --clr-accent: #e0e0e0;
+    --clr-on-surface: #e0e0e0;
+    --clr-surface: #e0e0e0;
+  }
+}

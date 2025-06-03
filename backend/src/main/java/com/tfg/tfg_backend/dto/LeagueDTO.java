@@ -19,9 +19,6 @@ public class LeagueDTO {
     private String ref;
 
     private String id;
-    private String guid;
-    private String uid;
-    private String alternateId;
     private String name;
     private String displayName;
     private String abbreviation;
@@ -36,7 +33,6 @@ public class LeagueDTO {
     // Estas propiedades son referenciadas por URL en el JSON original.
     // Se pueden modelar como String o a su vez crear DTOs adicionales si lo deseas.
     
-    private List<LinkDTO> links;
     private List<LogoDTO> logos;
     
     private String gender;
@@ -52,24 +48,6 @@ public class LeagueDTO {
     }
     public void setId(String id) {
         this.id = id;
-    }
-    public String getGuid() {
-        return guid;
-    }
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
-    public String getUid() {
-        return uid;
-    }
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-    public String getAlternateId() {
-        return alternateId;
-    }
-    public void setAlternateId(String alternateId) {
-        this.alternateId = alternateId;
     }
     public String getName() {
         return name;
@@ -124,12 +102,6 @@ public class LeagueDTO {
     }
     public void setSeason(SeasonDTO season) {
         this.season = season;
-    }
-    public List<LinkDTO> getLinks() {
-        return links;
-    }
-    public void setLinks(List<LinkDTO> links) {
-        this.links = links;
     }
     public List<LogoDTO> getLogos() {
         return logos;
@@ -200,20 +172,6 @@ public class LeagueDTO {
         private String href;
         private String alt;
         private List<String> rel;
-    }
-
-    
-    @Getter
-    @Setter
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class LinkDTO {
-        private String language;
-        private List<String> rel;
-        private String href;
-        private String text;
-        private String shortText;
-        private boolean isExternal;
-        private boolean isPremium;
     }
 
     @Getter

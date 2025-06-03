@@ -40,7 +40,7 @@ public class MatchService {
     }
 
     public ScoreboardDTO getEnglishMatches() {
-        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?lang=es&region=es";
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?lang=en&region=en";
         // Jackson convertirá automáticamente el JSON en un objeto ScoreboardResponse
         return restTemplate.getForObject(url, ScoreboardDTO.class);
     }
@@ -76,7 +76,7 @@ public class MatchService {
                    + league
                    + "/scoreboard?dates="
                    + startDate + "-" + endDate
-                   + "&lang=es&region=es";
+                   + "?lang=en&region=en";
     
         return restTemplate.getForObject(url, ScoreboardDTO.class);
     }  
@@ -101,7 +101,7 @@ public class MatchService {
             season = "2024";
         }
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-                + league + "/seasons/" + season + "/teams/" + team + "/events?lang=es&region=es";
+                + league + "/seasons/" + season + "/teams/" + team + "/events?lang=en&region=en";
         return restTemplate.getForObject(url, EventDTO.class);
     }
 
@@ -129,7 +129,7 @@ public class MatchService {
         } else {
             // Si no se especifica liga, obtener las ligas en las que participa el equipo.
             String leaguesUrl = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
-                    + teamId + "/leagues?lang=es&region=es";
+                    + teamId + "/leagues?lang=en&region=en";
             String leaguesResponse = restTemplate.getForObject(leaguesUrl, String.class);
             JsonNode leaguesRoot = objectMapper.readTree(leaguesResponse);
             JsonNode leaguesItems = leaguesRoot.path("items");
@@ -161,7 +161,7 @@ public class MatchService {
                 String monthStr = (month < 10) ? "0" + month : String.valueOf(month);
 
                 String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es&dates=" + year + monthStr + "01-" + year + monthStr + "31";
+                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=en&region=en&dates=" + year + monthStr + "01-" + year + monthStr + "31";
                 int currentPage = 1;
                 int totalPages = 1;
                 boolean morePages = true;
@@ -188,7 +188,7 @@ public class MatchService {
         } else {
             for (String leagueId : leagueIds) {
                 String eventsUrl = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/"
-                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=es&region=es";
+                        + leagueId + "/seasons/" + season + "/teams/" + teamId + "/events?lang=en&region=en";
                 
                 int currentPage = 1;
                 int totalPages = 1;
@@ -218,12 +218,12 @@ public class MatchService {
     }
 
     public EventDTO getMatchById(String id) throws IOException, JsonMappingException, JsonProcessingException {
-        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard/" + id + "?lang=es&region=es";
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard/" + id + "?lang=en&region=en";
         return resolveReferences(restTemplate.getForObject(url, EventDTO.class));
     }
 
     public TeamEventDTO getAthleteMatches(String id) throws IOException, JsonMappingException, JsonProcessingException {
-        String url = "http://sports.core.api.espn.com/v2/sports/soccer/athletes/" + id + "/events?lang=es&region=es";
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/athletes/" + id + "/events?lang=en&region=en";
         String response = restTemplate.getForObject(url, String.class);
         JsonNode root = objectMapper.readTree(response);
         JsonNode items = root.path("items");
@@ -243,7 +243,7 @@ public class MatchService {
     }
 
     public TeamEventDTO getTeamEvent(String id) throws IOException, JsonMappingException, JsonProcessingException {
-        String url = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "/events?lang=es&region=es";
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "/events?lang=en&region=en";
         String response = restTemplate.getForObject(url, String.class);
         JsonNode root = objectMapper.readTree(response);
         JsonNode items = root.path("items");

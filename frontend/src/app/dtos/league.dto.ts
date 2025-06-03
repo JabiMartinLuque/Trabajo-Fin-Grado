@@ -2,9 +2,6 @@ import { SeasonDTO } from "./season.dto";
 
 export interface LeagueDTO {
     id: number;
-    guid: string;
-    uid: string;
-    alternateId: string;
     name: string;
     displayName: string;
     abbreviation: string;
@@ -15,7 +12,6 @@ export interface LeagueDTO {
     country: CountryDTO;
     season: SeasonDTO;
     logos: LogoDTO[];
-    links: LinkDTO[];
     gender: string;    
 }
 
@@ -41,14 +37,4 @@ export interface LogoDTO {
     rel: string[];
     lastUpdated: string;
 
-}
-
-export interface LinkDTO {
-    language: string;
-    rel: string[];
-    href: string;
-    text: string;
-    shortText: string;
-    isExternal: boolean;
-    isPremium: boolean;
 }

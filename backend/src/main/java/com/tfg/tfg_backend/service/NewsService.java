@@ -14,7 +14,7 @@ public class NewsService {
     }
 
     public NewsDTO getNewsByLeague(String league) {
-        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/" + league + "/news?lang=es&region=es";
+        String url = "https://site.api.espn.com/apis/site/v2/sports/soccer/" + league + "/news?lang=en&region=en";
         return restTemplate.getForObject(url, NewsDTO.class);
     }
 

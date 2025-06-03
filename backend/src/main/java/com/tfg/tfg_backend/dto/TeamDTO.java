@@ -12,9 +12,6 @@ public class TeamDTO {
     private String ref;
     
     private String id;
-    private String guid;
-    private String uid;
-    private AlternateIds alternateIds;
     private String slug;
     private String location;
     private String name;
@@ -24,8 +21,6 @@ public class TeamDTO {
     private String shortDisplayName;
     private String color;
     private String alternateColor;
-    private Boolean isActive;
-    private Boolean isAllStar;
     
     // Campo para el logo: se extrae del array "logos" (el primer elemento)
     private String logo;
@@ -41,25 +36,14 @@ public class TeamDTO {
 
     @JsonProperty("statistics")
     private String statisticsRef;
-    private String leadersRef;
-    private String injuriesRef;
-    private String notesRef;
-    private String franchiseRef;
-    private String eventsRef;
-    private String coachesRef;
-    private String seasonsRef;
-    private String summaryRef;
-    private Boolean isNational;
-    private String form;
+    private String eventsRef;  
+    private String form; 
     
     @JsonProperty("defaultLeague")
     private String defaultLeagueRef;
     
     // Campo anidado para la información del venue
     private VenueDTO venue;
-    
-    // Lista de links
-    private List<LinkDTO> links;
 
     private List<String> competitions;
 
@@ -76,24 +60,6 @@ public class TeamDTO {
     }
     public void setId(String id) {
         this.id = id;
-    }
-    public String getGuid() {
-        return guid;
-    }
-    public void setGuid(String guid) {
-        this.guid = guid;
-    }
-    public String getUid() {
-        return uid;
-    }
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-    public AlternateIds getAlternateIds() {
-        return alternateIds;
-    }
-    public void setAlternateIds(AlternateIds alternateIds) {
-        this.alternateIds = alternateIds;
     }
     public String getSlug() {
         return slug;
@@ -149,18 +115,6 @@ public class TeamDTO {
     public void setAlternateColor(String alternateColor) {
         this.alternateColor = alternateColor;
     }
-    public Boolean getIsActive() {
-        return isActive;
-    }
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-    public Boolean getIsAllStar() {
-        return isAllStar;
-    }
-    public void setIsAllStar(Boolean isAllStar) {
-        this.isAllStar = isAllStar;
-    }
     public String getLogo() {
         return logo;
     }
@@ -191,59 +145,11 @@ public class TeamDTO {
     public void setStatisticsRef(String statisticsRef) {
         this.statisticsRef = statisticsRef;
     }
-    public String getLeadersRef() {
-        return leadersRef;
-    }
-    public void setLeadersRef(String leadersRef) {
-        this.leadersRef = leadersRef;
-    }
-    public String getInjuriesRef() {
-        return injuriesRef;
-    }
-    public void setInjuriesRef(String injuriesRef) {
-        this.injuriesRef = injuriesRef;
-    }
-    public String getNotesRef() {
-        return notesRef;
-    }
-    public void setNotesRef(String notesRef) {
-        this.notesRef = notesRef;
-    }
-    public String getFranchiseRef() {
-        return franchiseRef;
-    }
-    public void setFranchiseRef(String franchiseRef) {
-        this.franchiseRef = franchiseRef;
-    }
     public String getEventsRef() {
         return eventsRef;
     }
     public void setEventsRef(String eventsRef) {
         this.eventsRef = eventsRef;
-    }
-    public String getCoachesRef() {
-        return coachesRef;
-    }
-    public void setCoachesRef(String coachesRef) {
-        this.coachesRef = coachesRef;
-    }
-    public String getSeasonsRef() {
-        return seasonsRef;
-    }
-    public void setSeasonsRef(String seasonsRef) {
-        this.seasonsRef = seasonsRef;
-    }
-    public String getSummaryRef() {
-        return summaryRef;
-    }
-    public void setSummaryRef(String summaryRef) {
-        this.summaryRef = summaryRef;
-    }
-    public Boolean getIsNational() {
-        return isNational;
-    }
-    public void setIsNational(Boolean isNational) {
-        this.isNational = isNational;
     }
     public String getForm() {
         return form;
@@ -262,12 +168,6 @@ public class TeamDTO {
     }
     public void setVenue(VenueDTO venue) {
         this.venue = venue;
-    }
-    public List<LinkDTO> getLinks() {
-        return links;
-    }
-    public void setLinks(List<LinkDTO> links) {
-        this.links = links;
     }
 
     public List<String> getCompetitions() {
@@ -365,50 +265,6 @@ public class TeamDTO {
         }
     }
 
-    @JsonProperty("leaders")
-    public void setLeadersFromObject(Object leadersObj) {
-        if (leadersObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) leadersObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.leadersRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("injuries")
-    public void setInjuriesFromObject(Object injuriesObj) {
-        if (injuriesObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) injuriesObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.injuriesRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("notes")
-    public void setNotesFromObject(Object notesObj) {
-        if (notesObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) notesObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.notesRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("franchise")
-    public void setFranchiseFromObject(Object franchiseObj) {
-        if (franchiseObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) franchiseObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.franchiseRef = ref.toString();
-            }
-        }
-    }
-
     @JsonProperty("events")
     public void setEventsFromObject(Object eventsObj) {
         if (eventsObj instanceof java.util.Map) {
@@ -416,39 +272,6 @@ public class TeamDTO {
             Object ref = map.get("$ref");
             if (ref != null) {
                 this.eventsRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("coaches")
-    public void setCoachesFromObject(Object coachesObj) {
-        if (coachesObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) coachesObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.coachesRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("seasons")
-    public void setSeasonsFromObject(Object seasonsObj) {
-        if (seasonsObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) seasonsObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.seasonsRef = ref.toString();
-            }
-        }
-    }
-
-    @JsonProperty("summary")
-    public void setSummaryFromObject(Object summaryObj) {
-        if (summaryObj instanceof java.util.Map) {
-            java.util.Map<?, ?> map = (java.util.Map<?, ?>) summaryObj;
-            Object ref = map.get("$ref");
-            if (ref != null) {
-                this.summaryRef = ref.toString();
             }
         }
     }
@@ -487,7 +310,6 @@ public class TeamDTO {
         private String fullName;
         private String shortName;
         private Address address;
-        private List<Object> images; // Puedes definirlo más detalladamente si es necesario
 
         public String getRef() {
             return ref;
@@ -519,12 +341,6 @@ public class TeamDTO {
         public void setAddress(Address address) {
             this.address = address;
         }
-        public List<Object> getImages() {
-            return images;
-        }
-        public void setImages(List<Object> images) {
-            this.images = images;
-        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -543,60 +359,6 @@ public class TeamDTO {
         }
         public void setCountry(String country) {
             this.country = country;
-        }
-    }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class LinkDTO {
-        private String language;
-        private List<String> rel;
-        private String href;
-        private String text;
-        private String shortText;
-        private Boolean isExternal;
-        private Boolean isPremium;
-
-        public String getLanguage() {
-            return language;
-        }
-        public void setLanguage(String language) {
-            this.language = language;
-        }
-        public List<String> getRel() {
-            return rel;
-        }
-        public void setRel(List<String> rel) {
-            this.rel = rel;
-        }
-        public String getHref() {
-            return href;
-        }
-        public void setHref(String href) {
-            this.href = href;
-        }
-        public String getText() {
-            return text;
-        }
-        public void setText(String text) {
-            this.text = text;
-        }
-        public String getShortText() {
-            return shortText;
-        }
-        public void setShortText(String shortText) {
-            this.shortText = shortText;
-        }
-        public Boolean getIsExternal() {
-            return isExternal;
-        }
-        public void setIsExternal(Boolean isExternal) {
-            this.isExternal = isExternal;
-        }
-        public Boolean getIsPremium() {
-            return isPremium;
-        }
-        public void setIsPremium(Boolean isPremium) {
-            this.isPremium = isPremium;
         }
     }
 

@@ -93,6 +93,34 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/{userId}/profile-image")
+    public ResponseEntity<?> deleteProfileImage(@PathVariable Long userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (!userOpt.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        User user = userOpt.get();
+        String imageUrl = user.getProfileImageUrl();
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            return ResponseEntity.badRequest().body("El usuario no tiene imagen de perfil");
+        }
+        
+        // Extraer el nombre del archivo de la URL (se asume que la URL contiene "/uploads/")
+        String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+        Path filePath = Paths.get(uploadDir).resolve(fileName);
+        
+        try {
+            Files.deleteIfExists(filePath);
+            // Se actualiza el usuario para quitar la URL de la imagen de perfil
+            user.setProfileImageUrl(null);
+            userRepository.save(user);
+            return ResponseEntity.ok("Imagen eliminada exitosamente");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar la imagen");
+        }
+    }
+
     @PutMapping("/{userId}")
     public ResponseEntity<User> updateUser(
             @PathVariable Long userId, @RequestBody User updatedUser) {

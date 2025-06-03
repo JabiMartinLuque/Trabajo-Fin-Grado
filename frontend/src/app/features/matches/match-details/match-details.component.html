@@ -11,7 +11,6 @@
 
     <!-- Resultado -->
     <div class="scoreboard" *ngFor="let comp of event.competitions; first as isFirst">
-      <!-- Solo lo mostramos una vez -->
       <ng-container *ngIf="isFirst">
         <div class="team-score">
           <a [routerLink]="['/team', getHome(comp).team.id, 'details']">
@@ -41,11 +40,10 @@
 
   <mat-card-content>
     <ng-container *ngFor="let comp of event.competitions">
-      <!-- Cabecera de competición -->
       <div class="competition-section">
         <div class="competition-header">
-          <span><strong>Inicio:</strong> {{ comp.startDate | date:'shortTime' }}</span>
-          <span><strong>Sede:</strong> {{ comp.venue.fullName }}</span>
+          <span><strong>Start:</strong> {{ comp.startDate | date:'shortTime' }}</span>
+          <span><strong>Venue:</strong> {{ comp.venue.fullName }}</span>
         </div>
         <div *ngIf="comp.status" class="competition-status">
           <span class="status-chip">
@@ -61,10 +59,9 @@
 
       <!-- Pestañas: Resumen / Alineación / Estadísticas -->
       <mat-tab-group class="match-tabs">
-        <!-- 1. Resumen de jugadas -->
         <mat-tab label="Resumen">
           <div class="summary-container" *ngFor="let comp of event.competitions">
-            <!-- Columna HOME -->
+            <!-- HOME -->
             <div class="summary-column home">
               <div class="team-header">
                 <img
@@ -92,7 +89,7 @@
               </div>
             </div>
         
-            <!-- Columna AWAY -->
+            <!-- AWAY -->
             <div class="summary-column away">
               <div class="team-header">
                 <img
@@ -110,7 +107,6 @@
                 <mat-icon *ngIf="d.yellowCard">warning</mat-icon>
                 <mat-icon *ngIf="d.redCard">dangerous</mat-icon>
                 <span class="detail-text">{{ d.type.text }}</span>
-                <!-- Y aquí igual -->
                 <span
                   *ngFor="let ath of d.athletesInvolved; let i = index"
                   class="actor"
@@ -126,7 +122,6 @@
         <mat-tab label="Alineación">
           <div *ngFor="let comp of event.competitions" class="formation-field">
         
-            <!-- aplicamos la formación por columna -->
             <div
               class="formation-side"
               *ngFor="let side of sides"
@@ -192,7 +187,7 @@
         
                 <!-- Nombre de la estadística -->
                 <ng-container matColumnDef="name">
-                  <mat-header-cell *matHeaderCellDef>Estadística</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef>Statistics</mat-header-cell>
                   <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
                 </ng-container>
         
@@ -209,7 +204,7 @@
         
                 <!-- Valor Away -->
                 <ng-container matColumnDef="away">
-                  <mat-header-cell *matHeaderCellDef>Visitante</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef>Away</mat-header-cell>
                   <mat-cell
                     *matCellDef="let row"
                     [ngClass]="{'highlight': row.highest==='away'}"
@@ -218,7 +213,6 @@
                   </mat-cell>
                 </ng-container>
         
-                <!-- Definimos las columnas -->
                 <mat-header-row *matHeaderRowDef="['name','home','away']"></mat-header-row>
                 <mat-row        *matRowDef="let row; columns: ['name','home','away'];"></mat-row>
         

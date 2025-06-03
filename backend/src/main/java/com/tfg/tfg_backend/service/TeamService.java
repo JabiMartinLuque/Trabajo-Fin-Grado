@@ -38,7 +38,7 @@ public class TeamService {
     }
 
     public TeamDTO getTeamById(String id) throws IOException {
-        String url = "https://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "?lang=es&region=es";
+        String url = "https://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "?lang=en&region=en";
         TeamDTO team = restTemplate.getForObject(url, TeamDTO.class);
         String league = team.getLeague();
         String currentSeason = team.getCurrentSeason();
@@ -68,7 +68,7 @@ public class TeamService {
         }
         List<String> leagueIds = new ArrayList<>();
         String leaguesUrl = "http://sports.core.api.espn.com/v2/sports/soccer/teams/" 
-                    + id + "/leagues?lang=es&region=es";
+                    + id + "/leagues?lang=en&region=en";
         String leaguesResponse = restTemplate.getForObject(leaguesUrl, String.class);
         JsonNode leaguesRoot = objectMapper.readTree(leaguesResponse);
         JsonNode leaguesItems = leaguesRoot.path("items");
@@ -103,7 +103,7 @@ public class TeamService {
         }
         // Endpoint externo que devuelve la respuesta paginada con un array "items" de $ref
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" 
-                + league + "/seasons/" + season + "/teams?lang=es&region=es";
+                + league + "/seasons/" + season + "/teams?lang=en&region=en";
         
         // Obtenemos la respuesta completa en forma de String
         String response = restTemplate.getForObject(url, String.class);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService} from './profile.service';
+import { UserStateService } from './userState.service';
 import { User } from '../../entities/user';
 import { TeamDTO } from '../../dtos/team.dto';
 import { AthleteDTO } from '../../dtos/athlete.dto';
@@ -16,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 
 
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 import { ProfileImageDialogComponent } from './profile-image-dialog/profile-image-dialog.component';
 import { AthletesService } from '../leagues/athletes/athletes.service';
@@ -44,10 +45,12 @@ export class ProfileComponent implements OnInit {
   private backup = { username: '', email: '' };
 
   constructor(
-    private profileService: ProfileService, 
+    private profileService: ProfileService,
+    private userStateService: UserStateService,
     private athletesService: AthletesService,
     private leaguesService: LeagueService, 
     private teamsService: TeamsService,
+    private router: Router,
     private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -59,6 +62,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.getUserProfile(userId).subscribe({
         next: (data: User) => {
           this.user = data;
+          this.userStateService.setUser(data); // Actualiza el estado del usuario en el servicio
           this.isLoading = false;
           this.loadFavorites(); // Llamamos al método que carga jugadores y equipos
 
@@ -126,15 +130,19 @@ export class ProfileComponent implements OnInit {
   }
 
   cancelEdit() {
-  if (this.user) {
-    if (this.editing.username) this.user.username = this.backup.username;
-    if (this.editing.email)    this.user.email    = this.backup.email;
+    if (this.user) {
+      if (this.editing.username) this.user.username = this.backup.username;
+      if (this.editing.email)    this.user.email    = this.backup.email;
+    }
+    this.editing = { username: false, email: false };
   }
-  this.editing = { username: false, email: false };
-}
 
-saveEdit() {
+  saveEdit() {
   if (this.user) {
+    if (!this.validateEmail(this.user.email)) {
+      alert('El formato del correo no es válido');
+      return;
+    }
     this.profileService.updateProfile(this.user).subscribe({
       next: (updatedUser) => {
         this.user = updatedUser;
@@ -146,5 +154,17 @@ saveEdit() {
     });
   }
 }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('userId');
+    
+    this.router.navigate(['/login']);
+  }
+
+  validateEmail(email: string): boolean {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  }
 
 }

@@ -26,7 +26,7 @@ public class SeasonService {
     public List<SeasonDTO> getSeasonByLeagueTeam(String league, String team) throws JsonMappingException, JsonProcessingException {
         String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" 
                 + team + "/teams/" 
-                + league + "/seasons?lang=es&region=es";
+                + league + "/seasons?lang=en&region=en";
     
         String response = restTemplate.getForObject(url, String.class);
         JsonNode root = objectMapper.readTree(response);

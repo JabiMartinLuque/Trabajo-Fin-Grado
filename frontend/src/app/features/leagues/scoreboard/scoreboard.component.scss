@@ -111,3 +111,11 @@
     }
   }
   
+  @media (prefers-color-scheme: dark) {
+  .scoreboard-container {
+    .competition-info,
+    .event-date {
+      color: #fff !important;
+    }
+  }
+}

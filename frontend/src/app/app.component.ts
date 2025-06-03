@@ -12,7 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuPanel } from '@angular/material/menu';
 import { User } from './entities/user';
 import { CommonModule } from '@angular/common';
-import { ProfileService } from './features/profile/profile.service';
+import { UserStateService } from './features/profile/userState.service';
 
 @Component({
   selector: 'app-root',
@@ -26,20 +26,11 @@ export class AppComponent {
 
   user: User | null = null;
   
-  constructor(private profileService: ProfileService) { }
+  constructor(private userStateService: UserStateService) {}
 
-    ngOnInit(): void {
-        const storedUserId = localStorage.getItem('userId');
-        const userId = storedUserId ? parseInt(storedUserId, 10) : null;
-        if (userId) {
-            this.profileService.getUserProfile(userId).subscribe({
-                next: (data: User) => {
-                    this.user = data;
-                },
-                error: () => {
-                    console.error('Error fetching user profile');
-                }
-            });
-        }
-    }
+  ngOnInit(): void {
+    this.userStateService.user$.subscribe((user: User | null) => {
+      this.user = user;
+    });
+  }
 }

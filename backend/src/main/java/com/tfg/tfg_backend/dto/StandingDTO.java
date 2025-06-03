@@ -104,7 +104,7 @@ public class StandingDTO {
             private String shortDisplayName;
             private String description;
             private String abbreviation;
-            private Double value;  // Puede ser numérico, se usa Double como ejemplo
+            private Double value;
             private String displayValue;
 
             // Getters y setters

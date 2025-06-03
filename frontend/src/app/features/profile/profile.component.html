@@ -4,12 +4,19 @@
     <mat-card class="profile-card">
       <mat-card-header>
         <div class="profile-header">
-          <img
-            class="profile-image"
-            [src]="user?.profileImageUrl || 'assets/default-profile.png'"
-            [alt]="user?.username || 'Imagen de perfil'"
-            (click)="openProfileImageDialog()"
-          />
+          <ng-container *ngIf="(user?.profileImageUrl || '').trim().length > 0; else defaultIcon">
+            <img
+              class="profile-image"
+              [src]="user?.profileImageUrl"
+              [alt]="user?.username || 'Imagen de perfil'"
+              (click)="openProfileImageDialog()"
+            />
+          </ng-container>
+          <ng-template #defaultIcon>
+            <button class="default-profile-button" (click)="openProfileImageDialog()">
+              <mat-icon class="profile-avatar-icon">person</mat-icon>
+            </button>
+          </ng-template>
         </div>
       </mat-card-header>
 
@@ -18,7 +25,7 @@
           <div class="editable-field">
             <mat-icon class="edit-icon" (click)="toggleEdit('username')">edit</mat-icon>
             <ng-container *ngIf="!editing.username; else editUsername">
-              <span class="field-label">Usuario:</span>
+              <span class="field-label">User:</span>
               <span class="field-value">{{ user.username }}</span>
             </ng-container>
             <ng-template #editUsername>
@@ -45,6 +52,12 @@
             <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancelar</button>
             <button mat-flat-button color="primary" (click)="saveEdit()">Guardar</button>
           </div>
+
+          <div class="profile-actions">
+            <button mat-stroked-button color="warn" (click)="logout()">
+              Cerrar Sesión
+            </button>
+          </div>
         </ng-container>
       </mat-card-content>
     </mat-card>
@@ -54,14 +67,15 @@
   <!-- EQUIPOS FAVORITOS -->
   <section class="favorites-section">
     <div class="section-header">
-      <h3>Equipos Favoritos</h3>
+      <h3>Favorite teams</h3>
       <button mat-stroked-button color="primary" routerLink="/favorites/teams">
-        Gestionar
+        Manage
       </button>
     </div>
     <ng-container *ngIf="favoriteTeams?.length; else noTeams">
       <div class="cards-grid">
-        <mat-card *ngFor="let team of favoriteTeams" class="favorite-card">
+        <mat-card *ngFor="let team of favoriteTeams" class="favorite-card"
+                  [routerLink]="'/team/' + team.id + '/details'">
           <img mat-card-avatar [src]="team.logo" [alt]="team.displayName" />
           <mat-card-title>{{ team.displayName }}</mat-card-title>
           <mat-card-subtitle>{{ team.location }}</mat-card-subtitle>
@@ -74,21 +88,22 @@
       </div>
     </ng-container>
     <ng-template #noTeams>
-      <p class="empty-state">No tienes equipos favoritos.</p>
+      <p class="empty-state">You don't have any favorite teams.</p>
     </ng-template>
   </section>
 
   <!-- JUGADORES FAVORITOS -->
   <section class="favorites-section">
     <div class="section-header">
-      <h3>Jugadores Favoritos</h3>
+      <h3>Favorite players</h3>
       <button mat-stroked-button color="primary" routerLink="/favorites/players">
-        Gestionar
+        Manage
       </button>
     </div>
     <ng-container *ngIf="favoritePlayers?.length; else noPlayers">
       <div class="cards-grid">
-        <mat-card *ngFor="let p of favoritePlayers" class="favorite-card">
+        <mat-card *ngFor="let p of favoritePlayers" class="favorite-card"
+                  [routerLink]="'/player/' + p.id">
           <mat-card-header>
             <mat-card-title>{{ p.fullName }}</mat-card-title>
             <mat-card-subtitle>
@@ -96,14 +111,9 @@
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <p *ngIf="p.jersey">Camiseta: #{{ p.jersey }}</p>
+            <p *ngIf="p.jersey">Jersey: #{{ p.jersey }}</p>
             <p>
-              <img
-                *ngIf="p.flag?.href"
-                [src]="p.flag.href"
-                width="24"
-                alt="Bandera"
-              />
+              <img *ngIf="p.flag?.href" [src]="p.flag.href" width="24" alt="Bandera" />
               {{ p.citizenshipCountry.abbreviation || 'N/A' }}
             </p>
           </mat-card-content>
@@ -111,32 +121,32 @@
       </div>
     </ng-container>
     <ng-template #noPlayers>
-      <p class="empty-state">No tienes jugadores favoritos.</p>
+      <p class="empty-state">You don't have any favorite players.</p>
     </ng-template>
   </section>
 
   <!-- LIGAS FAVORITAS -->
   <section class="favorites-section">
     <div class="section-header">
-      <h3>Ligas Favoritas</h3>
+      <h3>Favorites leagues</h3>
       <button mat-stroked-button color="primary" routerLink="/favorites/leagues">
-        Gestionar
+        Manage
       </button>
     </div>
     <ng-container *ngIf="favoriteLeagues?.length; else noLeagues">
       <div class="cards-grid">
-        <mat-card *ngFor="let lg of favoriteLeagues" class="favorite-card">
+        <mat-card *ngFor="let lg of favoriteLeagues" class="favorite-card"
+                  [routerLink]="'/league/' + lg.slug + '/standing'">
           <img class="league-logo"
-            [src]="lg?.logos?.[0]?.href"
-            [alt]="lg.displayName"
-          />
+              [src]="lg?.logos?.[0]?.href"
+              [alt]="lg.displayName" />
           <mat-card-title>{{ lg.displayName }}</mat-card-title>
           <mat-card-subtitle>{{ lg.country.name }}</mat-card-subtitle>
         </mat-card>
       </div>
     </ng-container>
     <ng-template #noLeagues>
-      <p class="empty-state">No tienes ligas favoritas.</p>
+      <p class="empty-state">You don't have any favorite leagues.</p>
     </ng-template>
   </section>
 
@@ -149,5 +159,5 @@
 </ng-template>
 
 <ng-template #noUser>
-  <p class="empty-state">Error: datos de usuario no disponibles.</p>
+  <p class="empty-state">Error: user data no available.</p>
 </ng-template>

@@ -430,6 +430,25 @@
   height: 32px !important;
 }
 
+@media (prefers-color-scheme: dark) {
+  .summary-container {
+    background: #424242 !important;
+  }
+
+  .summary-column {
+    background: #616161 !important;
+  }
+
+  .formation-field {
+    background: #424242 !important;
+  }
+
+  .formation-side {
+    background: #616161 !important;
+  }
+  
+}
+
 
 
   

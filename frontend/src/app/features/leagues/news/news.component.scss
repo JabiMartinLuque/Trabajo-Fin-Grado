@@ -83,4 +83,15 @@
     }
   }
   
+  @media (prefers-color-scheme: dark) {
+  .news-container .article-card {
+    background: #424242 !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .news-container .article-card {
+    background: #fff !important;
+  }
+}
   

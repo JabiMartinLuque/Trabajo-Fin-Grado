@@ -53,21 +53,30 @@ export class ScoreboardComponent implements OnInit {
   }
 
   formatStatus(status: StatusDTO): string {
-    const key = status.type.name;
-    switch (key) {
-      case 'STATUS_SCHEDULED':
-        return 'Programado';
-      case 'STATUS_FULL_TIME':
-        return 'Finalizado';
-      case 'STATUS_IN_PROGRESS':
-        // Usa el displayClock si tienes tiempo en directo
-        return `En directo ${status.displayClock}`;
-      case 'STATUS_POSTPONED':
-        return 'Aplazado';
-      // Añade los que necesites…
-      default:
-        // Si viene algo raro, lo devolvemos tal cual
-        return key.replace('STATUS_', '').replace(/_/g, ' ').toLowerCase();
+      const key = status.type.name;
+      switch (key) {
+        case 'STATUS_SCHEDULED':
+          return 'Programado';
+        case 'STATUS_FULL_TIME':
+          return 'Finalizado';
+        case 'STATUS_IN_PROGRESS':
+          // Usa el displayClock si tienes tiempo en directo
+          return `En directo ${status.displayClock}`;
+        case 'STATUS_POSTPONED':
+          return 'Aplazado';
+        case 'STATUS_FIRST_HALF':
+          return 'Primera parte';
+        case 'STATUS_SECOND_HALF':
+          return 'Segunda parte';
+        case 'STATUS_OVERTIME':
+          return 'Prórroga';
+        case 'STATUS_PENALTY_SHOOTOUT':
+          return 'Penales';
+        case 'STATUS_FINAL_AET':
+          return 'Finalizado (AET)';
+        default:
+          // Si viene algo raro, lo devolvemos tal cual
+          return key.replace('STATUS_', '').replace(/_/g, ' ').toLowerCase();
+      }
     }
-  }
 }

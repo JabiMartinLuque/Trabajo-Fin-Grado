@@ -1,7 +1,7 @@
 <div class="favorites-athletes-container">
 
     <!-- Paso 1: Ligas -->
-    <h3>Elige una liga</h3>
+    <h3>Choose a league</h3>
     <div class="cards-grid">
       <mat-card *ngFor="let lg of allLeagues"
                 class="league-card"
@@ -21,7 +21,7 @@
   
     <!-- Paso 2: Equipos -->
     <div *ngIf="selectedLeagueSlug">
-        <h3>Equipos en {{ getSelectedLeagueDisplayName() }}</h3>
+        <h3>Teams on {{ getSelectedLeagueDisplayName() }}</h3>
         <div class="cards-grid">
         <mat-card *ngFor="let team of allTeams"
                   class="team-card"
@@ -42,7 +42,7 @@
   
     <!-- Paso 3: Jugadores -->
     <div *ngIf="selectedTeamId">
-      <h3>Jugadores en {{ getSelectedTeamDisplayName() }}</h3>
+      <h3>Players on {{ getSelectedTeamDisplayName() }}</h3>
       <div class="cards-grid">
         <mat-card *ngFor="let a of allAthletes"
                   class="athlete-card"
@@ -62,7 +62,7 @@
       <mat-progress-spinner *ngIf="isLoadingAthletes"
                             mode="indeterminate"
                             diameter="30"></mat-progress-spinner>
-      <p *ngIf="!isLoadingAthletes && !allAthletes.length">No hay jugadores.</p>
+      <p *ngIf="!isLoadingAthletes && !allAthletes.length">There's no players available</p>
     </div>
   
     <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>

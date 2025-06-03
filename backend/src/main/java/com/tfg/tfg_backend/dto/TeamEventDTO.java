@@ -12,12 +12,9 @@ public class TeamEventDTO {
     @JsonProperty("$ref")
     private String ref;
     private String id;
-    private String uid;
     private String date;
     private String name;
     private String shortName;
-    private Reference season;
-    private Reference seasonType;
     private boolean timeValid;
     private List<CompetitionDTO> competitions;
     private List<Reference> venues;
@@ -36,12 +33,6 @@ public class TeamEventDTO {
     public void setId(String id) {
         this.id = id;
     }
-    public String getUid() {
-        return uid;
-    }
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
     public String getDate() {
         return date;
     }
@@ -59,18 +50,6 @@ public class TeamEventDTO {
     }
     public void setShortName(String shortName) {
         this.shortName = shortName;
-    }
-    public Reference getSeason() {
-        return season;
-    }
-    public void setSeason(Reference season) {
-        this.season = season;
-    }
-    public Reference getSeasonType() {
-        return seasonType;
-    }
-    public void setSeasonType(Reference seasonType) {
-        this.seasonType = seasonType;
     }
     public boolean isTimeValid() {
         return timeValid;
@@ -116,46 +95,14 @@ public class TeamEventDTO {
         @JsonProperty("$ref")
         private String ref;
         private String id;
-        private String guid;
-        private String uid;
         private String date;
-        private Integer attendance;
-        private boolean necessary;
-        private boolean timeValid;
-        private boolean neutralSite;
-        private boolean divisionCompetition;
-        private boolean conferenceCompetition;
-        private boolean previewAvailable;
-        private boolean recapAvailable;
         private boolean boxscoreAvailable;
         private boolean lineupAvailable;
-        private boolean gamecastAvailable;
-        private boolean playByPlayAvailable;
-        private boolean commentaryAvailable;
-        private boolean pickcenterAvailable;
-        private boolean summaryAvailable;
-        private boolean liveAvailable;
-        private boolean ticketsAvailable;
-        private boolean shotChartAvailable;
-        private boolean timeoutsAvailable;
-        private boolean possessionArrowAvailable;
-        private boolean onWatchESPN;
-        private boolean recent;
-        private boolean bracketAvailable;
-        private boolean wallclockAvailable;
         private SourceDTO boxscoreSource;
         private SourceDTO playByPlaySource;
         private VenueDTO venue;
         private List<CompetitorDTO> competitors;
         private List<Object> notes;
-        private Reference situation;
-        private Reference status;
-        private Reference odds;
-        private Reference broadcasts;
-        private Reference officials;
-        private Reference details;
-        private Reference commentaries;
-        private Reference groups;
         private FormatDTO format;
 
         // Getters y setters
@@ -171,71 +118,11 @@ public class TeamEventDTO {
         public void setId(String id) {
             this.id = id;
         }
-        public String getGuid() {
-            return guid;
-        }
-        public void setGuid(String guid) {
-            this.guid = guid;
-        }
-        public String getUid() {
-            return uid;
-        }
-        public void setUid(String uid) {
-            this.uid = uid;
-        }
         public String getDate() {
             return date;
         }
         public void setDate(String date) {
             this.date = date;
-        }
-        public Integer getAttendance() {
-            return attendance;
-        }
-        public void setAttendance(Integer attendance) {
-            this.attendance = attendance;
-        }
-        public boolean isNecessary() {
-            return necessary;
-        }
-        public void setNecessary(boolean necessary) {
-            this.necessary = necessary;
-        }
-        public boolean isTimeValid() {
-            return timeValid;
-        }
-        public void setTimeValid(boolean timeValid) {
-            this.timeValid = timeValid;
-        }
-        public boolean isNeutralSite() {
-            return neutralSite;
-        }
-        public void setNeutralSite(boolean neutralSite) {
-            this.neutralSite = neutralSite;
-        }
-        public boolean isDivisionCompetition() {
-            return divisionCompetition;
-        }
-        public void setDivisionCompetition(boolean divisionCompetition) {
-            this.divisionCompetition = divisionCompetition;
-        }
-        public boolean isConferenceCompetition() {
-            return conferenceCompetition;
-        }
-        public void setConferenceCompetition(boolean conferenceCompetition) {
-            this.conferenceCompetition = conferenceCompetition;
-        }
-        public boolean isPreviewAvailable() {
-            return previewAvailable;
-        }
-        public void setPreviewAvailable(boolean previewAvailable) {
-            this.previewAvailable = previewAvailable;
-        }
-        public boolean isRecapAvailable() {
-            return recapAvailable;
-        }
-        public void setRecapAvailable(boolean recapAvailable) {
-            this.recapAvailable = recapAvailable;
         }
         public boolean isBoxscoreAvailable() {
             return boxscoreAvailable;
@@ -248,90 +135,6 @@ public class TeamEventDTO {
         }
         public void setLineupAvailable(boolean lineupAvailable) {
             this.lineupAvailable = lineupAvailable;
-        }
-        public boolean isGamecastAvailable() {
-            return gamecastAvailable;
-        }
-        public void setGamecastAvailable(boolean gamecastAvailable) {
-            this.gamecastAvailable = gamecastAvailable;
-        }
-        public boolean isPlayByPlayAvailable() {
-            return playByPlayAvailable;
-        }
-        public void setPlayByPlayAvailable(boolean playByPlayAvailable) {
-            this.playByPlayAvailable = playByPlayAvailable;
-        }
-        public boolean isCommentaryAvailable() {
-            return commentaryAvailable;
-        }
-        public void setCommentaryAvailable(boolean commentaryAvailable) {
-            this.commentaryAvailable = commentaryAvailable;
-        }
-        public boolean isPickcenterAvailable() {
-            return pickcenterAvailable;
-        }
-        public void setPickcenterAvailable(boolean pickcenterAvailable) {
-            this.pickcenterAvailable = pickcenterAvailable;
-        }
-        public boolean isSummaryAvailable() {
-            return summaryAvailable;
-        }
-        public void setSummaryAvailable(boolean summaryAvailable) {
-            this.summaryAvailable = summaryAvailable;
-        }
-        public boolean isLiveAvailable() {
-            return liveAvailable;
-        }
-        public void setLiveAvailable(boolean liveAvailable) {
-            this.liveAvailable = liveAvailable;
-        }
-        public boolean isTicketsAvailable() {
-            return ticketsAvailable;
-        }
-        public void setTicketsAvailable(boolean ticketsAvailable) {
-            this.ticketsAvailable = ticketsAvailable;
-        }
-        public boolean isShotChartAvailable() {
-            return shotChartAvailable;
-        }
-        public void setShotChartAvailable(boolean shotChartAvailable) {
-            this.shotChartAvailable = shotChartAvailable;
-        }
-        public boolean isTimeoutsAvailable() {
-            return timeoutsAvailable;
-        }
-        public void setTimeoutsAvailable(boolean timeoutsAvailable) {
-            this.timeoutsAvailable = timeoutsAvailable;
-        }
-        public boolean isPossessionArrowAvailable() {
-            return possessionArrowAvailable;
-        }
-        public void setPossessionArrowAvailable(boolean possessionArrowAvailable) {
-            this.possessionArrowAvailable = possessionArrowAvailable;
-        }
-        public boolean isOnWatchESPN() {
-            return onWatchESPN;
-        }
-        public void setOnWatchESPN(boolean onWatchESPN) {
-            this.onWatchESPN = onWatchESPN;
-        }
-        public boolean isRecent() {
-            return recent;
-        }
-        public void setRecent(boolean recent) {
-            this.recent = recent;
-        }
-        public boolean isBracketAvailable() {
-            return bracketAvailable;
-        }
-        public void setBracketAvailable(boolean bracketAvailable) {
-            this.bracketAvailable = bracketAvailable;
-        }
-        public boolean isWallclockAvailable() {
-            return wallclockAvailable;
-        }
-        public void setWallclockAvailable(boolean wallclockAvailable) {
-            this.wallclockAvailable = wallclockAvailable;
         }
         public SourceDTO getBoxscoreSource() {
             return boxscoreSource;
@@ -362,54 +165,6 @@ public class TeamEventDTO {
         }
         public void setNotes(List<Object> notes) {
             this.notes = notes;
-        }
-        public Reference getSituation() {
-            return situation;
-        }
-        public void setSituation(Reference situation) {
-            this.situation = situation;
-        }
-        public Reference getStatus() {
-            return status;
-        }
-        public void setStatus(Reference status) {
-            this.status = status;
-        }
-        public Reference getOdds() {
-            return odds;
-        }
-        public void setOdds(Reference odds) {
-            this.odds = odds;
-        }
-        public Reference getBroadcasts() {
-            return broadcasts;
-        }
-        public void setBroadcasts(Reference broadcasts) {
-            this.broadcasts = broadcasts;
-        }
-        public Reference getOfficials() {
-            return officials;
-        }
-        public void setOfficials(Reference officials) {
-            this.officials = officials;
-        }
-        public Reference getDetails() {
-            return details;
-        }
-        public void setDetails(Reference details) {
-            this.details = details;
-        }
-        public Reference getCommentaries() {
-            return commentaries;
-        }
-        public void setCommentaries(Reference commentaries) {
-            this.commentaries = commentaries;
-        }
-        public Reference getGroups() {
-            return groups;
-        }
-        public void setGroups(Reference groups) {
-            this.groups = groups;
         }
         public FormatDTO getFormat() {
             return format;
@@ -452,7 +207,6 @@ public class TeamEventDTO {
         private String fullName;
         private String shortName;
         private AddressDTO address;
-        private List<Object> images;
         public String getRef() {
             return ref;
         }
@@ -482,12 +236,6 @@ public class TeamEventDTO {
         }
         public void setAddress(AddressDTO address) {
             this.address = address;
-        }
-        public List<Object> getImages() {
-            return images;
-        }
-        public void setImages(List<Object> images) {
-            this.images = images;
         }
     }
 
@@ -521,11 +269,7 @@ public class TeamEventDTO {
         private boolean winner;
         private Reference teamRef;
         private Reference scoreRef;
-        private Reference linescores;
-        private Reference rosterRef;
-        private Reference statistics;
-        private Reference leaders;
-        private Reference record;
+        private Reference linescores;   
         private UniformDTO uniform;
 
         private ScoreValueDTO score;
@@ -592,30 +336,6 @@ public class TeamEventDTO {
         }
         public void setLinescores(Reference linescores) {
             this.linescores = linescores;
-        }
-        public Reference getRosterRef() {
-            return rosterRef;
-        }
-        public void setRosterRef(Reference rosterRef) {
-            this.rosterRef = rosterRef;
-        }
-        public Reference getStatistics() {
-            return statistics;
-        }
-        public void setStatistics(Reference statistics) {
-            this.statistics = statistics;
-        }
-        public Reference getLeaders() {
-            return leaders;
-        }
-        public void setLeaders(Reference leaders) {
-            this.leaders = leaders;
-        }
-        public Reference getRecord() {
-            return record;
-        }
-        public void setRecord(Reference record) {
-            this.record = record;
         }
         public UniformDTO getUniform() {
             return uniform;

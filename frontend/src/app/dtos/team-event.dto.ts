@@ -3,12 +3,9 @@ import { TeamDTO } from "./team.dto";
 export interface TeamEventDTO {
     ref: string;
     id: string;
-    uid: string;
     date: string;
     name: string;
     shortName: string;
-    season: Reference;
-    seasonType: Reference;
     timeValid: boolean;
     competitions: CompetitionDTO[];
     venues: Reference[];
@@ -22,39 +19,14 @@ export interface Reference {
 export interface CompetitionDTO {
     ref: string;
     id: string;
-    guid: string;
-    uid: string;
     date: string;
-    attendance: number;
-    necessary: boolean;
-    timeValid: boolean;
-    neutralSite: boolean;
-    divisionCompetition: boolean;
-    conferenceCompetition: boolean;
-    previewAvailable: boolean;
-    recapAvailable: boolean;
     boxscoreAvailable: boolean;
     lineupAvailable: boolean;
-    gamecastAvailable: boolean;
-    playByPlayAvailable: boolean;
-    commentaryAvailable: boolean;
-    pickcenterAvailable: boolean;
-    summaryAvailable: boolean;
-    liveAvailable: boolean;
-    tickersAvailable: boolean;
-    shortChartAvailable: boolean;
-    timeoutAvailable: boolean;
-    possessionAvailable: boolean;
-    onWatchESPN: boolean;
-    recent: boolean;
-    bracketAvailable: boolean;
-    wallclockAvailable: boolean;
     boxscoreSource: SourceDTO;
     playByPlaySource: SourceDTO;
     venue: VenueDTO;
     competitors: CompetitorDTO[];
     notes: Object[];
-    situation: Reference;
 }
 
 export interface SourceDTO {
@@ -87,10 +59,6 @@ export interface CompetitorDTO {
     winner: boolean;
     team: TeamDTO;
     score: ScoreDTO;
-    linescores: Reference;
-    statistics: Reference;
-    leaders: Reference;
-    record: Reference;
     uniform: UniformDTO;
 }
 

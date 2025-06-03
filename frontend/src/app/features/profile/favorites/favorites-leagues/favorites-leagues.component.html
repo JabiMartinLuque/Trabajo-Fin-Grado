@@ -1,6 +1,6 @@
 <div class="leagues-container" *ngIf="!isLoading; else loading">
 
-  <h3 class="title">Gestionar ligas favoritas</h3>
+  <h3 class="title">Manage favorite leagues</h3>
 
   <mat-card *ngIf="errorMsg" class="error-card" appearance="outlined">
     {{ errorMsg }}
@@ -42,12 +42,12 @@
 
 <!-- estados -->
 <ng-template #empty>
-  <p class="info">No se encontraron ligas disponibles.</p>
+  <p class="info">There's no league available.</p>
 </ng-template>
 
 <ng-template #loading>
   <div class="loading-box">
     <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
-    <span>Cargando ligas…</span>
+    <span>Loading leagues…</span>
   </div>
 </ng-template>

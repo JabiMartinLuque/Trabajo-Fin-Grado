@@ -29,26 +29,32 @@ services:
     container_name: tfg-backend
     labels:
       - "traefik.enable=true"
-      # Router para la API (ya existente)
+      - "traefik.docker.network=tfg-network"
+      # Router para la API:
       - "traefik.http.routers.backend.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=websecure"
       - "traefik.http.routers.backend.tls.certresolver=myresolver"
-      - "traefik.http.services.backend.loadbalancer.server.port=8080"
-      # Router adicional para servir /uploads
+      - "traefik.http.routers.backend.service=backend-api"
+      - "traefik.http.services.backend-api.loadbalancer.server.port=8080"
+      # Router para /uploads:
       - "traefik.http.routers.backend-uploads.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/uploads`)"
       - "traefik.http.routers.backend-uploads.entrypoints=websecure"
       - "traefik.http.routers.backend-uploads.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend-uploads.service=backend-uploads"
       - "traefik.http.services.backend-uploads.loadbalancer.server.port=8080"
-      # Router adicional para servir la consola de H2
+      - "traefik.http.routers.backend-uploads.priority=300"   # Prioridad alta para que se aplique sobre el router frontend
+      # Router para la consola de H2:
       - "traefik.http.routers.backend-h2.rule=Host(`tfgproject.duckdns.org`) && PathPrefix(`/h2-console`)"
       - "traefik.http.routers.backend-h2.entrypoints=websecure"
       - "traefik.http.routers.backend-h2.tls.certresolver=myresolver"
+      - "traefik.http.routers.backend-h2.service=backend-h2"
       - "traefik.http.services.backend-h2.loadbalancer.server.port=8080"
+      - "traefik.http.routers.backend-h2.priority=100"   # Prioridad alta para que se aplique sobre el router frontend
     environment:
       - SPRING_PROFILES_ACTIVE=prod
     volumes:
-      - ./data/tfg_backend:/app/data 
-      - ./backend/uploads:/app/uploads
+      - "./data/tfg_backend:/app/data"
+      - "./backend/uploads:/app/uploads"
     networks:
       - tfg-network
 
@@ -59,7 +65,8 @@ services:
     container_name: tfg-frontend
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`tfgproject.duckdns.org`) && (PathPrefix(`/`) && !PathPrefix(`/api`))"
+      - "traefik.docker.network=tfg-network"
+      - "traefik.http.routers.frontend.rule=Host(`tfgproject.duckdns.org`) && (PathPrefix(`/`) && !PathPrefix(`/api`) && !PathPrefix(`/h2-console`) && !PathPrefix(`/uploads`))"
       - "traefik.http.routers.frontend.entrypoints=websecure"
       - "traefik.http.routers.frontend.tls.certresolver=myresolver"
     networks:

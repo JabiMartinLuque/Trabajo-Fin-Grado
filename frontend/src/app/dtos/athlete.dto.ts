@@ -1,8 +1,6 @@
 export interface AthleteDTO {
     id: string; 
-    uid: string; 
     type: string; 
-    guid: string;
     firstName: string;
     middleName: string;
     lastName: string;
@@ -25,12 +23,9 @@ export interface AthleteDTO {
     citizenshipCountry: CitizenshipCountryDTO;
     flag: FlagDTO;
     position: PositionDTO;
-    links: LinkDTO[];
-
     teamRef: string;
 
 }
-
 
 export interface CitizenshipCountryDTO {
     alternateId: string;
@@ -51,13 +46,4 @@ export interface PositionDTO {
     abbreviation: string;
     shortName: string;
     leaf: boolean;
-}
-export interface LinkDTO {
-    language: string;
-    rel: string[];
-    href: string;
-    text: string;
-    shortText: string;
-    isExternal: boolean;
-    isPremium: boolean;
 }

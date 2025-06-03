@@ -15,7 +15,7 @@ public class StatisticsService {
     }
 
     public StatisticsDTO getStatistics(String season, String team, String league) {
-        String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/seasons/" + season + "/types/1/teams/" + team + "/statistics?lang=es&region=es";
+        String url = "http://sports.core.api.espn.com/v2/sports/soccer/leagues/" + league + "/seasons/" + season + "/types/1/teams/" + team + "/statistics?lang=en&region=en";
         return restTemplate.getForObject(url, StatisticsDTO.class);
     }
 }

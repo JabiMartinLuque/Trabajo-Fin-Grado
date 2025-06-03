@@ -5,7 +5,7 @@
     <!-- Selector de mes -->
     <div class="month-selector" style="flex: 1;">
       <mat-form-field appearance="fill" class="month-field" style="width: 100%;">
-        <mat-label>Selecciona mes</mat-label>
+        <mat-label>Choose a month</mat-label>
         <mat-select [(value)]="selectedMonth" (selectionChange)="loadMatches(teamId)">
           <mat-option *ngFor="let m of monthOptions" [value]="m.value">
             {{ m.name }}
@@ -16,7 +16,7 @@
     <!-- Selector de año -->
     <div class="year-selector" style="flex: 1;">
       <mat-form-field appearance="fill" class="year-field" style="width: 100%;">
-        <mat-label>Selecciona año</mat-label>
+        <mat-label>Choose a year</mat-label>
         <mat-select [(value)]="selectedYear" (selectionChange)="loadMatches(teamId)">
           <mat-option *ngFor="let y of yearOptions" [value]="y.value">
             {{ y.name }}
@@ -41,7 +41,7 @@
 
     <!-- Próximos partidos -->
     <section *ngIf="upcomingMatches.length">
-      <h2 class="section-title">Próximos Partidos</h2>
+      <h2 class="section-title">Upcoming matches</h2>
       <div class="cards-grid">
         <mat-card class="match-card" *ngFor="let event of upcomingMatches" (click)="goToMatch(event.id)">
           <mat-card-header>
@@ -76,7 +76,7 @@
 
     <!-- Partidos pasados -->
     <section *ngIf="pastMatches.length" class="past-section">
-      <h2 class="section-title">Partidos Pasados</h2>
+      <h2 class="section-title">Last matches</h2>
       <div class="cards-grid">
         <mat-card class="match-card" *ngFor="let event of pastMatches" (click)="goToMatch(event.id)">
           <mat-card-header>
@@ -110,7 +110,7 @@
 
     <!-- Sin partidos -->
     <div *ngIf="!upcomingMatches.length && !pastMatches.length" class="no-matches">
-      <p>No hay partidos disponibles.</p>
+      <p>There's no matches available.</p>
     </div>
   </ng-template>
 

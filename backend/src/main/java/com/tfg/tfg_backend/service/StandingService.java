@@ -29,7 +29,7 @@ public class StandingService {
     public List<StandingDTO> getStandingsByLeague(String league) throws IOException {
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/leagues/" 
                      + league 
-                     + "/seasons/2024/types/1/groups/1/standings/0?lang=es&region=es";
+                     + "/seasons/2024/types/1/groups/1/standings/0?lang=en&region=en";
         // Obtener la respuesta completa en forma de String
         String jsonResponse = restTemplate.getForObject(url, String.class);
         // Leer la respuesta como un árbol JSON

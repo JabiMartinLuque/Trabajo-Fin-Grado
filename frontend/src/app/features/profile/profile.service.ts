@@ -29,6 +29,10 @@ export class ProfileService {
     return this.http.post(`${this.apiUrlUser}/${userId}/profile-image`, formData, { responseType: 'text' });
   }
 
+  deleteProfileImage(userId: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/users/${userId}/profile-image`, { responseType: 'text' });
+  }
+
   updateProfile(user: User): Observable<User> {
     return this.http.put<User>(`${environment.apiUrl}/users/${user.id}`, user);
   }

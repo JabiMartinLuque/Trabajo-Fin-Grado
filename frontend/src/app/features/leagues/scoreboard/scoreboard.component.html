@@ -1,7 +1,7 @@
 <!-- src/app/features/scoreboard/scoreboard.component.html -->
 <div class="scoreboard-container">
   <div class="scoreboard-header" style="padding: var(--space-md) var(--space-sm); text-align: center; background: var(--clr-primary-light); color: var(--on-brand);">
-      <h2>Partidos de la Jornada Actual</h2>
+      <h2>Current Matchday</h2>
     </div>
 
   <ng-container *ngIf="isLoading; else loaded">
@@ -35,7 +35,7 @@
             <mat-card-content>
               <div *ngFor="let comp of event.competitions" class="competition-block">
                 <div class="competition-info">
-                  <span><strong>Sede:</strong> {{ comp.venue.fullName }}</span>
+                  <span><strong>Venue:</strong> {{ comp.venue.fullName }}</span>
                   <ng-container *ngIf="comp.status">
                     <span class="status-chip">
                       <mat-chip color="accent" selected>
@@ -72,7 +72,7 @@
 
     <ng-template #noEvents>
       <div class="no-events">
-        <p>No hay eventos disponibles.</p>
+        <p>There's no events now.</p>
       </div>
     </ng-template>
   </ng-template>

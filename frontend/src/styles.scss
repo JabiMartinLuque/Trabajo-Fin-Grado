@@ -265,3 +265,10 @@ h1, h2, h3, h4 {
   }
 }
 
+.mat-card {
+  background: var(--card-bg-app);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--card-shadow);
+  margin-bottom: 1rem;
+}
+
