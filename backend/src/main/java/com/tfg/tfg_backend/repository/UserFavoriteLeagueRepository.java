@@ -1,6 +1,5 @@
 package com.tfg.tfg_backend.repository;
 
-import com.tfg.tfg_backend.model.User;
 import com.tfg.tfg_backend.model.UserFavoriteLeague;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

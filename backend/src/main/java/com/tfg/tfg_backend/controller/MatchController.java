@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.tfg.tfg_backend.dto.EventDTO;
 import com.tfg.tfg_backend.dto.ScoreboardDTO;
-import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TeamEventDTO;
 import com.tfg.tfg_backend.service.MatchService;
 

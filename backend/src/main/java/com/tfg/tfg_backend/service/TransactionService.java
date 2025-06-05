@@ -9,7 +9,6 @@ import org.springframework.web.client.RestTemplate;
 import com.tfg.tfg_backend.dto.AthleteDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 import com.tfg.tfg_backend.dto.TransactionDTO;
-import com.tfg.tfg_backend.dto.TransactionDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;

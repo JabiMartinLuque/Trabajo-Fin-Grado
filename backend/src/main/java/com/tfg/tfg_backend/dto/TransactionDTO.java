@@ -1,7 +1,6 @@
 //// filepath: c:\Users\jamar\Trabajo-Fin-Grado\backend\src\main\java\com\tfg\tfg_backend\dto\TransactionDTO.java
 package com.tfg.tfg_backend.dto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

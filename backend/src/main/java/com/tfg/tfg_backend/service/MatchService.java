@@ -18,24 +18,20 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sound.sampled.Line;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.tfg.tfg_backend.service.TeamService;
 
 import io.jsonwebtoken.io.IOException;
 
 @Service
 public class MatchService {
     private final RestTemplate restTemplate;
-    private final TeamService teamService;
     private final ObjectMapper objectMapper;
 
     public MatchService() {
         this.restTemplate = new RestTemplate();
-        this.teamService = new TeamService();
         this.objectMapper = new ObjectMapper();
     }
 

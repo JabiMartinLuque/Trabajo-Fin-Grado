@@ -3,8 +3,6 @@ package com.tfg.tfg_backend.service;
 import com.tfg.tfg_backend.dto.StandingDTO;
 import com.tfg.tfg_backend.dto.TeamDTO;
 
-import com.tfg.tfg_backend.service.TeamService;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 

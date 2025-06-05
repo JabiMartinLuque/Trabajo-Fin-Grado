@@ -40,8 +40,6 @@ public class TeamService {
     public TeamDTO getTeamById(String id) throws IOException {
         String url = "https://sports.core.api.espn.com/v2/sports/soccer/teams/" + id + "?lang=en&region=en";
         TeamDTO team = restTemplate.getForObject(url, TeamDTO.class);
-        String league = team.getLeague();
-        String currentSeason = team.getCurrentSeason();
 
         String jsonResponse = restTemplate.getForObject(url, String.class);
         JsonNode root = objectMapper.readTree(jsonResponse);

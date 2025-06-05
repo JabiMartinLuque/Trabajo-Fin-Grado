@@ -3,7 +3,6 @@ package com.tfg.tfg_backend.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.security.KeyStore.Entry;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
