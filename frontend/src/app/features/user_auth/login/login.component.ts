@@ -36,7 +36,7 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error('Error en el login:', error);
-        this.errorMessage = 'Credenciales incorrectas o error en el login.';
+        this.errorMessage = 'Login error.';
       }
     });
   }

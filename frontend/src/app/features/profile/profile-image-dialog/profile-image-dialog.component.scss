@@ -73,3 +73,18 @@
 :host ::ng-deep mat-dialog-actions button[color="primary"]:hover {
   background: var(--clr-primary-light);
 }
+
+.custom-file-upload {
+  display: inline-block;
+  background-color: var(--clr-primary); /* verde principal */
+  color: var(--clr-surface);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+
+.custom-file-upload:hover {
+  background-color: var(--clr-primary-light);
+}

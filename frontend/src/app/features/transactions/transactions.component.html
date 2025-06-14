@@ -3,7 +3,7 @@
 
   <div class="season-selector mb-3 d-flex justify-content-center">
     <mat-form-field appearance="fill" class="w-25">
-      <mat-label>Temporada</mat-label>
+      <mat-label>Season</mat-label>
       <mat-select [value]="season" (selectionChange)="onSeasonChange($event.value)">
         <mat-option *ngFor="let option of seasonOptions" [value]="option">
           {{ option }}
@@ -41,22 +41,22 @@
         <mat-divider></mat-divider>
         <mat-card-content>
           <p>
-            <strong>Tipo: </strong>
+            <strong>Type: </strong>
             <span class="info-value">{{ transaction.type }}</span>
           </p>
           <p>
-            <strong style="margin-right: 0.5rem;">Importe: </strong>
+            <strong style="margin-right: 0.5rem;">Import: </strong>
             <span class="info-value" style="margin-right: 0.5rem;">{{ transform(transaction.amount) }}</span>
             ({{ transaction.displayAmount }})
           </p>
           <p class="d-flex align-items-center">
-            <strong class="me-2">Desde:</strong>
+            <strong class="me-2">From:</strong>
             <img [src]="transaction.from.logo" alt="{{ transaction.from.displayName }} logo"
                  width="24" height="24" class="me-2" />
             {{ transaction.from.displayName }}
           </p>
           <p class="d-flex align-items-center">
-            <strong class="me-2">Hasta:</strong>
+            <strong class="me-2">To:</strong>
             <img [src]="transaction.to.logo" alt="{{ transaction.to.name }} logo"
                  width="24" height="24" class="me-2" />
             {{ transaction.to.name }}

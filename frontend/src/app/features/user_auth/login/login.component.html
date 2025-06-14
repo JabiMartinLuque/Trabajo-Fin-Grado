@@ -1,6 +1,6 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
   <div class="card p-4 shadow-lg">
-    <h2 class="text-center mb-4">Inicio de Sesión</h2>
+    <h2 class="text-center mb-4">Login</h2>
     <form (ngSubmit)="login()">
       <div class="form-group">
         <label for="username">Username:</label>
@@ -14,7 +14,7 @@
       </div>
   
       <div class="form-group">
-        <label for="password">Contraseña:</label>
+        <label for="password">Password:</label>
         <input 
           id="password" 
           type="password" 
@@ -24,7 +24,7 @@
           required />
       </div>
   
-      <button type="submit" class="btn btn-primary btn-block mt-3">Iniciar Sesión</button>
+      <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
   
       <!-- Mostrar mensaje de error si existe -->
       <div *ngIf="errorMessage" class="alert alert-danger mt-3">
@@ -32,11 +32,11 @@
       </div>
     </form>
     <div class="text-center mt-3">
-      <a routerLink="/forgot-password">Olvidé mi contraseña</a>
+      <a routerLink="/forgot-password">Forgot password?</a>
     </div>
   
     <p class="text-center mt-3">
-      ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+      Don't have an account? <a routerLink="/register">Register here</a>
     </p>
   </div>
 </div>

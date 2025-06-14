@@ -15,10 +15,11 @@ import { MatAccordion } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
   selector: 'app-team-details-top-performers',
-  imports: [MatCardModule, MatProgressSpinnerModule, CommonModule, MatFormFieldModule, MatSelectModule, MatListModule, MatExpansionModule, MatTabsModule],
+  imports: [MatCardModule, MatProgressSpinnerModule, CommonModule, MatFormFieldModule, MatSelectModule, MatListModule, MatExpansionModule, MatTabsModule, MatChipsModule, MatAccordion],
   templateUrl: './team-details-top-performers.component.html',
   styleUrl: './team-details-top-performers.component.scss'
 })
@@ -32,12 +33,13 @@ export class TeamDetailsTopPerformersComponent {
   errorMessage = '';
 
   allowedCategoryNames = [
-    'goalsLeaders',
-    'assistsLeaders',
+    'goals',
+    'assists',
     'yellowCards',
     'redCards',
     'foulsCommitted'
   ];
+cat: any;
 
   constructor(
     private route: ActivatedRoute,

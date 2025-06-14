@@ -1,56 +1,68 @@
-<!-- team-details-top-performers.component.html -->
+<mat-card class="top-performers-card">
 
-<mat-card class="top-performers-card m-4">
+  <!-- CABECERA CON LOGO + NOMBRE DE EQUIPO -->
   <mat-card-header>
-    <mat-card-title>Top Performers – Equipo {{ teamId }}</mat-card-title>
+    <img
+      mat-card-avatar
+      class="team-logo"
+      [src]="team?.logo"
+      [alt]="team?.displayName"
+    />
+    <mat-card-title class="title">
+      Top performers – {{ team?.displayName || 'Equipo' }}
+    </mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
-    <!-- Loading -->
+
+    <!-- CARGA / ERROR --------------------------------------------------- -->
     <ng-container *ngIf="isLoading; else loaded">
-      <div class="loading-container">
+      <div class="loading-box">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </div>
     </ng-container>
 
     <ng-template #loaded>
-      <!-- Error -->
-      <ng-container *ngIf="errorMessage; else showTabs">
-        <div class="error-message">{{ errorMessage }}</div>
+      <ng-container *ngIf="errorMessage; else showCategories">
+        <p class="error-message">{{ errorMessage }}</p>
       </ng-container>
     </ng-template>
 
-    <ng-template #showTabs>
-      <mat-tab-group>
-        <!-- Recorremos todas las categorías pero renderizamos solo las permitidas -->
-        <ng-container
-          *ngFor="let cat of topPerformers?.categories; trackBy: trackByCategory"
-        >
-          <mat-tab
+    <!-- LISTADO DE CATEGORÍAS ------------------------------------------ -->
+    <ng-template #showCategories>
+      <mat-accordion multi="false" class="cat-accordion">
+
+        <!-- solo las categorías permitidas -->
+        <ng-container *ngFor="let cat of topPerformers?.categories; trackBy: trackByCategory">
+          <mat-expansion-panel
+            [hideToggle]="true"
             *ngIf="allowedCategoryNames.includes(cat.name)"
-            [label]="cat.shortDisplayName"
           >
-            <ng-container *ngIf="cat.leaders?.length; else noLeaders">
-              <mat-list dense>
-                <mat-list-item
-                  *ngFor="let leader of cat.leaders | slice:0:5; trackBy: trackByLeader"
-                >
-                  <span class="leader-name">
-                    {{ getAthleteName(leader.athleteRef) }}
-                  </span>
-                  <span class="leader-value">
-                    {{ leader.displayValue }}
-                  </span>
-                </mat-list-item>
-              </mat-list>
-            </ng-container>
-            <ng-template #noLeaders>
-              <p class="no-data">No hay líderes en esta categoría.</p>
-            </ng-template>
-          </mat-tab>
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ cat.displayName }}</mat-panel-title>
+              <mat-panel-description>{{ cat.shortDisplayName }}</mat-panel-description>
+            </mat-expansion-panel-header>
+
+          <!-- líderes (máx. 5) -->
+          <mat-list-item *ngFor="let leader of cat.leaders | slice : 0 : 5; trackBy: trackByLeader">
+            <div class="leader-row">
+              <span class="leader-name">
+                {{ getAthleteName(leader.athleteRef) }}
+              </span>
+              <mat-chip color="primary" selected class="leader-chip">
+                {{ leader.displayValue }}
+              </mat-chip>
+            </div>
+          </mat-list-item>
+
+          <ng-template #noLeaders>
+            <p class="no-data">No hay líderes en esta categoría.</p>
+          </ng-template>
+        </mat-expansion-panel>
         </ng-container>
-      </mat-tab-group>
+      </mat-accordion>
     </ng-template>
+
   </mat-card-content>
 </mat-card>
 

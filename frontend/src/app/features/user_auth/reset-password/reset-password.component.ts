@@ -30,19 +30,19 @@ export class ResetPasswordComponent {
         this.successMessage = '';
 
         if (this.newPassword !== this.confirmPassword) {
-            this.errorMessage = 'Las contraseñas no coinciden';
+            this.errorMessage = 'Passwords do not match';
             return;
         }
 
         // Llama al servicio para restablecer la contraseña
         this.authService.resetPassword(this.token, this.newPassword).subscribe({
             next: (response) => {
-                this.successMessage = 'Contraseña restablecida con éxito. Ahora puedes iniciar sesión.';
+            this.successMessage = 'Password successfully reset. You can now log in.';
                 setTimeout(() => this.router.navigate(['/login']), 2000);
             },
             error: (error) => {
                 console.error('Error al restablecer contraseña:', error);
-                this.errorMessage = 'Error al restablecer la contraseña. Por favor, inténtalo de nuevo.';
+                this.errorMessage = 'Error resetting the password. Please try again.';
             }
         });
     }

@@ -46,12 +46,12 @@ export class ProfileImageDialogComponent {
             currentUser.profileImageUrl = imageUrl;
             this.userStateService.setUser(currentUser);
           }
-          this.snackBar.open('Imagen actualizada exitosamente', '', { duration: 3000 });
+          this.snackBar.open('Image successfully updated', '', { duration: 3000 });
           this.dialogRef.close(imageUrl);
         },
         error: (err) => {
           console.error('Error al subir la imagen', err);
-          this.snackBar.open('Error al actualizar la imagen', '', { duration: 3000 });
+          this.snackBar.open('Error updating the image', '', { duration: 3000 });
           this.dialogRef.close();
         }
       });
@@ -63,7 +63,7 @@ export class ProfileImageDialogComponent {
   onDelete(): void {
     const currentUser = this.userStateService.getUser();
     if (!currentUser || !(currentUser.profileImageUrl || '').trim().length) {
-      this.snackBar.open('No hay imagen para eliminar', '', { duration: 3000 });
+      this.snackBar.open('No image to delete', '', { duration: 3000 });
       this.dialogRef.close();
       return;
     }
@@ -74,12 +74,12 @@ export class ProfileImageDialogComponent {
         // Actualizamos el estado del usuario para eliminar la imagen
         currentUser.profileImageUrl = '';
         this.userStateService.setUser(currentUser);
-        this.snackBar.open('Imagen eliminada exitosamente', '', { duration: 3000 });
+        this.snackBar.open('Image successfully deleted', '', { duration: 3000 });
         this.dialogRef.close(null);
       },
       error: (err) => {
         console.error('Error al eliminar la imagen', err);
-        this.snackBar.open('Error al eliminar la imagen', '', { duration: 3000 });
+        this.snackBar.open('Error deleting the image', '', { duration: 3000 });
         this.dialogRef.close();
       }
     });

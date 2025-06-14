@@ -7,12 +7,12 @@
 <ng-container *ngIf="!isLoading">
 
   <!-- Porteros -->
-  <section *ngIf="hasAthletesWithPosition('Arquero')">
+  <section *ngIf="hasAthletesWithPosition('Goalkeeper')">
     <h3 class="role-title">Goalkeepers</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
-          *ngIf="a.position?.displayName === 'Arquero'"
+          *ngIf="a.position?.displayName === 'Goalkeeper'"
           class="athlete-card"
           (click)="goToAthlete(a.id)"
         >
@@ -38,12 +38,12 @@
   </section>
 
   <!-- Defensas -->
-  <section *ngIf="hasAthletesWithPosition('Defensor')">
+  <section *ngIf="hasAthletesWithPosition('Defender')">
     <h3 class="role-title">Defense</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
-          *ngIf="a.position?.displayName === 'Defensor'"
+          *ngIf="a.position?.displayName === 'Defender'"
           class="athlete-card"
           (click)="goToAthlete(a.id)"
         >
@@ -68,12 +68,12 @@
     </div>
   </section>
   <!-- Mediocampistas -->
-  <section *ngIf="hasAthletesWithPosition('Mediocampista')">
+  <section *ngIf="hasAthletesWithPosition('Midfielder')">
     <h3 class="role-title">Midfielders</h3>
     <div class="athletes-grid">
       <ng-container *ngFor="let a of athletes">
         <mat-card
-          *ngIf="a.position?.displayName === 'Mediocampista'"
+          *ngIf="a.position?.displayName === 'Midfielder'"
           class="athlete-card"
           (click)="goToAthlete(a.id)"
         >
@@ -98,12 +98,12 @@
     </div>
   </section>
   <!-- Delanteros -->
-  <section *ngIf="hasAthletesWithPosition('Atacante')">
+  <section *ngIf="hasAthletesWithPosition('Forward')">
     <h3 class="role-title">Forwards</h3>
     <div class="athletes-grid">      
       <ng-container *ngFor="let a of athletes">
         <mat-card
-          *ngIf="a.position?.displayName === 'Atacante'"
+          *ngIf="a.position?.displayName === 'Forward'"
           class="athlete-card"
           (click)="goToAthlete(a.id)"
         >

@@ -3,7 +3,10 @@
   <div class="image-preview">
     <img *ngIf="previewUrl" [src]="previewUrl" style="width: 100%; max-height: 300px; object-fit: contain;"/>
   </div>
-  <input type="file" (change)="onFileSelected($event)" accept="image/*"/>
+  <label class="custom-file-upload">
+    Select an image
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+  </label>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button (click)="onCancel()">Cancel</button>

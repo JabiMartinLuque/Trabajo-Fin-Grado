@@ -26,19 +26,19 @@ export class RegisterComponent {
     this.successMessage = '';
 
     if (!this.validateEmail(this.usuario.email)) {
-      this.errorMessage = 'Por favor, introduce un email válido';
+      this.errorMessage = 'Please enter a valid email';
       return;
     }
 
-    if(this.usuario.password !== this.confirmPassword) {
-      this.errorMessage = 'Las contraseñas no coinciden';
-      return;
+    if (this.usuario.password !== this.confirmPassword) {
+        this.errorMessage = 'Passwords do not match';
+        return;
     }
 
     this.authService.register(this.usuario).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
-        this.successMessage = 'Registro exitoso! Por favor, inicia sesión.';
+        this.successMessage = 'Registration successful! Please log in.';
         // Opcional: redirigir al login después de unos segundos o inmediatamente
         this.router.navigate(['/login']);
       },
@@ -54,12 +54,12 @@ export class RegisterComponent {
           }
           
           if (backendMsg.includes("ya está registrado")) {
-            this.errorMessage = "Este email ya está registrado. Por favor, utiliza otro.";
+            this.errorMessage = "This email is already registered. Please use another one.";
           } else {
-            this.errorMessage = 'Ocurrió un error durante el registro. Por favor, intenta nuevamente.';
+              this.errorMessage = 'An error occurred during registration. Please try again.';
           }
         } else {
-          this.errorMessage = 'Ocurrió un error durante el registro. Por favor, intenta nuevamente.';
+          this.errorMessage = 'An error occurred during registration. Please try again.';
         }
       }
     });

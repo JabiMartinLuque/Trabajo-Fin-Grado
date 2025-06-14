@@ -14,10 +14,6 @@ import { environment } from '../../../../environments/environment';
   
     constructor(private http: HttpClient) {}
   
-    /**
-     * Obtiene el scoreboard para la liga indicada.
-     * Ejemplo de URL final: http://localhost:8080/api/matches/league/esp.1
-     */
     getScoreboard(league: string): Observable<ScoreboardDTO> {
       const url = `${this.apiUrl}/${league}`;
       console.log(url);

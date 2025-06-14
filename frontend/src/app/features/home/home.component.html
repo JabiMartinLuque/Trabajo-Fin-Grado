@@ -8,7 +8,9 @@
     <h3>My Favorite Player Matches</h3>
     <ng-container *ngIf="athleteMatches.length; else noMatches">
       <div class="card-grid">
-        <mat-card class="match-card" *ngFor="let m of athleteMatches">
+        <ng-container *ngFor="let m of athleteMatches">
+          <!-- Mostrar los partidos del jugador -->
+        <mat-card class="match-card" *ngIf="m.competitions && m.competitions.length > 0">
           <mat-card-header>
             <div class="teams-info">
               <div class="team">
@@ -56,6 +58,7 @@
             </button>
           </mat-card-actions>
         </mat-card>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #noMatches>
@@ -70,7 +73,12 @@
     <h3>My Favorite Team Matches</h3>
     <ng-container *ngIf="teamMatches.length; else noTeam">
       <div class="card-grid">
-        <mat-card class="match-card" *ngFor="let m of teamMatches">
+        <ng-container *ngFor="let m of teamMatches">
+          <!-- Solo si m.competitions no está vacío -->
+          <mat-card
+            class="match-card"
+            *ngIf="m?.competitions && m.competitions.length > 0"
+          >
           <mat-card-header>
             <div class="teams-info">
               <div class="team">
@@ -113,6 +121,7 @@
             </button>
           </mat-card-actions>
         </mat-card>
+        </ng-container>
       </div>
     </ng-container>
     <ng-template #noTeam>

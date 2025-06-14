@@ -49,13 +49,13 @@
           </div>
 
           <div class="edit-actions" *ngIf="editing.username || editing.email">
-            <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancelar</button>
-            <button mat-flat-button color="primary" (click)="saveEdit()">Guardar</button>
+            <button mat-stroked-button color="warn" (click)="cancelEdit()">Cancel</button>
+            <button mat-flat-button color="primary" (click)="saveEdit()">Save</button>
           </div>
 
           <div class="profile-actions">
             <button mat-stroked-button color="warn" (click)="logout()">
-              Cerrar Sesión
+              Log out
             </button>
           </div>
         </ng-container>

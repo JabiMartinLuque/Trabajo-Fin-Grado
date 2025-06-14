@@ -23,7 +23,7 @@ public class UserController {
 
     private final String uploadDir = "uploads";
 
-    @Value("${prod.url}")
+    @Value("${prodBack.url}")
     private String prodUrl;
 
     public UserController(UserRepository userRepository) {

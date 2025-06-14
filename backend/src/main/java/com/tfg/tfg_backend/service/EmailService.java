@@ -11,16 +11,16 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Value("${prod.url}")
+    @Value("${prodFront.url}")
     private String resetLink;
 
     public void sendResetPasswordEmail(String to, String token, String username) {
         resetLink = resetLink + "/reset-password?token=" + token; // Ajusta la URL según corresponda
-        String subject = "Restablecimiento de contraseña";
-        String body = "Hola " + username + ",\n\n"
-                + "Para restablecer tu contraseña, haz clic en el siguiente enlace:\n" 
-                + resetLink + "\n\n" 
-                + "Si no solicitaste el restablecimiento, ignora este mensaje.";
+        String subject = "Reset Your Password";
+        String body = "Hello " + username + ",\n\n"
+            + "To reset your password, please click the following link:\n" 
+            + resetLink + "\n\n"
+            + "If you did not request a password reset, please ignore this message.";
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);

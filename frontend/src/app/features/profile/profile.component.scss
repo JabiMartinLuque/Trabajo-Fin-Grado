@@ -177,9 +177,10 @@
 
 .edit-actions {
   display: flex;
-  justify-content: flex-end;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
+  justify-content: center; /* Centra horizontalmente */
+  gap: 1rem;               /* Espacio entre botones */
+  margin-top: 1rem;        /* Ajusta según necesites */
+  margin-bottom: 1rem; /* Espacio debajo de los botones */
 }
 
 @media (prefers-color-scheme: dark) {

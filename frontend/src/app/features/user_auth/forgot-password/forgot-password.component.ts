@@ -21,11 +21,11 @@ export class ForgotPasswordComponent {
     this.successMessage = '';
     this.authService.forgotPassword(this.email).subscribe({
       next: (response) => {
-        this.successMessage = 'Se han enviado instrucciones a tu email.';
+        this.successMessage = 'Instructions have been sent to your email.';
       },
       error: (error) => {
         console.error('Error en recuperación:', error);
-        this.errorMessage = 'Ocurrió un error. Por favor, intenta de nuevo.';
+        this.errorMessage = 'An error occurred. Please try again.';
       }
     });
   }
